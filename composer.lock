@@ -948,7 +948,7 @@
             },
             "require": {
                 "illuminate/support": "^7.0",
-                "php": "^7.2.5"
+                  "php": "^7.2.5|^8.0.0"
             },
             "type": "library",
             "autoload": {
@@ -991,7 +991,7 @@
                 "illuminate/support": "^7.0",
                 "infyomlabs/laravel-generator-helpers": "^2.0",
                 "laravel/ui": "^2.0",
-                "php": "^7.2.5"
+                    "php": "^7.2.5|^8.0.0"
             },
             "type": "library",
             "extra": {
