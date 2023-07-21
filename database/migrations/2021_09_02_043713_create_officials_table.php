@@ -17,12 +17,14 @@ class CreateOfficialsTable extends Migration
 
             $table->id();
 
-            $table->string('brgy_official_name', 32);
-            $table->string('brgy_official_position', 32);
-            $table->string('brgy_official_role', 64)->nullable();
+            $table->string('name', 32);
+            $table->string('position', 32);
+            $table->string('role', 64)->nullable();
             $table->string('path', 64)->nullable();
             $table->string('img', 64)->nullable();
             $table->integer('batch_id')->length(10)->unsigned()->nullable();
+            $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
 
         });

@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Barangay;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     /**
      * Show the application dashboard.
@@ -23,7 +16,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-         //return view('home');
-         return redirect('dashboard');
+        $barangays = Barangay::all();
+        return view('frontend.home.index', compact('barangays'));
+    }
+    public function login($barangay_id){
+        $barangay = Barangay::find($barangay_id);
+        return view('frontend.auth.login', compact('barangay'));
     }
 }

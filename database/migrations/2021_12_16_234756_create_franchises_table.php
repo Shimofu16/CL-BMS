@@ -21,6 +21,9 @@ class CreateFranchisesTable extends Migration
             $table->string('motor_number', 32);
             $table->string('chasis_number', 32);
             $table->string('plate_number', 32);
+
+            $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
         });
     }

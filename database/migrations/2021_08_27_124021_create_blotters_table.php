@@ -15,10 +15,10 @@ class CreateBlottersTable extends Migration
     {
         Schema::create('blotters', function (Blueprint $table) {
             $table->id();
-            
+
             $table->string('case_number', 32);
             $table->string('complainant_name', 32);
-            $table->string('complained_resident', 32)->nullable();  
+            $table->string('complained_resident', 32)->nullable();
             $table->string('Blotters_info', 32);
             $table->string('case_type', 32);
             $table->date('date_of_incident');
@@ -48,6 +48,9 @@ class CreateBlottersTable extends Migration
             $table->string('lbp3', 32)->nullable();
             $table->string('lbp3_note', 32)->nullable();
             $table->dateTime('lbp3_date')->nullable();
+
+            // $table->unsignedBigInteger('barangay_id');
+            // $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
 
         });

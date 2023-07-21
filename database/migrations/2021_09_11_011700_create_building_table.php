@@ -21,8 +21,11 @@ class CreateBuildingTable extends Migration
             $table->string('building_type', 32);
             $table->string('building_address', 64);
             $table->string('reg_date');
+
+            $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
-            
+
         });
     }
 

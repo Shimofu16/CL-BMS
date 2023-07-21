@@ -13,7 +13,7 @@ class CreateBusinessTable extends Migration
      */
     public function up()
     {
-        
+
         Schema::create('business', function (Blueprint $table) {
             $table->id();
             // $table->integer('business_owner_id')->unsigned()->index()->nullable();
@@ -27,6 +27,8 @@ class CreateBusinessTable extends Migration
             $table->string('business_address', 64);
             $table->string('business_type', 32)->nullable();
             $table->date('regs_date');
+                 $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
         });
 

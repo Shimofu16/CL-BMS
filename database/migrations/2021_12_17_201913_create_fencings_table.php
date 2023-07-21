@@ -20,6 +20,8 @@ class CreateFencingsTable extends Migration
             $table->string('address', 64);
             $table->string('fencing_location', 64);
             $table->string('purpose', 32);
+            $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
         });
     }

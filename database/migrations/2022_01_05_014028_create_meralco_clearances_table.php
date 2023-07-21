@@ -19,6 +19,8 @@ class CreateMeralcoClearancesTable extends Migration
             $table->string('meralaco_clearance_applicant', 32);
             $table->string('meralaco_clearance_building_type', 32);
             $table->string('meralaco_clearance_address', 32);
+            $table->unsignedBigInteger('barangay_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
         });
     }
