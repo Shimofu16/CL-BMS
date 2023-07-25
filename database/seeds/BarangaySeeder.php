@@ -19,7 +19,6 @@ class BarangaySeeder extends Seeder
             ['name' => 'Dayap'],
             ['name' => 'Masiit'],
             ['name' => 'San Isidro'],
-            ['name' => 'San Isidro'],
             // Add more barangays as needed
         ];
         foreach ($barangays as $key => $barangay) {

@@ -13,14 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /* Home */
-Route::group([],function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/user/{barangay_id}/auth', [App\Http\Controllers\HomeController::class, 'login'])->name('login.page');
-    Route::post('/user/{barangay_id}/auth', [App\Http\Controllers\HomeController::class, 'authenticate'])->name('login.auth');
+
+Route::get('/', [App\Http\Controllers\HomeController::class,'index'])->name('home');
+Route::get('/barangay/{barangay_id}/login', [App\Http\Controllers\HomeController::class,'login'])->name('login.page');
+Route::get('/admin/login', [App\Http\Controllers\HomeController::class,'admin'])->name('admin.login.page');
+Route::post('/user/auth', [App\Http\Controllers\HomeController::class,'authenticate'])->name('login.auth');
+Route::post('/user/logout', [App\Http\Controllers\HomeController::class,'logout'])->name('logout.auth')->middleware('auth');
+
+/* admin */
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
+    
 });
-
-
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index')->middleware('auth');
+/* admin */
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
+});
 
 
 //Analytics

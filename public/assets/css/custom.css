@@ -1,31 +1,144 @@
-body {
-    color: black !important;
+#time {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-body label {
-    color: black !important;
+#date {
+    font-size: 1.6em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.bg-violet{
+    background-color: #A81ECB !important;
+    color: #fff;
 }
 
-body button {
-    color: black !important;
+/* violet Button */
+.btn-violet {
+    background-color: #A81ECB !important;
+    color: #fff;
+    border-color: #A81ECB;
+    border-style: solid;
 }
 
-body a {
-    color: black !important;
+/* violet Button hover effect */
+.btn-violet:hover {
+    background-color: #BB2BE0 !important;
+    border-color: #BB2BE0;
+    color: #fff;
 }
 
-body th {
-    color: black !important;
+/* violet Button focus effect */
+.btn-violet:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(140, 4, 24, 0.3);
 }
 
-body ul li a {
-    color: black !important;
+/* violet Button active effect */
+.btn-violet:active {
+    background-color: #6c0210 !important;
+    border-color: #6c0210;
 }
 
-#black {
-    color: black !important;
+/* violet Text */
+.text-violet {
+    color: #A81ECB !important;
 }
 
-#border-blue {
-    border: 1px solid #017cfd;
+/* violet Text hover effect */
+.text-violet:hover {
+    color: #BB2BE0 !important;
+}
+
+/* violet  btn-Outline */
+.btn-outline-violet {
+    background: transparent !important;
+    color: #A81ECB;
+    border-color: #A81ECB;
+}
+
+/* violet  btn-Outline hover effect */
+.btn-outline-violet:hover {
+    background-color: #A81ECB !important;
+    color: #fff !important;
+    border-color: #A81ECB;
+}
+
+/* violet  btn-Outline focus effect */
+.btn-outline-violet:focus {
+    outline-color: #A81ECB;
+}
+
+/* violet  btn-Outline active effect */
+.btn-outline-violet:active {
+    background-color: #A81ECB !important;
+    color: #fff;
+    border-color: #A81ECB;
+}
+
+.img-bg {
+    background-image: url("...\images\cl-townplaza.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bg-glass {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.77);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.bg-glass-radius-10 {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.77);
+border-radius: 10px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.nav-item .nav-content.collapse{
+    position: relative;
+    background:#A81ECB;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sidebar-nav .nav-link:focus{
+    color: #f6f9ff !important;
+    background: #A81ECB !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-bottom: #6c0210  1px solid;
+
+}
+.sidebar-nav .nav-link:focus.collapsed i,.sidebar-nav .nav-link:focus i {
+    color: #f6f9ff;
+}
+.sidebar-nav .nav-link:focus > .nav-content.collapse li a{
+    color: #f6f9ff ;
+}
+.sidebar-nav .nav-link > .nav-content.collapse li a {
+    color: #fff ;
+}
+.nav-content.collapse li a {
+    color: white;
+}
+.nav-content.collapse li:hover a, .nav-content.collapse li.collapse-active a{
+    color: #A81ECB !important;
+}
+.nav-content.collapse li:hover,.nav-content.collapse li.collapse-active{
+    background-color: #fff !important;
+}
+.nav-content.collapse li{
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.row-gap-0{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }

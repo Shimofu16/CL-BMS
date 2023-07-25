@@ -1,64 +1,138 @@
- <div class = "d-flex justify-content-between" style="width: 100%">
+<header id="header" class="header fixed-top d-flex align-items-center">
 
- <ul class="navbar-nav mr-3">
-
-            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a>
-            </li>
-</ul>
-
-<div class = "d-flex align-items-center">
-    <div class = "mr-5">{{Carbon\Carbon::now()->format('l\\, F d\\, Y -\\ h:i:A')}}</div>
-    <ul class="navbar-nav navbar-right">
-    
-        @if(\Illuminate\Support\Facades\Auth::user())
-            <li class="dropdown">
-                <a href="#" data-toggle="dropdown"
-                   class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <div class="d-sm-none d-lg-inline-block">
-                        Hi, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
-                </a>
-    
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-title">
-                        Welcome, {{\Illuminate\Support\Facades\Auth::user()->name}}</div>
-                    {{-- <a class="dropdown-item has-icon edit-profile" href="#" data-id="{{ \Auth::id() }}">
-                        <i class="fa fa-user"></i>Edit Profile</a>
-                    <a class="dropdown-item has-icon" data-toggle="modal" data-target="#changePasswordModal" href="#" data-id="{{ \Auth::id() }}"><i
-                                class="fa fa-lock"> </i>Change Password</a> --}}
-
-                                <a class="dropdown-item has-icon" href="{{ url('/register') }}">
-                        <i class="fa fa-user"></i>Register User</a>
-                                
-                    <a href="{{ url('logout') }}" class="dropdown-item has-icon text-danger"
-                       onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
-                        {{ csrf_field() }}
-                    </form>
-                </div>
-            </li>
-        @else
-            <li class="dropdown"><a href="#" data-toggle="dropdown"
-                                    class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    {{--                <img alt="image" src="#" class="rounded-circle mr-1">--}}
-                    <div class="d-sm-none d-lg-inline-block">{{ __('messages.common.hello') }}</div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-title">{{ __('messages.common.login') }}
-                        / {{ __('messages.common.register') }}</div>
-                    <a href="{{ route('login') }}" class="dropdown-item has-icon">
-                        <i class="fas fa-sign-in-alt"></i> {{ __('messages.common.login') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ route('register') }}" class="dropdown-item has-icon">
-                        <i class="fas fa-user-plus"></i> {{ __('messages.common.register') }}
-                    </a>
-                </div>
-            </li>
-        @endif
-    </ul>
-</div>
+    <div class="d-flex align-items-center justify-content-between">
+        <a href="#" class="logo d-flex align-items-center">
+            <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="">
+            <span class="d-none d-lg-block text-maroon">{{ Auth::user()->role }} Dashboard</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
 
 
-</div>
+
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+            {{-- <li class="nav-item dropdown">
+
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-chat-left-text"></i>
+                    <span class="badge bg-success badge-number">3</span>
+                </a><!-- End Messages Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                    <li class="dropdown-header">
+                        You have 3 new messages
+                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="message-item">
+                        <a href="#">
+                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                            <div>
+                                <h4>Maria Hudson</h4>
+                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <p>4 hrs. ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="message-item">
+                        <a href="#">
+                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                            <div>
+                                <h4>Anna Nelson</h4>
+                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <p>6 hrs. ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="message-item">
+                        <a href="#">
+                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                            <div>
+                                <h4>David Muldon</h4>
+                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <p>8 hrs. ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li class="dropdown-footer">
+                        <a href="#">Show all messages</a>
+                    </li>
+
+                </ul><!-- End Messages Dropdown Items -->
+
+            </li> --}}
+            <!-- End Messages Nav -->
+
+            <li class="nav-item dropdown pe-3">
+
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <img src="{{ asset('assets/images/avatar/avatar-1.png') }}" alt="Profile" class="rounded-circle">
+                    <span class="d-none d-md-block dropdown-toggle ps-2 text-maroon">
+                            {{ Auth::user()->name }}
+                    </span>
+                </a><!-- End Profile Iamge Icon -->
+
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                    <li class="dropdown-header">
+                        <h6>
+                            {{ Auth::user()->name }}
+                        </h6>
+
+                        <span>{{ Auth::user()->role }}</span>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    {{-- <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route(Str::lower(Auth::user()->role).'.change-password.index') }}">
+                            <i class="ri-lock-password-fill"></i>
+                            <span>Change Password</span>
+                        </a>
+                    </li> 
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+--}}
+                  {{--   <li>
+                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <i class="bi bi-gear"></i>
+                            <span>Account Settings</span>
+                        </a>
+                    </li> --}}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logout">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Sign Out</span>
+                        </a>
+                    </li>
+                </ul><!-- End Profile Dropdown Items -->
+            </li><!-- End Profile Nav -->
+
+        </ul>
+    </nav>
+    <!-- End Icons Navigation -->
+
+</header>
