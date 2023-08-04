@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Model\Officials;
@@ -40,10 +40,7 @@ class OfficialsController extends Controller
         $b_tres = Officials::where('brgy_official_position','Barangay Treasurer')->where('batch_id',$latest_id)->first();
         $b_clerk = Officials::where('brgy_official_position','Barangay Clerk')->where('batch_id',$latest_id)->first();
         $b_clerk1 = Officials::where('brgy_official_position','Barangay Clerk')->where('batch_id',$latest_id)->latest('id')->first();
-
-
-
-        
+            
         return view('officials.edit', compact('b_cap','b_councelor1','b_councelor2','b_councelor3','b_councelor4','b_councelor5','b_councelor6' ,'b_councelor7', 'b_sk', 'b_sec' , 'b_tres', 'b_clerk','b_clerk1'));
     }
 

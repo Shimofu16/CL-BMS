@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\user;
 
 use Illuminate\Http\Request;
 use App\Model\Resident;
@@ -8,27 +8,28 @@ use App\Model\Officials;
 use App\Model\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
-class BarangayResidencyController extends Controller
+class BarangayPUIPUMController extends Controller
 {
     public function create($id){
         $resident = Resident::findOrfail($id);  
-        return view('brgy_certificate.residency_certification.create',compact('resident')); 
+        return view('brgy_certificate.PUI_PUM_certification.create',compact('resident')); 
     }
 
 
     public function show($id, Request $request){
-        // officials
+         // officials
         $latest_id= Officials::max('batch_id');
         $b_officials= Officials::where('batch_id',$latest_id)->get();
         //
+
         $resident = Resident::findOrfail($id);  
 
         ActivityLog::create([
             'user' => Auth::user()->name,
-            'description' => 'Issue Brgy Residency Certificate',
-            'subject' => 'Brgy Residency',
-            
+            'description' => 'Issue Brgy PUI-PUM Certificate',
+            'subject' => 'Brgy PUI-PUM',
         ]);
-        return view('brgy_certificate.residency_certification.show',compact('resident', 'b_officials')); 
+
+        return view('brgy_certificate.PUI_PUM_certification.show',compact('resident', 'b_officials')); 
     }
 }

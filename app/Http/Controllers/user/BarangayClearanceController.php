@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\user;
 
 use Illuminate\Http\Request;
 use App\Model\Resident;
@@ -14,7 +14,7 @@ class BarangayClearanceController extends Controller
 {
     public function index(){
 
-        
+
         $residence_list = Resident::all();
         return view('brgy_certificate.brgy_clearance.index',compact ('residence_list'));
     }
@@ -24,7 +24,7 @@ class BarangayClearanceController extends Controller
         $resident = Resident::findOrfail($id);
         $resident_with_blotter = Resident::with('blotters')->findOrfail($id); //where('status', '!=', 'Settled') in blotter table
 
-        return view('brgy_certificate.brgy_clearance.create', compact('resident','resident_with_blotter')); 
+        return view('brgy_certificate.brgy_clearance.create', compact('resident','resident_with_blotter'));
     }
 
 
@@ -35,7 +35,7 @@ class BarangayClearanceController extends Controller
         //
 
         $purpose = $request->purpose;
-        $resident = Resident::findOrfail($id); 
+        $resident = Resident::findOrfail($id);
 
         $clearance_cnt = ActivityLog::where('subject', '=', 'Brgy Clearance')
         ->whereBetween('created_at', [
@@ -54,10 +54,10 @@ class BarangayClearanceController extends Controller
 
         $ActivityLog_id = $ActivityLog->id;
 
-        return view('brgy_certificate.brgy_clearance.show', compact('resident', 'purpose', 'b_officials','clearance_cnt')); 
+        return view('brgy_certificate.brgy_clearance.show', compact('resident', 'purpose', 'b_officials','clearance_cnt'));
     }
 
-    
-   
-    
+
+
+
 }
