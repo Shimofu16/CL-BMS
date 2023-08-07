@@ -1,6 +1,6 @@
 <?php
 
-use App\Barangay;
+use App\Model\Barangay;
 use Illuminate\Database\Seeder;
 
 class BarangaySeeder extends Seeder

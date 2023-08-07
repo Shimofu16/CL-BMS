@@ -32,7 +32,7 @@
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     {{-- page css --}}
     @yield('styles')
- 
+
 </head>
 
 <body>
@@ -48,17 +48,24 @@
 
     <main id="main" class="main">
         {{-- page titles --}}
-        <div class="pagetitle">
-            <h1>@yield('page-title')</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    @hasSection('page-breadcrumb')
-                        <li class="breadcrumb-item"><a href="@yield('breadcrumb-link')">@yield('page-breadcrumb')</a></li>
-                        <li class="breadcrumb-item active">@yield('page-title')</li>
-                    @else
-                    @endif
-                </ol>
-            </nav>
+        <div class="pagetitle d-flex align-items-center justify-content-between">
+            <div class="d-flex flex-column">
+                <h1 class="text-violet">@yield('page-title')</h1>
+                @if (!Route::is('admin.dashboard.index'))
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard.index') }}">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">@yield('page-title')</li>
+
+                        </ol>
+                    </nav>
+                @endif
+            </div>
+            <div class="add">
+                @yield('add')
+            </div>
+
         </div>
         <!-- End Page Title -->
 
@@ -70,7 +77,7 @@
     <!-- End #main -->
 
     <!-- ======= Footer ======= -->
-  
+
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
@@ -90,6 +97,14 @@
     {{-- sweetalert --}}
     @include('sweetalert::alert')
     @yield('scripts')
+    <script>
+        $(document).ready(function() {
+            //disable auto order
+            $('.datatable').DataTable({
+                "ordering": false
+            });
+        });
+    </script>
 </body>
 
 </html>

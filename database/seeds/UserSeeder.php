@@ -1,6 +1,6 @@
 <?php
 
-use App\User;
+use App\User; 
 use App\Model\Officials;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;

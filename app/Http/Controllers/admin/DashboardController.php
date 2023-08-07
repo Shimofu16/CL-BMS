@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Resident;
 use App\Model\Business;
@@ -10,7 +11,7 @@ use App\Model\Officials;
 use Carbon\Carbon;
 
 
-class DashboardController extends Controller
+class DashboardController extends Controller    
 {
     public function index(){
         

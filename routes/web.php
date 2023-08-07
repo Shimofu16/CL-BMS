@@ -14,18 +14,29 @@ use Illuminate\Support\Facades\Route;
 */
 /* Home */
 
-Route::get('/', [App\Http\Controllers\HomeController::class,'index'])->name('home');
-Route::get('/barangay/{barangay_id}/login', [App\Http\Controllers\HomeController::class,'login'])->name('login.page');
-Route::get('/admin/login', [App\Http\Controllers\HomeController::class,'admin'])->name('admin.login.page');
-Route::post('/user/auth', [App\Http\Controllers\HomeController::class,'authenticate'])->name('login.auth');
-Route::post('/user/logout', [App\Http\Controllers\HomeController::class,'logout'])->name('logout.auth')->middleware('auth');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/barangay/{barangay_id}/login', [App\Http\Controllers\HomeController::class, 'login'])->name('login.page');
+Route::get('/admin/login', [App\Http\Controllers\HomeController::class, 'admin'])->name('admin.login.page');
+Route::post('/user/auth', [App\Http\Controllers\HomeController::class, 'authenticate'])->name('login.auth');
+Route::post('/user/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout.auth')->middleware('auth');
 
 /* admin */
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
-    
+
+    Route::prefix('barangay')->name('official.')->group(function () {
+        Route::get('/official/{year}/{barangay_id?}', [App\Http\Controllers\admin\OfficialsController::class, 'index'])->name('index');
+        Route::post('store', [App\Http\Controllers\admin\OfficialsController::class, 'store'])->name('store');
+        Route::put('update/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'update'])->name('update');
+        Route::delete('delete/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'delete'])->name('delete');
+    });
+    Route::prefix('archive')->name('archive.')->group(function () {
+        Route::get('/{folder}', [App\Http\Controllers\admin\ArchiveController::class, 'index'])->name('index');
+        Route::put('/restore/{folder}/{id}', [App\Http\Controllers\admin\ArchiveController::class, 'update'])->name('restore');
+    });
 });
-/* admin */
+
+/* user */
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 });

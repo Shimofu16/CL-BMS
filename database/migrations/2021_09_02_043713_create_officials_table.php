@@ -19,10 +19,10 @@ class CreateOfficialsTable extends Migration
 
             $table->string('name', 32);
             $table->string('position', 32);
-            $table->string('role', 64)->nullable();
             $table->string('path')->nullable();
             $table->string('img', 64)->nullable();
             $table->string('year');
+            $table->boolean('toArchive')->default(0);
             $table->unsignedBigInteger('barangay_id');
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();

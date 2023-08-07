@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Officials extends Model
 {
-    protected $table = ('officials');
+    protected $table = 'officials';
     protected $guarded = [''];  
 
-    
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class);
+    }   
 }

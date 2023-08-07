@@ -1,6 +1,6 @@
 <?php
 
-use App\Barangay;
+use App\Model\Barangay;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +23,7 @@ class OfficialsSeeder extends Seeder
                     'name' => $faker->name,
                     'position' => $positions[$i],
                     'year' => date('Y',strtotime(now())),
-                    'barangay_id' => $barangay->id, 
+                    'barangay_id' => $barangay->id,
                 ]);
             }
         }
