@@ -11,65 +11,68 @@ use Illuminate\Support\Facades\Auth;
 
 class MeralcoClearanceController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        // $expired_business = 0;
+        // foreach ($businesses as $businesse){
+        //     $registration_date = \Carbon\Carbon::parse($businesse->regs_date)->diff(\Carbon\Carbon::now())->format('%y');
+            
+        //         if($registration_date > 1){
+        //             $expired_business = $expired_business = 1;
+        //         }
+        // }
 
-        $meralcos = MeralcoClearance::orderBy('id','desc')->get();
-       // $expired_business = 0;
-       // foreach ($businesses as $businesse){
-       //     $registration_date = \Carbon\Carbon::parse($businesse->regs_date)->diff(\Carbon\Carbon::now())->format('%y');
-           
-       //         if($registration_date > 1){
-       //             $expired_business = $expired_business = 1;
-       //         }
-       // }
+        return view('brgy_permit.meralco_clearance.index', [
+            'meralcos' => MeralcoClearance::orderBy('id','desc')->get()
+        ]);
+    }
 
-       return view('brgy_permit.meralco_clearance.index',compact('meralcos'));
-   }
+    public function create()
+    {
+        // $residence = Residence::all();
+        return view('brgy_permit.meralco_clearance.create');
+    }
 
-   public function create(){
-       // $residence = Residence::all();
-       return view('brgy_permit.meralco_clearance.create');
-   }
+    public function store(Request $request)
+    {
+        $year = Carbon::now()->year;  
+        $meralco_cnt = MeralcoClearance::all()->count();
 
-    public function store(Request $request){
+        $meralco_cnt =  $meralco_cnt + 1;    
+        $meralco_number = $year . '- BAYOG -' . $meralco_cnt;
+        
+        $meralco = MeralcoClearance::create([
+            'number' => $meralco_number,
+            'applicant' => $request->meralco_requestor,
+            'address' => $request->address,
+            'building_type' => $request->building_type,
+        ]);
 
-       $year = Carbon::now()->year;  
-       $meralco_cnt = MeralcoClearance::all()->count();
+        return redirect()->route('meralco_clearance.index')->withStatus('Meralco Clearance Added Succesfully!');
+    }
 
-       $meralco_cnt =  $meralco_cnt + 1;    
-       $meralco_number = $year . '- BAYOG -' . $meralco_cnt;
+    public function show($id)
+    {
+        return view('brgy_permit.meralco_clearance.show', [
+            'meralco' => MeralcoClearance::findOrFail($id),
+        ]);
+    }
 
+    public function clearance($id)
+    {
+        // officials
+        $latest_id= Officials::max('batch_id');
+        $b_officials= Officials::where('batch_id',$latest_id)->get();
 
-
-            $meralco = new MeralcoClearance;  
-            $meralco->meralaco_clearance_number = $meralco_number;
-            $meralco->meralaco_clearance_applicant = $request->meralco_requestor;
-            $meralco->meralaco_clearance_address = $request->address;
-            $meralco->meralaco_clearance_building_type = $request->building_type;
-            $meralco ->save();        
-
-          return redirect()->route('meralco_clearance.index')->withStatus('Meralco Clearance Added Succesfully!');
-   }
-    public function show($id){
-       $meralco  = MeralcoClearance::findOrfail($id);  
-        return view('brgy_permit.meralco_clearance.show',compact('meralco'));
-}
-
-   public function clearance($id){
-       // officials
-       $latest_id= Officials::max('batch_id');
-       $b_officials= Officials::where('batch_id',$latest_id)->get();
-       //
-
-       $meralco = MeralcoClearance::findorfail($id);
-
-       
         ActivityLog::create([
             'user' => Auth::user()->name,
             'description' => 'Issue Brgy Meralco Clearance',
             'subject' => 'Brgy Meralco',
         ]);
 
-       return view('brgy_permit.meralco_clearance.clearance',compact('meralco','b_officials')); 
-       }
+        return view('brgy_permit.meralco_clearance.clearance', [
+            'meralco' => MeralcoClearance::findOrFail($id),
+            'b_officials' => $b_officials,
+        ]); 
+    }
 }

@@ -10,17 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class BarangayLiveinController extends Controller
 {
-    public function create($id){
-        $resident = Resident::findOrfail($id);  
-        return view('brgy_certificate.livein_certification.create',compact('resident')); 
+    public function create($id)
+    {
+        return view('brgy_certificate.livein_certification.create', [
+            'resident' => Resident::findOrFail($id),
+        ]); 
     }
 
-
-    public function show($id, Request $request){
+    public function show($id, Request $request)
+    {
         // officials
         $latest_id= Officials::max('batch_id');
         $b_officials= Officials::where('batch_id',$latest_id)->get();
-        //
 
         $resident = Resident::findOrfail($id); 
 
@@ -34,7 +35,12 @@ class BarangayLiveinController extends Controller
             'subject' => 'Brgy Live In',
         ]);
 
-
-        return view('brgy_certificate.livein_certification.show',compact('resident', 'purpose','partner','long', 'b_officials')); 
+        return view('brgy_certificate.livein_certification.show', [
+            'resident' => Resident::findOrFail($id),
+            'purpose' => $request->purpose,
+            'partner' => $request->partner,
+            'long' => $request->long,
+            'b_officials' => $b_officials,
+        ]);
     }
 }

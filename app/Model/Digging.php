@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Digging extends Model
 {
-    
+    protected $guarded = ['id'];
 }

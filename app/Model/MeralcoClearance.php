@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MeralcoClearance extends Model
 {
-    //
+    protected $guarded = ['id'];
 }

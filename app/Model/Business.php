@@ -7,7 +7,7 @@ use App\Model\Resident;
 class Business extends Model
 {
     protected $table = 'business';
-    protected $guarded = ['']; 
+    protected $guarded = ['id']; 
 
     public function residence()
     {

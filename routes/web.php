@@ -37,7 +37,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 /* user */
-Route::prefix('user')->name('user.')->group(function () {
+Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 });
 

@@ -7,8 +7,8 @@ use App\Model\Resident;
 
 class AnalyticsController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $residence = Resident::all();
 
         //general analytics
@@ -113,8 +113,6 @@ class AnalyticsController extends Controller
         $purok3_student_Cnt = Resident::where('student' ,'!=', 'N/A')->where('purok',"=", "3")->count();
         $purok4_student_Cnt = Resident::where('student' ,'!=', 'N/A')->where('purok',"=", "4")->count();
         $purok5_student_Cnt = Resident::where('student' ,'!=', 'N/A')->where('purok',"=", "5")->count();
-
-
 
         return view('analytics.index',compact('std_Cnt','senior_Cnt','pwd_Cnt','fourPs_Cnt','tupad_Cnt','MembershipProgram_None_Cnt',
         'purok_1_Cnt','purok_2_Cnt','purok_3_Cnt','purok_4_Cnt','purok_5_Cnt',

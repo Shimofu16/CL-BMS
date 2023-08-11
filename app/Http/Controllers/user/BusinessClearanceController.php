@@ -12,70 +12,70 @@ use Illuminate\Support\Facades\Auth;
 
 class BusinessClearanceController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $businesses = Business::with('residence')->orderBy('id','desc')->get();
         $expired_business = 0;
-        foreach ($businesses as $businesse){
-            $registration_date = \Carbon\Carbon::parse($businesse->regs_date)->diff(\Carbon\Carbon::now())->format('%y');
+
+        foreach ($businesses as $business){
+            $registration_date = Carbon::parse($business->regs_date)->diff(Carbon::now())->format('%y');
             
-                if($registration_date > 1){
-                    $expired_business = $expired_business = 1;
-                }
+            if($registration_date > 1){
+                $expired_business += 1;
+            }
         }
 
-        return view('brgy_permit.business_clearance.index', compact('businesses','expired_business'));
+        return view('brgy_permit.business_clearance.index', [
+            'businesses' => $businesses,
+            'expired_business' => $expired_business,
+        ]);
     }
 
-    public function create_business(){
-        $residence = Resident::all();
-        return view('brgy_permit.business_clearance.create_business', compact('residence'));
+    public function create_business()
+    {
+        return view('brgy_permit.business_clearance.create_business', [
+            'residence' => Resident::all(),
+        ]);
     }
 
-    public function store_business(Request $request){
-
+    public function store_business(Request $request)
+    {
         $year = Carbon::now()->year;  
         $business_cnt = Business::all()->count();
 
         $business_cnt =  $business_cnt + 1;    
         $business_number = $year . '- BAYOG -' . $business_cnt;
 
+        $business = Business::create([
+            'business_number' => $business_number,
+            'business_owner_id' => $request->business_owner,
+            'business_owner_not_resident' => $request->business_owner_not_resident,
+            'business_name' => $request->business_name,
+            'business_address' => $request->business_address,
+            'business_type' => $request->business_type,
+            'regs_date' => $request->reg_date,
+        ]);
 
-        
-            $business = new Business;     
-            $business->business_number = $business_number;
-            $business->business_owner_id = $request->business_owner;
-            $business->business_owner_not_resident = $request->business_owner_not_resident;
-            $business->business_name = $request->business_name;
-            $business->business_address = $request->business_address;
-            $business->business_type = $request->business_type;
-            $business->regs_date = $request->reg_date;
-            $business->save();        
-
-            return redirect()->route('business_clearance.index')->withStatus('Business Added Succesfully!');
+        return redirect()->route('business_clearance.index')->withStatus('Business Added Succesfully!');
     }
-    public function show($id){
 
-        $business = Business::with('residence')->findOrfail($id);  
-        return view('brgy_permit.business_clearance.show',compact('business'));
-        }
+    public function show($id)
+    {
+        return view('brgy_permit.business_clearance.show', [
+            'business' => Business::with('residence')->findOrFail($id),
+        ]);
+    }
 
-    public function create_clearance($id){
+    public function create_clearance($id)
+    {
         return view('brgy_permit.business_clearance.clearance'); 
     }
 
-
-    public function show_clearance($id, Request $request){
-      
+    public function show_clearance($id, Request $request)
+    {  
         // officials
         $latest_id= Officials::max('batch_id');
         $b_officials= Officials::where('batch_id',$latest_id)->get();
-        //
-
-        $business = Business::with('residence')->findOrfail($id);  
-
-        $amount = $request->amount;
-        $or_number = $request->or_number;
 
         ActivityLog::create([
             'user' => Auth::user()->name,
@@ -83,6 +83,11 @@ class BusinessClearanceController extends Controller
             'subject' => 'Brgy Business',
         ]);
 
-        return view('brgy_permit.business_clearance.clearance',compact('business', 'b_officials','amount', 'or_number')); 
+        return view('brgy_permit.business_clearance.clearance', [
+            'business' => Business::with('residence')->findOrFail($id),
+            'b_officials' => $b_officials,
+            'amount' => $request->amount,
+            'or_number' => $request->or_number,
+        ]);
     }
 }

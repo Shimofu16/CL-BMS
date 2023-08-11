@@ -12,14 +12,25 @@ class BarangaySeeder extends Seeder
      */
     public function run()
     {
-        // Sample data for barangays in Calauan, Laguna, Philippines
+        // Barangays in Calauan, Laguna, Philippines
         $barangays = [
+            ['name' => 'Balayhangin'],
+            ['name' => 'Bangyas'],
+            ['name' => 'Dayap'],
+            ['name' => 'Hanggan'],
+            ['name' => 'Imok'],
             ['name' => 'Lamot 1'],
             ['name' => 'Lamot 2'],
-            ['name' => 'Dayap'],
+            ['name' => 'Limao'],
+            ['name' => 'Mabacan'],
             ['name' => 'Masiit'],
+            ['name' => 'Paliparan'],
+            ['name' => 'Perez'],
+            ['name' => 'Kanluran'],
+            ['name' => 'Silangan'],
+            ['name' => 'Prinza'],
             ['name' => 'San Isidro'],
-            // Add more barangays as needed
+            ['name' => 'Santo Tomas'],
         ];
         foreach ($barangays as $key => $barangay) {
             Barangay::create($barangay);

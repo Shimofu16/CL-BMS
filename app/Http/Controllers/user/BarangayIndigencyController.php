@@ -10,20 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class BarangayIndigencyController extends Controller
 {  
-    public function create($id){
-        $resident = Resident::findOrfail($id);  
-        return view('brgy_certificate.indigency_certification.create',compact('resident')); 
+    public function create($id)
+    {
+        return view('brgy_certificate.indigency_certification.create', [
+            'resident' => Resident::findOrFail($id),
+        ]); 
     }
 
-
-    public function show($id, Request $request){
+    public function show($id, Request $request)
+    {
          // officials
         $latest_id= Officials::max('batch_id');
         $b_officials= Officials::where('batch_id',$latest_id)->get();
-        //
-
-        $resident = Resident::findOrfail($id);  
-        $purpose = $request->purpose;
 
         ActivityLog::create([
             'user' => Auth::user()->name,
@@ -31,7 +29,10 @@ class BarangayIndigencyController extends Controller
             'subject' => 'Brgy Indigency',
         ]);
 
-
-        return view('brgy_certificate.indigency_certification.show',compact('resident' , 'purpose', 'b_officials')); 
+        return view('brgy_certificate.indigency_certification.show', [
+            'resident' => Resident::findOrFail($id),
+            'purpose' => $request->purpose,
+            'b_officials' => $b_officials
+        ]); 
     }
 }

@@ -11,54 +11,49 @@ use Illuminate\Support\Facades\Auth;
 
 class FencingController extends Controller
 {
-    public function index(){
-
-        $fencings = Fencing::orderBy('id','desc')->get();
-
-        return view('brgy_permit.fencing_permit.index',compact('fencings'));
-
+    public function index()
+    {
+        return view('brgy_permit.fencing_permit.index', [
+            'fencings' => Fencing::orderBy('id','desc')->get(),
+        ]);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('brgy_permit.fencing_permit.create');
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $year = Carbon::now()->year;  
         $fencing_cnt = Fencing::all()->count();
 
         $fencing_cnt =  $fencing_cnt + 1;    
         $fencing_number = $year . '-' . $fencing_cnt;
 
-        $fencing = new Fencing;
-        $fencing->fencing_number = $fencing_number;
-        $fencing->name = $request->name;
-        $fencing->address =$request->address;
-        $fencing->fencing_location = $request->fencing_location;
-        $fencing->purpose = $request->purpose;
-        
-
-        $fencing->save();
+        $fencing = Fencing::create([
+            'fencing_number' => $fencing_number,
+            'name' => $request->name,
+            'address' => $request->address,
+            'fencing_location' => $request->fencing_location,
+            'purpose' => $request->purpose,
+        ]);
 
         return redirect()->route('fencing_permit.index')->withStatus('Fencing Added Succesfully!');
-
     }
 
-
-    public function show($id){
-
-        $fencing = Fencing::findorfail($id);
-        return view('brgy_permit.fencing_permit.show',compact('fencing'));
+    public function show($id)
+    {
+        return view('brgy_permit.fencing_permit.show', [
+            'fencing' => Fencing::findOrFail($id),
+        ]);
     }
 
-    public function clearance($id){
+    public function clearance($id)
+    {
         // officials
         $latest_id= Officials::max('batch_id');
         $b_officials= Officials::where('batch_id',$latest_id)->get();
-        //
-
-        $fencing = Fencing::findorfail($id);
 
         ActivityLog::create([
             'user' => Auth::user()->name,
@@ -66,7 +61,9 @@ class FencingController extends Controller
             'subject' => 'Brgy Fencing',
         ]);
 
-        return view('brgy_permit.fencing_permit.clearance',compact('fencing','b_officials')); 
+        return view('brgy_permit.fencing_permit.clearance', [
+            'fencing' => Fencing::findOrFail($id),
+            'b_officials' => $b_officials,
+        ]); 
     }
-    
 }

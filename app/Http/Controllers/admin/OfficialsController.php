@@ -25,6 +25,7 @@ class OfficialsController extends Controller
 
         return view('backend.admin.officials.index', compact('officials', 'barangay', 'barangay_id', 'barangays', 'year', 'years', 'positions'));
     }
+
     public function store(Request $request)
     {
         try {
@@ -44,6 +45,7 @@ class OfficialsController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
     public function update(Request $request, $id)
     {
         try {
@@ -58,6 +60,7 @@ class OfficialsController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+    
     public function delete($id)
     {
         try {

@@ -10,7 +10,10 @@ use Carbon\Carbon;
 class Resident extends Model
 {
     protected $table = 'residents';
-    protected $guarded = ['']; 
+    protected $guarded = ['id'];
+    protected $casts = [
+      'birthday' => 'datetime'
+    ];
 
     public function business()
     {

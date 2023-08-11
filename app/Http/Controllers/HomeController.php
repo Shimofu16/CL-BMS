@@ -81,6 +81,6 @@ class HomeController extends Controller
     {
         Auth::logout();
         session()->flush();
-        return redirect()->route('home.index');
+        return redirect()->route('home');
     }
 }

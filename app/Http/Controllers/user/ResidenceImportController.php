@@ -11,7 +11,6 @@ class ResidenceImportController extends Controller
 {
     public function import(Request $request)
     {
-
         $file = $request->file('excelFile');
 
         $import = new ResidenceImport;
@@ -21,10 +20,6 @@ class ResidenceImportController extends Controller
              return back()->withFailures($import->failures());
          }
 
-
          return back()->withStatus('Excel file imported successfully');
-     
-       
-         
     }
 }

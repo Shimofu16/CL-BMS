@@ -15,10 +15,10 @@ class CreateMeralcoClearancesTable extends Migration
     {
         Schema::create('meralco_clearances', function (Blueprint $table) {
             $table->id();
-            $table->string('meralaco_clearance_number', 32);
-            $table->string('meralaco_clearance_applicant', 32);
-            $table->string('meralaco_clearance_building_type', 32);
-            $table->string('meralaco_clearance_address', 32);
+            $table->string('number', 32);
+            $table->string('applicant', 32);
+            $table->string('building_type', 32);
+            $table->string('address', 32);
             $table->unsignedBigInteger('barangay_id');
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
