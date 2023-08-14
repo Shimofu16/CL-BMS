@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\user;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Resident;
 use App\Model\Officials;
@@ -11,10 +12,10 @@ use Illuminate\Support\Facades\Auth;
 class BarangayIncomeController extends Controller
 {
     public function create($id)
-    { 
+    {
         return view('brgy_certificate.income_certification.create', [
             'resident' => Resident::findOrFail($id),
-        ]); 
+        ]);
     }
 
     public function show($id, Request $request)
@@ -28,11 +29,11 @@ class BarangayIncomeController extends Controller
             'description' => 'Issue Brgy Income Certificate',
             'subject' => 'Brgy Income',
         ]);
-                
+
         return view('brgy_certificate.income_certification.show', [
             'resident' => Resident::findOrFail($id),
             'purpose' => $request->purpose,
             'b_officials' => $b_officials,
-        ]); 
+        ]);
     }
 }

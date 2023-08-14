@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\user;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Resident;
 use App\Model\Officials;
@@ -9,12 +10,12 @@ use App\Model\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
 class BarangayIndigencyController extends Controller
-{  
+{
     public function create($id)
     {
         return view('brgy_certificate.indigency_certification.create', [
             'resident' => Resident::findOrFail($id),
-        ]); 
+        ]);
     }
 
     public function show($id, Request $request)
@@ -33,6 +34,6 @@ class BarangayIndigencyController extends Controller
             'resident' => Resident::findOrFail($id),
             'purpose' => $request->purpose,
             'b_officials' => $b_officials
-        ]); 
+        ]);
     }
 }

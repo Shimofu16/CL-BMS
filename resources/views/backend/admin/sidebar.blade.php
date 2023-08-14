@@ -21,6 +21,13 @@
                         <span>Officials</span>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link {{ Route::is('admin.barangay.index') ? 'active' : '' }}"
+                        href="{{ route('admin.barangay.index') }}">
+                        <i class="fa-solid fa-people-roof"></i>
+                        <span>Barangays</span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed {{ Route::is('admin.archieve.*') ? 'active' : '' }}" data-bs-target="#archieves"

@@ -20,7 +20,7 @@ class OfficialsSeeder extends Seeder
         foreach ($barangays as $key => $barangay) {
             for ($i = 0; $i < 5; $i++) {
                 DB::table('officials')->insert([
-                    'name' => $faker->name,
+                    'name' => $positions[$i]. ' '.$key,
                     'position' => $positions[$i],
                     'year' => date('Y',strtotime(now())),
                     'barangay_id' => $barangay->id,

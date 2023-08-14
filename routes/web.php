@@ -24,12 +24,20 @@ Route::post('/user/logout', [App\Http\Controllers\HomeController::class, 'logout
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::prefix('barangay')->name('official.')->group(function () {
+    Route::prefix('barangay/official')->name('official.')->group(function () {
         Route::get('/official/{year}/{barangay_id?}', [App\Http\Controllers\admin\OfficialsController::class, 'index'])->name('index');
         Route::post('store', [App\Http\Controllers\admin\OfficialsController::class, 'store'])->name('store');
         Route::put('update/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'update'])->name('update');
         Route::delete('delete/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'delete'])->name('delete');
     });
+    Route::prefix('barangay')->name('barangay.')->group(function () {
+        Route::get('/', [App\Http\Controllers\admin\BarangayController::class, 'index'])->name('index');
+        Route::get('/show/{id}', [App\Http\Controllers\admin\BarangayController::class, 'show'])->name('show');
+        Route::post('store/{isBarangay}/{barangay_id}', [App\Http\Controllers\admin\BarangayController::class, 'store'])->name('store');
+        Route::put('update/{isBarangay}/{id}/{barangay_id}', [App\Http\Controllers\admin\BarangayController::class, 'update'])->name('update');
+        Route::delete('delete/{isBarangay}/{id}', [App\Http\Controllers\admin\BarangayController::class, 'destroy'])->name('delete');
+    });
+
     Route::prefix('archive')->name('archive.')->group(function () {
         Route::get('/{folder}', [App\Http\Controllers\admin\ArchiveController::class, 'index'])->name('index');
         Route::put('/restore/{folder}/{id}', [App\Http\Controllers\admin\ArchiveController::class, 'update'])->name('restore');
@@ -39,6 +47,23 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 /* user */
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
+
+
+    Route::prefix('resident')->name('resident.')->group(function () {
+        Route::get('/index', [App\Http\Controllers\user\ResidentsController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\user\ResidentsController::class, 'create'])->name('create');
+        Route::get('/show/{id}', [App\Http\Controllers\user\ResidentsController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [App\Http\Controllers\user\ResidentsController::class, 'edit'])->name('edit');
+        Route::post('/store', [App\Http\Controllers\user\ResidentsController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [App\Http\Controllers\user\ResidentsController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [App\Http\Controllers\user\ResidentsController::class, 'delete'])->name('delete');
+    });
+    Route::prefix('barangay')->name('barangay.')->group(function () {
+        Route::prefix('certificate')->name('certificate.')->group(function () {
+            Route::get('/create/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'create'])->name('create');
+            Route::get('/show/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'show'])->name('show');
+        });
+    });
 });
 
 
@@ -50,15 +75,15 @@ Route::group(['prefix' => 'Brgy-Analytics', 'middleware' => 'auth'], function ()
 
 
 Route::group(['prefix' => 'residents', 'middleware' => 'auth'], function () {
-    Route::get('/index', [App\Http\Controllers\ResidenceController::class, 'index'])->name('residence.index');
-    Route::get('/create', [App\Http\Controllers\ResidenceController::class, 'create'])->name('residence.create');
-    Route::get('/edit/{id}', [App\Http\Controllers\ResidenceController::class, 'edit'])->name('residence.edit');
-    Route::post('/store', [App\Http\Controllers\ResidenceController::class, 'store'])->name('residence.store');
-    Route::put('/update/{id}', [App\Http\Controllers\ResidenceController::class, 'update'])->name('residence.update');
-    Route::get('/show/{id}', [App\Http\Controllers\ResidenceController::class, 'show'])->name('residence.show');
-    Route::delete('/delete/{id}', [App\Http\Controllers\ResidenceController::class, 'destroy'])->name('residence.delete');
+    Route::get('/index', [App\Http\Controllers\ResidentsController::class, 'index'])->name('residence.index');
+    Route::get('/create', [App\Http\Controllers\ResidentsController::class, 'create'])->name('residence.create');
+    Route::get('/edit/{id}', [App\Http\Controllers\ResidentsController::class, 'edit'])->name('residence.edit');
+    Route::post('/store', [App\Http\Controllers\ResidentsController::class, 'store'])->name('residence.store');
+    Route::put('/update/{id}', [App\Http\Controllers\ResidentsController::class, 'update'])->name('residence.update');
+    Route::get('/show/{id}', [App\Http\Controllers\ResidentsController::class, 'show'])->name('residence.show');
+    Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
 
-    Route::get('/import', [App\Http\Controllers\ResidenceController::class, 'import'])->name('residence.import');
+    Route::get('/import', [App\Http\Controllers\ResidentsController::class, 'import'])->name('residence.import');
 });
 
 Route::group(['prefix' => 'residents/brgy_clearance', 'middleware' => 'auth'], function () {
@@ -115,7 +140,7 @@ Route::group(['prefix' => 'Blotters', 'middleware' => 'auth'], function () {
     Route::post('/manage/{id}', [App\Http\Controllers\BlottersController::class, 'manage'])->name('blotters.manage');
     Route::get('/patawag-form/{date}/{id}', [App\Http\Controllers\BlottersController::class, 'patawag'])->name('blotters.patawag');
 
-    // Route::delete('/delete/{id}', [App\Http\Controllers\ResidenceController::class, 'destroy'])->name('residence.delete');
+    // Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
 });
 
 //Reports

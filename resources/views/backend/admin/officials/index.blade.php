@@ -53,7 +53,7 @@
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table datatable" id="officials-table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -86,8 +86,8 @@
                                                 </button>
                                             </div>
 
-                                            @include('backend.admin.officials.modals.edit')
-                                            @include('backend.admin.officials.modals.delete')
+                                            @include('backend.admin.officials.modal._edit')
+                                            @include('backend.admin.officials.modal._delete')
 
                                         </td>
                                     </tr>
@@ -108,16 +108,5 @@
     <button class="btn btn-outline-violet" data-bs-toggle="modal" data-bs-target="#add">
         Add Barangay Official
     </button>
-    @include('backend.admin.officials.modals.add')
-@endsection
-
-@section('scripts')
-    <script>
-        $(document).ready(function() {
-            //disable auto order
-            $('.datatable').DataTable({
-                "ordering": false
-            });
-        });
-    </script>
+    @include('backend.admin.officials.modal._add')
 @endsection

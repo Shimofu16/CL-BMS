@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 @section('sidebar')
-    
+
 <ul class="sidebar-menu">
     <aside id="sidebar" class="sidebar">
 
@@ -14,8 +14,13 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <!-- End Dashboard Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('user.resident.index') ? 'active' : '' }}"
+                    href="{{ route('user.resident.index') }}">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>Residents</span>
+                </a>
+            </li>
     </aside>
 </ul>
 @endsection

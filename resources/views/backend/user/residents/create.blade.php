@@ -1,9 +1,10 @@
-@extends('layouts.app')
-@section('title')
-    Residents Registration
+
+@extends('backend.user.sidebar')
+@section('page-title')
+    Add Residence
 @endsection
 
-@section('content')
+@section('contents')
     <section class="section">
         <div class="section-header">
             <h3 class="page__heading">Residents Registration</h3>
@@ -17,8 +18,8 @@
                             <div class="row">
                                 <div class="col-12 ">
                                     <div class="card">
-                                        
-                                        
+
+
                                         <form action="{{ route('residence.store') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
@@ -126,10 +127,10 @@
                                                                 <select class="form-control" name="gender">
                                                                     <option selected="true" disabled="disabled">
                                                                     </option>
-                                                                     
+
                                                                     <option value="Male" {{ old('gender') === 'Male' ? 'selected' : '' }}>Male</option>
                                                                     <option value="Female" {{ old('gender') === 'Female' ? 'selected' : '' }}>Female</option>
-                    
+
                                                                     {{-- <option value="Female">Female</option> --}}
                                                                 </select>
                                                             </div>
@@ -398,7 +399,7 @@
             });
         </script>
 
-    
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
         <!-- Configure a few settings and attach camera -->

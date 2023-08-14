@@ -24,21 +24,20 @@ class CreateResidentsTable extends Migration
             $table->date('birthday');
             $table->string('birthplace', 32)->nullable();
             $table->string('civil_status', 32);
-            
-
             $table->string('house_number', 32)->nullable();
-            $table->string('purok', 32);
-            $table->string('street', 32);
 
+            $table->string('street', 32);
             $table->string('occupation', 32);
             $table->string('student', 32);
             $table->string('type_of_house', 32);
-
             $table->string('pwd', 32);
             $table->string('membership_prog', 32);
-
             $table->string('image', 64)->nullable();
 
+            $table->unsignedBigInteger('barangay_id');
+            $table->unsignedBigInteger('purok_id');
+            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
+            $table->foreign('purok_id')->references('id')->on('puroks')->onDelete('cascade');
             $table->timestamps();
         });
     }

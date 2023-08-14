@@ -51,13 +51,18 @@
         <div class="pagetitle d-flex align-items-center justify-content-between">
             <div class="d-flex flex-column">
                 <h1 class="text-violet">@yield('page-title')</h1>
-                @if (!Route::is('admin.dashboard.index'))
+                @if (!Route::is(Str::lower(Auth::user()->role) . '.dashboard.index'))
                     <nav>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard.index') }}">Dashboard</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route(Str::lower(Auth::user()->role) . '.dashboard.index') }}">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">@yield('page-title')</li>
-
+                            @hasSection('breadcrumb')
+                                <li class="breadcrumb-item"><a href="@yield('breadcrumb-link')">@yield('breadcrumb')</a></li>
+                                <li class="breadcrumb-item active">@yield('page-title')</li>
+                            @else
+                                <li class="breadcrumb-item active">@yield('page-title')</li>
+                            @endif
                         </ol>
                     </nav>
                 @endif
