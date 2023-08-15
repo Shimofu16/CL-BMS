@@ -26,11 +26,15 @@ class Resident extends Model
     }
     public function getAddress()
     {
-        return $this->house_number . ' ' . $this->purok .  ' ' . $this->street . ', ' . $this->barangay->name . ' ' . 'Calauan, Laguna';
+        return $this->house_number . ' ' . $this->purok->name .  ' ' . $this->street . ', ' . $this->barangay->name . ' ' . 'Calauan, Laguna';
     }
     public function barangay()
     {
         return $this->belongsTo(Barangay::class);
+    }
+    public function purok()
+    {
+        return $this->belongsTo(Purok::class);
     }
 
     public function business()

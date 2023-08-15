@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers\user;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\Resident;
 use Carbon\Carbon;
+use App\Model\Purok;
+use App\Model\Barangay;
+use App\Model\Resident;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ResidentRequest;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ResidentsController extends Controller
 {
-    public $barangay_id;
+    public $barangay_id = 1;
     public $residents;
     public $path;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->barangay_id = session('barangay_id');
+
+        // Initialize a default value for barangay_id in case it's not in the session
+        $this->barangay_id = session('barangay_id'); // 0 or any default value
         $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
-        $this->path = storage_path('app/uploads/residents/');
+        $this->path = 'uploads/residents/';
     }
     /**
      * Display a listing of the resource.
@@ -39,7 +45,9 @@ class ResidentsController extends Controller
      */
     public function create()
     {
-        return view('backend.user.residence.create');
+        return view('backend.user.residents.create', [
+            'puroks' => Barangay::with('puroks')->find($this->barangay_id)->puroks,
+        ]);
     }
 
     /**
@@ -50,25 +58,18 @@ class ResidentsController extends Controller
      */
     public function store(Request $request)
     {
-        //image Request
-        $img =  $request->get('image');
-
+        $img = $request->get('image');
         $image_parts = explode(";base64,", $img);
-        foreach ($image_parts as $key => $image) {
-            $image_base64 = base64_decode($image);
-        }
+        $image_base64 = base64_decode(end($image_parts));
         $fileName = uniqid() . '.png';
-        $file = $this->path . $fileName;
-        file_put_contents($file, $image_base64);
-
-        //resident Number
+    
+        // Save the image using Laravel's Storage facade
+        $filePath = $this->path . $fileName;
+        Storage::disk('public')->put($filePath, $image_base64);
+    
         $year = Carbon::now()->year;
-        $resident_cnt = $this->residents->count();
-        $resident_cnt = $resident_cnt + 1;
-
-        // change this later, format as <brgy_id>-<resident_count>
-        // we can also include the year but we can talk about that later
-        $resident_number = 'Byg' . '-' .  $year . '-' . $resident_cnt;
+        $resident_cnt = $this->residents->count() + 1;
+        $resident_number = "Brgy-{$year}-{$resident_cnt}";
 
         $resident = Resident::create([
             'res_num' => $resident_number,
@@ -82,7 +83,7 @@ class ResidentsController extends Controller
             'birthplace' => $request->birthplace,
             'civil_status' => $request->civil_status,
             'house_number' => $request->house_number,
-            'purok' => $request->purok,
+        
             'street' => $request->street,
             'occupation' => $request->occupation,
             'student' => $request->student,
@@ -90,6 +91,7 @@ class ResidentsController extends Controller
             'pwd' => $request->pwd,
             'membership_prog' => $request->membership_prog,
             'barangay_id' => $this->barangay_id,
+            'purok_id' => $request->purok_id,
         ]);
 
         // $request->validate([

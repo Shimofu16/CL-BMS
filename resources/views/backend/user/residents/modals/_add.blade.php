@@ -51,25 +51,4 @@
         </div>
     </div>
 </div>
-@section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
-        integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script language="JavaScript">
-        Webcam.set({
-            width: 300,
-            height: 300,
-            image_format: 'jpeg',
-            jpeg_quality: 90
-        });
 
-        Webcam.attach('#my_camera');
-
-        function take_snapshot() {
-            Webcam.snap(function(data_uri) {
-                $(".image-tag").val(data_uri);
-                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
-            });
-        }
-    </script>
-@endsection

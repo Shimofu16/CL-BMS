@@ -62,6 +62,7 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
         Route::prefix('certificate')->name('certificate.')->group(function () {
             Route::get('/create/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'create'])->name('create');
             Route::get('/show/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'show'])->name('show');
+            Route::post('/store/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'store'])->name('store');
         });
     });
 });

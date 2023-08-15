@@ -25,6 +25,7 @@ class HomeController extends Controller
         $barangay = Barangay::find($barangay_id);
         // store barangay id to session
         session(['barangay_id' => $barangay->id]);
+        
         return view('frontend.auth.login', compact('barangay'));
     }
     public function admin()

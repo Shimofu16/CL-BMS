@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('backend.user.sidebar')
 @section('title')
     Brgy Clearance Issuance
 @endsection
-@section('content')
+@section('contents')
     <section class="section">
         <div class="section-header">
             <h3 class="page__heading">Brgy Clearance Issuance</h3>
@@ -35,15 +35,14 @@
                             <div class="card profile-widget" id="border-blue">
                                 <div class="profile-widget-header d-flex justify-content-center px-5 pt-5">
 
-                                    <img alt="image" src="{{ url('storage/residence/' . $resident->image) }}"
+                                    <img alt="image" src="{{ asset('storage/uploads/residents/' . $resident->image) }}"
                                         class="rounded-circle" height="300px" width="300px">
 
                                 </div>
                                 <div class="profile-widget-description">
                                     <div class="profile-widget-name text-center mb-4">
                                         <h5>
-                                            <strong>{{ $resident->last_name }} {{ $resident->first_name }}
-                                                {{ $resident->middle_name }} {{ $resident->suffix_name }} <div
+                                            <strong>{{ $resident->getFullName() }} <div
                                                     class="text-muted d-inline font-weight-normal">
                                                     <div class="slash"></div>{{ $resident->occupation }}
                                                 </div>
@@ -54,14 +53,12 @@
                                         <div class="col-md-6">
 
                                             <p>
-                                                <strong>Fullname: </strong> {{ $resident->last_name }},
-                                                {{ $resident->first_name }}
-                                                {{ $resident->middle_name }} {{ $resident->suffix_name }}
+                                                <strong>Full Name: </strong> {{ $resident->getFullName() }} {{ Str::ucfirst(Str::substr($resident->suffix_name, 0, 1)) }}
                                             </p>
 
                                             <p>
                                                 <strong>Birthday:
-                                                </strong>{{ date('M d, Y', strtotime($resident->birthday)) }}
+                                                </strong>{{ date('F d, Y', strtotime($resident->birthday)) }}
                                             </p>
                                             <p>
                                                 <strong>Sex: </strong>{{ $resident->gender }}
@@ -73,8 +70,7 @@
 
 
                                             <p>
-                                                <strong>Address: </strong>{{ $resident->house_number }}
-                                                {{ $resident->street }}, Purok{{ $resident->purok }}, Bayog
+                                                <strong>Address: </strong>{{ $resident->getAddress() }}
                                             </p>
 
                                             <p>
@@ -89,7 +85,7 @@
                                         <div class="col-md-6">
                                             <p>
                                                 <strong>Age: </strong>
-                                                {{ \Carbon\Carbon::parse($resident->birthday)->diff(\Carbon\Carbon::now())->format('%y') }}
+                                                {{ $resident->getAge() }}
                                             </p>
                                             <p>
                                                 <strong>Birthplace: </strong>{{ $resident->birthplace }}
@@ -146,7 +142,7 @@
                                 <div class="card-header">
                                     <h4> Requesting for </h4>
                                 </div>
-                                <form action="{{ route('brgy_clearance.show', $resident->id) }}" method="POST"
+                                <form action="{{ route('user.barangay.certificate.store', ['certificate_type' => 'barangay_clearance','resident_id' => $resident->id]) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
