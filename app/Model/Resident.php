@@ -3,7 +3,9 @@
 namespace App\Model;
 
 use Carbon\Carbon;
+use App\Model\Purok;
 use App\Model\Blotter;
+use App\Model\Barangay;
 use App\Model\Business;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
@@ -13,25 +15,29 @@ class Resident extends Model
     protected $table = 'residents';
     protected $guarded = ['id'];
     protected $casts = [
-        'birthday' => 'datetime'
+        'birthday' => 'date'
     ];
 
-    public function getFullName()
+    protected $appends = [
+        'full_name',
+        'address',
+    ];
+
+    public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . Str::ucfirst(Str::substr($this->middle_name, 0, 1)) . '. ' . $this->last_name;
     }
-    public function getAge()
+
+    public function getAddressAttribute()
     {
-        return Carbon::parse($this->birthday)->age;
+        return $this->house_number . ' ' . $this->purok->name .  ' ' . $this->street . ', ' . $this->barangay->name . ', ' . 'Calauan, Laguna';
     }
-    public function getAddress()
-    {
-        return $this->house_number . ' ' . $this->purok->name .  ' ' . $this->street . ', ' . $this->barangay->name . ' ' . 'Calauan, Laguna';
-    }
+
     public function barangay()
     {
         return $this->belongsTo(Barangay::class);
     }
+
     public function purok()
     {
         return $this->belongsTo(Purok::class);
@@ -39,11 +45,11 @@ class Resident extends Model
 
     public function business()
     {
-        return $this->hasMany('App\Model\Business', 'business_owner_id');
+        return $this->hasMany(Business::class, 'business_owner_id');
     }
 
     public function blotters()
     {
-        return $this->belongsToMany('App\Model\Blotter');
+        return $this->belongsToMany(Blotter::class);
     }
 }

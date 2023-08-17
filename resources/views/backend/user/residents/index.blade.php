@@ -33,13 +33,13 @@ Residents of Brgy. {{ auth()->user()->official->barangay->name }}
                                 <th scope="row">{{ $resident->res_num }}</th>
                                 <td>
                                     <div class="d-flex flex-column">
-                                        <h5 class="mb-0"> {{ $resident->getFullName() }}</h5>
+                                        <h5 class="mb-0"> {{ $resident->full_name }}</h5>
                                         <small>{{ $resident->gender }}</small>
                                     </div>
                                 </td>
                                 <td>{{ date('F d, Y', strtotime($resident->birthday)) }}</td>
-                                <td>{{ $resident->getAge() }}</td>
-                                <td>{{ $resident->getAddress() }}</td>
+                                <td>{{ $resident->birthday->age }}</td>
+                                <td>{{ $resident->address }}</td>
                                 <td>
                                     {{-- dropdown for certificates --}}
                                     <div class="dropdown">
