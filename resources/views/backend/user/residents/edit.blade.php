@@ -1,412 +1,275 @@
-@extends('layouts.app')
-@section('title')
-    Residents Update
+@extends('backend.user.sidebar')
+@section('page-title')
+    Update Resident
+@endsection
+@section('breadcrumb')
+    Residents
+@endsection
+@section('breadcrumb-link')
+    {{ route('user.barangay.resident.index') }}
 @endsection
 
-@section('content')
+@section('contents')
     <section class="section">
-        <div class="section-header">
-            <h3 class="page__heading"> Update Resident </h3>
-        </div>
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card" id="border-blue">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="card">
+                    <form action="{{ route('user.barangay.resident.update', ['id' => $resident->id]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="card-body">
-
+                            <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                                <h4 class="mb-0 text-white">Resident Picture</h4>
+                            </div>
                             <div class="row">
-                                <div class="col-12 ">
+                                <div class="d-flex flex-column align-items-center justify-content-center">
+                                    <div id="my_camera"></div>
+                                    <div id="results"></div>
+                                    <div class="btn btn-sm btn-primary mt-3" onClick="take_snapshot()">Capture</div>
+                                </div>
+                                <input type="hidden" name="image" class="image-tag">
+                            </div>
 
-                                    <form action="{{ route('residence.update', $resident->id) }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
-                                                    <h4 class="text-dark">Resident Picture</h4>
-                                                </div>
-                                                <div class="col-md-6 ">
-                                                    <div class = "d-flex flex-column align-items-center ">
-                                                    <div id="my_camera"></div>
-                                                        <div>
-                                                            <input type=button class="btn btn-sm btn-primary" value="Capture"
-                                                            onClick="take_snapshot()">
-                                                        </div>
-                                                    </div>
-                                                        <input type="hidden" name="image" class="image-tag">
-                                                    </div>
+                            <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                                <h4 class="mb-0 text-white">Personal Information</h4>
+                            </div>
 
-                                                <div class="col-md-6">
-                                                    <div id="results"></div>
-                                                </div>
-                                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="last_name">Last name</label>
+                                    <input type="text" name="last_name" id="last_name" class="form-control"
+                                        value="{{ $resident->last_name }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="first_name">First name</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control"
+                                        value="{{ $resident->first_name }}">
+                                </div>
 
-                                            <div class="row">
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="middle_name">Middle name</label>
+                                    <input type="text" name="middle_name" id="middle_name" class="form-control"
+                                        value="{{ $resident->middle_name }}">
+                                </div>
 
-                                                <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
-                                                    <h4 class="text-dark">Personal Information</h4>
-                                                </div>
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Last name</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-user"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="last_name"
-                                                                value="{{ $resident->last_name }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>First name</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-user"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="first_name"
-                                                                value="{{ $resident->first_name }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Middle name</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-user"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="middle_name"
-                                                                value="{{ $resident->middle_name }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Sex</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-venus-mars"></i>
-                                                            </div>
-                                                            <select class="form-control" name="gender" required>
-
-                                                                <option
-                                                                    {{ $resident->gender == 'Male' ? 'selected' : '' }}
-                                                                    value="Male">Male</option>
-                                                                <option
-                                                                    {{ $resident->gender == 'Female' ? 'selected' : '' }}
-                                                                    value="Female">Female</option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Birthday</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-calendar"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="date" name="birthday"
-                                                                value="{{ $resident->birthday }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Birth Place</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-address-card"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="birthplace"
-                                                            value="{{ $resident->birthplace }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Civil Status</label>
-
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-id-badge"></i>
-                                                            </div>
-                                                            <select class="form-control" name="civil_status">
-
-                                                                <option
-                                                                    {{ $resident->civil_status == 'Single' ? 'selected' : '' }}
-                                                                    value="Single">Single</option>
-                                                                <option
-                                                                    {{ $resident->civil_status == 'Married' ? 'selected' : '' }}
-                                                                    value="Married">Married</option>
-                                                                <option
-                                                                    {{ $resident->civil_status == 'Annulled' ? 'selected' : '' }}
-                                                                    value="Annulled">Annulled</option>
-                                                                <option
-                                                                    {{ $resident->civil_status == 'Widowed' ? 'selected' : '' }}
-                                                                    value="Widowed">Widowed</option>
-                                                                <option
-                                                                    {{ $resident->civil_status == 'Separated' ? 'selected' : '' }}
-                                                                    value="Separated">Separated</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Occupation</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-briefcase"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="occupation"
-                                                                value="{{ $resident->occupation }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Student</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-address-card"></i>
-                                                            </div>
-                                                            <select class="form-control" name="student">
-
-                                                                <option
-                                                                    {{ $resident->student == 'N/A' ? 'selected' : '' }}
-                                                                    value="N/A"> N/A </option>
-                                                                <option
-                                                                    {{ $resident->student == 'Elementary' ? 'selected' : '' }}
-                                                                    value="Elementary">Elementary</option>
-                                                                <option
-                                                                    {{ $resident->student == 'High School' ? 'selected' : '' }}
-                                                                    value="High School">High School</option>
-                                                                <option
-                                                                    {{ $resident->student == 'College' ? 'selected' : '' }}
-                                                                    value="College">College</option>
-                                                                <option
-                                                                    {{ $resident->student == 'Other' ? 'selected' : '' }}
-                                                                    value="Other">Other</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-
-
-
-                                                <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
-                                                    <h4 class="text-dark"> Address</h4>
-                                                </div>
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>House Number</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-address-card"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="house_number"
-                                                                value="{{ $resident->house_number }}"
-                                                                class="form-control phone-number">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Purok</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-address-card"></i>
-                                                            </div>
-                                                            <select class="form-control" name="purok">
-
-                                                                <option value="1"
-                                                                    {{ $resident->purok == '1' ? 'selected' : '' }}>Purok
-                                                                    1</option>
-                                                                <option value="2"
-                                                                    {{ $resident->purok == '2' ? 'selected' : '' }}>Purok
-                                                                    2</option>
-                                                                <option value="3"
-                                                                    {{ $resident->purok == '3' ? 'selected' : '' }}>Purok
-                                                                    3</option>
-                                                                <option value="4"
-                                                                    {{ $resident->purok == '4' ? 'selected' : '' }}>Purok
-                                                                    4</option>
-                                                                <option value="5"
-                                                                    {{ $resident->purok == '5' ? 'selected' : '' }}>Purok
-                                                                    5</option>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Street</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text">
-                                                                    <i class="fas fa-address-card"></i>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" name="street"
-                                                                value="{{ $resident->street }}"
-                                                                class="form-control phone-number" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Type of house</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-address-card"></i>
-                                                            </div>
-                                                            <select class="form-control" name="type_of_house">
-
-                                                                <option value="Owned"
-                                                                    {{ $resident->type_of_house == 'Owned' ? 'selected' : '' }}>
-                                                                    Owned</option>
-                                                                <option value="Rental"
-                                                                    {{ $resident->type_of_house == 'Rental' ? 'selected' : '' }}>
-                                                                    Rental</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
-                                                    <h4 class="text-dark text-center"> Other Information</h4>
-                                                </div>
-
-
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>PWD</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-venus-mars"></i>
-                                                            </div>
-                                                            <select class="form-control" name="pwd">
-
-                                                                <option value="Yes"
-                                                                    {{ $resident->pwd == 'Yes' ? 'selected' : '' }}>Yes
-                                                                </option>
-                                                                <option value="No"
-                                                                    {{ $resident->pwd == 'No' ? 'selected' : '' }}>No
-                                                                </option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 col-lg-6">
-                                                    <div class="form-group">
-                                                        <label>Subsidy Program</label>
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-venus-mars"></i>
-                                                            </div>
-                                                            <select class="form-control" name="membership_prog">
-
-                                                                <option value="None"
-                                                                    {{ $resident->membership_prog == 'None' ? 'selected' : '' }}>
-                                                                    None</option>
-                                                                <option value="4Ps"
-                                                                    {{ $resident->membership_prog == '4Ps' ? 'selected' : '' }}>
-                                                                    4Ps</option>
-                                                                <option value="TUPAD"
-                                                                    {{ $resident->membership_prog == 'TUPAD' ? 'selected' : '' }}>
-                                                                    TUPAD</option>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-
-
-                                        </div>
-                                        <div class="container d-flex justify-content-center">
-                                            <a href="{{ route('residence.show', $resident->id) }}"
-                                                class="btn btn-icon icon-left btn-danger mr-3"><i
-                                                    class="fas fa-ban"></i>
-                                                Cancel</a>
-                                            <button type="submit" class="btn btn-icon icon-left btn-primary mr-3"><i
-                                                    class="far fa-save"></i> Update</button>
-
-                                        </div>
-                                    </form>
-
-                                    
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="suffix_name">Suffix name</label>
+                                    <input type="text" name="suffix_name" id="suffix_name" class="form-control"
+                                        value="{{ $resident->suffix_name }}">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
 
+
+
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <label class="form-label" for="gender">Sex</label>
+                                    <select class="form-select" name="gender" id="gender">
+                                        <option selected="true" disabled="disabled">----- Select Sex -----</option>
+
+                                        <option value="Male" {{ $resident->gender === 'Male' ? 'selected' : '' }}>Male
+                                        </option>
+                                        <option value="Female" {{ $resident->gender === 'Female' ? 'selected' : '' }}>
+                                            Female</option>
+
+                                        {{-- <option value="Female">Female</option> --}}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label" for="birthday">Birthday</label>
+                                    <input class="form-control" type="date" name="birthday" id="birthday"
+                                           value="{{ substr($resident->birthday, 0, 10) }}" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 col-lg-6">
+                                    <label class="form-label" for="birthplace">Birth Place</label>
+                                    <input type="text" name="birthplace" id="birthplace" class="form-control" required
+                                        value="{{ $resident->birthplace }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="occupation">Occupation</label>
+                                    <input type="text" name="occupation" id="occupation" class="form-control" required
+                                        value="{{ $resident->occupation }}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="civil_status">Civil Status</label>
+                                    <select class="form-select" name="civil_status" id="civil_status">
+                                        <option selected="true" disabled="disabled">----- Select Civil Status -----
+                                        </option>
+                                        <option value="Single"
+                                            {{ $resident->civil_status === 'Single' ? 'selected' : '' }}>
+                                            Single
+                                        </option>
+                                        <option value="Married"
+                                            {{ $resident->civil_status === 'Married' ? 'selected' : '' }}>
+                                            Married
+                                        </option>
+                                        <option value="Annulled"
+                                            {{ $resident->civil_status === 'Annulled' ? 'selected' : '' }}>
+                                            Annulled
+                                        </option>
+                                        <option value="Widowed"
+                                            {{ $resident->civil_status === 'Widowed' ? 'selected' : '' }}>
+                                            Widowed
+                                        </option>
+                                        <option value="Separated"
+                                            {{ $resident->civil_status === 'Separated' ? 'selected' : '' }}>
+                                            Separated
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="student">Student</label>
+                                    <select class="form-select" name="student" id="student">
+                                        <option selected="true" disabled="disabled">----- Select Student -----</option>
+                                        <option value="N/A" {{ $resident->student === 'N/A' ? 'selected' : '' }}> N/A
+                                        </option>
+                                        <option value="Elementary"
+                                            {{ $resident->student === 'Elementary' ? 'selected' : '' }}>
+                                            Elementary
+                                        </option>
+                                        <option value="High School"
+                                            {{ $resident->student === 'High School' ? 'selected' : '' }}>
+                                            High
+                                            School</option>
+                                        <option value="College" {{ $resident->student === 'College' ? 'selected' : '' }}>
+                                            College
+                                        </option>
+                                        <option value="Other" {{ $resident->student === 'Other' ? 'selected' : '' }}>
+                                            Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                                <h4 class="mb-0 text-white"> Address</h4>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="house_number">House Number</label>
+                                    <input type="text" name="house_number" id="house_number" class="form-control"
+                                        value="{{ $resident->house_number }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="purok_id">Purok</label>
+                                    <select class="form-select" name="purok_id" id="purok_id">
+                                        <option selected="true" disabled="disabled">----- Select Purok -----</option>
+                                        @foreach ($puroks as $item)
+                                            <option value="{{ $item->id }}"
+                                                {{ $resident->purok_id === $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="street">Street</label>
+                                    <input type="text" name="street" id="street" class="form-control" required
+                                        value="{{ $resident->street }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="">Type of house</label>
+                                    <select class="form-select" name="type_of_house">
+                                        <option selected="true" disabled="disabled">----- Select Type of house -----
+                                        </option>
+                                        <option value="Owned"
+                                            {{ $resident->type_of_house === 'Owned' ? 'selected' : '' }}>
+                                            Owned
+                                        </option>
+                                        <option value="Rental"
+                                            {{ $resident->type_of_house === 'Rental' ? 'selected' : '' }}>
+                                            Rental
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                                <h4 class="mb-0 text-white"> Other Information</h4>
+                            </div>
+
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="">PWD</label>
+                                    <select class="form-select" name="pwd">
+                                        <option selected="true" disabled="disabled">----- Select if PWD -----</option>
+                                        <option value="Yes" {{ $resident->pwd === 'Yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="No" {{ $resident->pwd === 'No' ? 'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-lg-6">
+                                    <label class="form-label" for="">Subsidy Program</label>
+                                    <select class="form-select" name="membership_prog">
+                                        <option selected="true" disabled="disabled">----- Select Subsidy Program -----
+                                        </option>
+                                        <option value="None"
+                                            {{ $resident->membership_prog === 'None' ? 'selected' : '' }}>
+                                            None</option>
+                                        <option value="4Ps"
+                                            {{ $resident->membership_prog === '4Ps' ? 'selected' : '' }}>
+                                            4Ps</option>
+                                        <option value="TUPAD"
+                                            {{ $resident->membership_prog === 'TUPAD' ? 'selected' : '' }}>
+                                            TUPAD</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-1"><i class="far fa-save"></i>
+                                Save</button>
+                            <a href="{{ route('user.barangay.resident.index') }}" class="btn btn-danger me-3"><i
+                                    class="fas fa-ban"></i>
+                                Cancel</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-        <!-- Configure a few settings and attach camera -->
-        <script language="JavaScript">
-            Webcam.set({
-                width: 490,
-                height: 390,
-                image_format: 'jpeg',
-                jpeg_quality: 90
-            });
-            Webcam.attach('#my_camera');
-
-            function take_snapshot() {
-                Webcam.snap(function(data_uri) {
-                    $(".image-tag").val(data_uri);
-                    document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
-                });
-            }
-        </script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     </section>
+@endsection
+@section('scripts')
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
+    integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    <script src="{{ asset('assets/packages/webcam/webcam.min.js') }}"></script>
+    <script language="JavaScript">
+        Webcam.set({
+            width: 300,
+            height: 300,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+
+        Webcam.attach('#my_camera');
+
+        function take_snapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+
+                //hide camera
+                Webcam.reset();
+                document.querySelector('#my_camera').style.display = 'none';
+            });
+        }
+    </script>
 @endsection

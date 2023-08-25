@@ -12,43 +12,58 @@ use Illuminate\Support\Facades\Auth;
 
 class CertificateListController extends Controller
 {
+    public $barangay_id;
+    public $residents;
+
+    public function __construct(Request $request)
+    {
+        // Initialize a default value for barangay_id in case it's not in the session
+        $this->barangay_id = session('barangay_id');
+        $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
+    }
     public function create($certificate, $id)
     {
-        $residences = Resident::query();
-        if ($certificate == 'barangay_clearance') {
-            return view('backend.user.barangay.certificates.clearance.create', [
-                'resident' =>    $residences->findOrFail($id),
-                'resident_with_blotter' =>    $residences->with('blotters')->findOrFail($id),
-            ]);
-        }
+        // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
+        $title = ucwords(str_replace("_", " ", $certificate)) . " Certificate";
+        return view('backend.user.barangay.certificates.create', [
+            'resident' =>     $this->residents->findOrFail($id),
+            'title' => $title,
+            'certificate' => $certificate,
+        ]);
     }
-    public function store(Request $request, $certificate, $id){
-           // officials
-           $latest_id= Officials::max('batch_id');
-           $b_officials= Officials::where('batch_id',$latest_id)->get();
-   
-           $clearance_cnt = ActivityLog::where('subject', '=', 'Brgy Clearance')
-                                           ->whereBetween('created_at', [
-                                               Carbon::now()->startOfYear(),
-                                               Carbon::now()->endOfYear(),
-                                           ])
-                                           ->count();
-   
-           $clearance_cnt = $clearance_cnt + 1;
-   
-           $ActivityLog = ActivityLog::create([
-               'user' => Auth::user()->name,
-               'description' => 'Issue Brgy Clearance Certificate',
-               'subject' => 'Brgy Clearance',
-           ]);
-   
-           $ActivityLog_id = $ActivityLog->id;
-   
-           return view('backend.user.barangay.certificates.clearance.show', [
-               'resident' => Resident::findOrFail($id),
-               'purpose' => $request->purpose,
-               'b_officials' => $b_officials,
-               'clearance_cnt' => $clearance_cnt,
-           ]);
+    public function store(Request $request, $certificate, $id)
+    {
+        // officials
+        $officials = Officials::query()->where('barangay_id', $this->barangay_id)->get();
+        // chairman
+        $chairman = $officials->where('position', 'Chairman')->first();
+        // resident
+        $resident =  Resident::findOrFail($id);
+        // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
+        $title = ucwords(str_replace("_", " ", $certificate)) . " Certificate";
+        $clearance_count = ActivityLog::where('subject', '=', $title)
+            ->whereBetween('created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ])
+            ->count() + 1;
+
+        // $clearance_count = $clearance_count + 1;
+
+        ActivityLog::create([
+            'user' => Auth::user()->name,
+            'description' => 'Issue ' . $title . ' to ' . $resident->name,
+            'subject' => $title,
+        ]);
+
+
+
+        return view('backend.user.barangay.certificates.clearance.show', [
+            'resident' => $resident,
+            'purpose' => $request->purpose,
+            'officials' => $officials,
+            'chairman' => $chairman,
+            'clearance_count' => $clearance_count,
+        ]);
     }
 }

@@ -49,16 +49,25 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 
 
-    Route::prefix('resident')->name('resident.')->group(function () {
-        Route::get('/index', [App\Http\Controllers\user\ResidentsController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\user\ResidentsController::class, 'create'])->name('create');
-        Route::get('/show/{id}', [App\Http\Controllers\user\ResidentsController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\user\ResidentsController::class, 'edit'])->name('edit');
-        Route::post('/store', [App\Http\Controllers\user\ResidentsController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [App\Http\Controllers\user\ResidentsController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [App\Http\Controllers\user\ResidentsController::class, 'delete'])->name('delete');
-    });
     Route::prefix('barangay')->name('barangay.')->group(function () {
+        Route::prefix('resident')->name('resident.')->group(function () {
+            Route::get('/index', [App\Http\Controllers\user\ResidentsController::class, 'index'])->name('index');
+            Route::get('/create', [App\Http\Controllers\user\ResidentsController::class, 'create'])->name('create');
+            Route::get('/show/{id}', [App\Http\Controllers\user\ResidentsController::class, 'show'])->name('show');
+            Route::get('/edit/{id}', [App\Http\Controllers\user\ResidentsController::class, 'edit'])->name('edit');
+            Route::post('/store', [App\Http\Controllers\user\ResidentsController::class, 'store'])->name('store');
+            Route::put('/update/{id}', [App\Http\Controllers\user\ResidentsController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\user\ResidentsController::class, 'delete'])->name('delete');
+        });
+        Route::prefix('permit')->name('permit.')->group(function () {
+            Route::get('/{permit_type}', [App\Http\Controllers\user\PermitController::class, 'index'])->name('index');
+            Route::get('/create', [App\Http\Controllers\user\PermitController::class, 'create'])->name('create');
+            Route::get('/show/{id}', [App\Http\Controllers\user\PermitController::class, 'show'])->name('show');
+            Route::get('/edit/{id}', [App\Http\Controllers\user\PermitController::class, 'edit'])->name('edit');
+            Route::post('/store', [App\Http\Controllers\user\PermitController::class, 'store'])->name('store');
+            Route::put('/update/{id}', [App\Http\Controllers\user\PermitController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\user\PermitController::class, 'delete'])->name('delete');
+        });
         Route::prefix('certificate')->name('certificate.')->group(function () {
             Route::get('/create/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'create'])->name('create');
             Route::get('/show/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'show'])->name('show');

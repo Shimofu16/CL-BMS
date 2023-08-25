@@ -32,6 +32,14 @@ class Resident extends Model
     {
         return $this->house_number . ' ' . $this->purok->name .  ' ' . $this->street . ', ' . $this->barangay->name . ', ' . 'Calauan, Laguna';
     }
+    public function hasUnsettledBlotter()
+    {
+        return $this->blotters()->where('status', '!=', 'settled')->count() > 0;
+    }
+    public function getUnsettledBlotter()
+    {
+        return $this->blotters()->where('status', '!=', 'settled')->get();
+    }
 
     public function barangay()
     {
