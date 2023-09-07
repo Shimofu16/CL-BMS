@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Model\Purok;
 use App\Model\Barangay;
 use App\Model\Resident;
+use App\Model\FamilyMember;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResidentRequest;
@@ -66,6 +68,7 @@ class ResidentsController extends Controller
                 'type' => 'settlement',
             ]
         ];
+
         $permits = [
             [
                 'title' => 'Building Permit',
@@ -92,6 +95,7 @@ class ResidentsController extends Controller
                 'type' => 'meralco_clearance',
             ],
         ];
+
         return view('backend.user.residents.index', [
             'residents' => $this->residents->get(),
             'certificates' => $certificates,
@@ -123,13 +127,13 @@ class ResidentsController extends Controller
             'image' => ['required'],
             'last_name' => ['required'],
             'first_name' => ['required'],
-            'middle_name' => ['required'],
-            'suffix_name' => ['required'],
+            'middle_name' => ['nullable'],
+            'suffix_name' => ['nullable'],
             'gender' => ['required'],
             'birthday' => ['required'],
-            'birthplace' => ['required'],
+            'birthplace' => ['nullable'],
             'civil_status' => ['required'],
-            'house_number' => ['required'],
+            'house_number' => ['nullable'],
             'street' => ['required'],
             'occupation' => ['required'],
             'student' => ['required'],
@@ -174,6 +178,19 @@ class ResidentsController extends Controller
             'purok_id' => $request->purok_id,
         ]);
 
+        $memberCount = 1;
+        foreach ($request->member as $member) {
+            FamilyMember::create([
+                'head_id' => $resident->id,
+                'resident_number' => $resident->res_num.'-'.chr(ord('A') + $memberCount - 1),
+                'name' => $member['name'],
+                'relationship' => $member['relationship'],
+                'birthdate' => $member['birthday']
+            ]);
+
+            $memberCount += 1;
+        }
+
         // $request->validate([
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         //   ]);
@@ -186,7 +203,7 @@ class ResidentsController extends Controller
         //   $residence->image = $imageName;
         //   $residence->path = '/storage/'.$path;
 
-        return redirect()->back()->with('success', 'Residence added sucessfully');
+        return redirect()->route('user.barangay.resident.index')->with('success', 'Residence added sucessfully');
     }
 
     /**
@@ -210,9 +227,9 @@ class ResidentsController extends Controller
      */
     public function edit($id)
     {
-        // dd(Resident::findOrFail($id));
+        // dd(Resident::with('members')->findOrFail($id)->members[Resident::with('members')->findorfail($id)->members->count() - 1]);
         return view('backend.user.residents.edit', [
-            'resident' => Resident::findOrFail($id),
+            'resident' => Resident::with('members')->findOrFail($id),
             'puroks' => Barangay::with('puroks')->find($this->barangay_id)->puroks,
         ]);
     }
@@ -261,6 +278,37 @@ class ResidentsController extends Controller
                 'membership_prog' => $request->membership_prog,
                 'purok_id' => $request->purok_id,
             ]);
+
+            if ($request->has('member')) {
+                $ids = [];
+                // dd($request->member, Arr::exists($request->member[2], 'id'));
+                foreach ($request->member as $member) {
+                    if ($member['id']) {
+                        FamilyMember::findOrFail($member['id'])->update([
+                            'name' => $member['name'],
+                            'relationship' => $member['relationship'],
+                            'birthdate' => $member['birthday'],
+                        ]);
+                        $ids[] = $member['id'];
+                    } else {
+                        $last = $resident->members[$resident->members->count()-1];
+                        $ext = chr(ord(mb_substr($last->resident_number, -1)) + 1);
+                        
+                        $new = FamilyMember::create([
+                            'head_id' => $resident->id,
+                            'resident_number' => $resident->res_num.'-'.$ext,
+                            'name' => $member['name'],
+                            'relationship' => $member['relationship'],
+                            'birthdate' => $member['birthday'],
+                        ]);
+                        $ids[] = $new->id;
+                    }
+                }
+                FamilyMember::whereNotIn('id', $ids)->delete();
+            } else {
+                FamilyMember::where('head_id', $resident->id)->delete();
+            }
+
             return redirect()->back()->with('success', 'Resident Updated Successfully.');
         } catch (\Throwable $th) {
             dd($th->getMessage());

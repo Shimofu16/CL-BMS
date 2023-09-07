@@ -26,7 +26,7 @@ class CreateResidentsTable extends Migration
             $table->string('civil_status', 32);
             $table->string('house_number', 32)->nullable();
 
-            $table->string('street', 32);
+            $table->string('street', 32)->nullable();
             $table->string('occupation', 32);
             $table->string('student', 32);
             $table->string('type_of_house', 32);

@@ -7,6 +7,7 @@ use App\Model\Purok;
 use App\Model\Blotter;
 use App\Model\Barangay;
 use App\Model\Business;
+use App\Model\FamilyMember;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +26,11 @@ class Resident extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . Str::ucfirst(Str::substr($this->middle_name, 0, 1)) . '. ' . $this->last_name;
+        if ($this->middle_name) {
+            return $this->first_name . ' ' . Str::ucfirst(Str::substr($this->middle_name, 0, 1)) . '. ' . $this->last_name;
+        } else {
+            return $this->first_name.' '.$this->last_name;
+        }
     }
 
     public function getAddressAttribute()
@@ -39,6 +44,11 @@ class Resident extends Model
     public function getUnsettledBlotter()
     {
         return $this->blotters()->where('status', '!=', 'settled')->get();
+    }
+
+    public function members()
+    {
+        return $this->hasMany(FamilyMember::class, 'head_id', 'id');
     }
 
     public function barangay()
