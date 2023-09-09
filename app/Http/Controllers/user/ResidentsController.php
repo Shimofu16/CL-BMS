@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\user;
 
 use Carbon\Carbon;
-use App\Model\Purok;
 use App\Model\Barangay;
 use App\Model\Resident;
 use App\Model\FamilyMember;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ResidentRequest;
-use Illuminate\Support\Facades\Session;
+
 use Illuminate\Support\Facades\Storage;
 
 class ResidentsController extends Controller
@@ -68,38 +65,9 @@ class ResidentsController extends Controller
                 'type' => 'settlement',
             ]
         ];
-
-        $permits = [
-            [
-                'title' => 'Building Permit',
-                'type' => 'building_permit',
-            ],
-            [
-                'title' => 'Business Permit',
-                'type' => 'business_permit',
-            ],
-            [
-                'title' => 'digging Permit',
-                'type' => 'digging_permit',
-            ],
-            [
-                'title' => 'fencing Permit',
-                'type' => 'fencing_permit',
-            ],
-            [
-                'title' => 'Franchise Clearance',
-                'type' => 'franchise_clearance',
-            ],
-            [
-                'title' => 'Meralco Clearance',
-                'type' => 'meralco_clearance',
-            ],
-        ];
-
         return view('backend.user.residents.index', [
             'residents' => $this->residents->get(),
             'certificates' => $certificates,
-            'permits' => $permits,
         ]);
     }
 
@@ -293,7 +261,7 @@ class ResidentsController extends Controller
                     } else {
                         $last = $resident->members[$resident->members->count()-1];
                         $ext = chr(ord(mb_substr($last->resident_number, -1)) + 1);
-                        
+
                         $new = FamilyMember::create([
                             'head_id' => $resident->id,
                             'resident_number' => $resident->res_num.'-'.$ext,

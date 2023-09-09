@@ -220,7 +220,7 @@ Residents
 
                         <button type="button" class="btn btn-primary add" id="addMember">Add family member</button>
 
-                        <div id="family_members">
+                        <div id="family_members" class="mt-3">
                             {{-- New members go here --}}
                         </div>
 
@@ -240,9 +240,6 @@ Residents
 </section>
 @endsection
 @section('scripts')
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"
-    integrity="sha512-dQIiHSl2hr3NWKKLycPndtpbh5iaHLo6MwrXm7F0FM5e+kL2U16oE9uIwPHUl6fQBeCthiEuV/rzP3MiAB8Vfw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 <script src="{{ asset('assets/packages/webcam/webcam.min.js') }}"></script>
 <script language="JavaScript">
     Webcam.set({
@@ -290,7 +287,7 @@ Residents
                 </div>
             </div>
             `
-            
+
             $('#family_members').append(html)
             memberCount += 1
         })

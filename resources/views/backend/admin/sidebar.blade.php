@@ -16,7 +16,7 @@
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link {{ Route::is('admin.official.index') ? 'active' : '' }}"
-                        href="{{ route('admin.official.index', ['year' => date('Y', strtotime(now()))]) }}">
+                        href="{{ route('admin.official.index') }}">
                         <i class="fa-solid fa-people-roof"></i>
                         <span>Officials</span>
                     </a>

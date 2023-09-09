@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="#" class="logo d-flex align-items-center">
             <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="">
-            <span class="d-none d-lg-block text-violet">{{ Auth::user()->role }} Dashboard</span>
+            <span class="d-none d-lg-block text-violet">{{ auth()->user()->role }} Dashboard</span>
         </a>
         <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -85,24 +85,24 @@
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/images/avatar/avatar-1.png') }}" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2 text-violet">
-                            {{ Auth::user()->name }}
+                            {{ auth()->user()->name }}
                     </span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
                         <h6>
-                            {{ Auth::user()->name }}
+                            {{ auth()->user()->name }}
                         </h6>
 
-                        <span>{{ Auth::user()->role }}</span>
+                        <span>{{ (auth()->user()->role == "User")?  auth()->user()->official->position :auth()->user()->role  }}</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     {{-- <li>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ route(Str::lower(Auth::user()->role).'.change-password.index') }}">
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route(Str::lower(auth()->user()->role).'.change-password.index') }}">
                             <i class="ri-lock-password-fill"></i>
                             <span>Change Password</span>
                         </a>

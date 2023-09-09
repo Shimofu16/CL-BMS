@@ -1,6 +1,6 @@
 @extends('backend.admin.sidebar')
 @section('page-title')
-    Officials
+    {{ ($barangay_id) ? 'Brgy. Officials of '. $barangay->name  : 'Brgy. Officials'  }}
 @endsection
 
 @section('contents')
@@ -10,11 +10,13 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
-                        <h3 class="card-title"> {{ $year }}
-                            {{ $barangay_id ? 'Brgy. ' . $barangay->name : 'Barangay' }} @yield('page-title')
+                        <h3 class="card-title">
+                            {{ ($barangay_id) ? 'Year '.$year->year.' Brgy. Officials of '. $barangay->name  : 'Year '.$year->year.' Brgy. Officials'  }}
                         </h3>
                         <div class="d-flex align-items-center">
-
+                            <a href="{{ route('admin.official.index') }}" class="btn btn-secondary me-1">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </a>
                             <div class="dropdown me-1">
                                 <button class="btn btn-violet dropdown-toggle" type="button" id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,11 +25,9 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     @foreach ($barangays as $item)
                                         <li><a class="dropdown-item"
-                                                href="{{ route('admin.official.index', ['year' => $year, 'barangay_id' => $item->id]) }}">{{ $item->name }}</a>
+                                                href="{{ route('admin.official.index', ['year_id' => $year->id, 'barangay_id' => $item->id]) }}">{{ $item->name }}</a>
                                         </li>
                                     @endforeach
-                                    <li><a href="{{ route('admin.official.index', ['year' => $year]) }}"><i
-                                                class="fa-solid fa-rotate-right"></i> Reset</a></li>
                                 </ul>
 
                             </div>
@@ -39,11 +39,9 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     @foreach ($years as $year)
                                         <li><a class="dropdown-item"
-                                                href="{{ route('admin.official.index', ['year' => $year]) }}">{{ $year }}</a>
+                                                href="{{ route('admin.official.index', ['year_id' => $year->id]) }}">{{ $year->year }}</a>
                                         </li>
                                     @endforeach
-                                    <li><a href="{{ route('admin.official.index', ['year' => $year]) }}"><i
-                                                class="fa-solid fa-rotate-right"></i> Reset</a></li>
                                 </ul>
 
                             </div>
@@ -69,7 +67,7 @@
                                 @foreach ($officials as $index => $official)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ $official->name }}</td>
+                                        <td>{{ $official->full_name }}</td>
                                         <td>{{ $official->position }}</td>
                                         @if (!$barangay_id)
                                             <td>{{ $official->barangay->name }}</td>

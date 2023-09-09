@@ -25,7 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::prefix('barangay/official')->name('official.')->group(function () {
-        Route::get('/official/{year}/{barangay_id?}', [App\Http\Controllers\admin\OfficialsController::class, 'index'])->name('index');
+        Route::get('/{year_id?}/{barangay_id?}', [App\Http\Controllers\admin\OfficialsController::class, 'index'])->name('index');
         Route::post('store', [App\Http\Controllers\admin\OfficialsController::class, 'store'])->name('store');
         Route::put('update/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'update'])->name('update');
         Route::delete('delete/{id}', [App\Http\Controllers\admin\OfficialsController::class, 'delete'])->name('delete');
@@ -69,9 +69,8 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
             Route::delete('/delete/{id}', [App\Http\Controllers\user\PermitController::class, 'delete'])->name('delete');
         });
         Route::prefix('certificate')->name('certificate.')->group(function () {
-            Route::get('/create/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'create'])->name('create');
-            Route::get('/show/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'show'])->name('show');
-            Route::post('/store/{certificate_type}/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'store'])->name('store');
+            Route::get('/create/resident/{resident_id}', [App\Http\Controllers\user\CertificateListController::class, 'create'])->name('create');
+
         });
     });
 });

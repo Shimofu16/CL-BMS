@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Model\Barangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -25,7 +27,6 @@ class HomeController extends Controller
         $barangay = Barangay::find($barangay_id);
         // store barangay id to session
         session(['barangay_id' => $barangay->id]);
-        
         return view('frontend.auth.login', compact('barangay'));
     }
     public function admin()

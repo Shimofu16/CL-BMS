@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Certificates / Brgy Clearance
+{{ $certificate }}
 @endsection
 @section('styles')
     <style>
@@ -216,7 +216,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Brgy Clearance Certificate</h3>
+            <h3 class="page__heading">{{ $certificate }}</h3>
         </div>
         <div class="d-flex justify-content-around">
             <div id="border-blue">
@@ -226,12 +226,11 @@
                             <div class="header">
                                 <p>REPUBLIC OF THE PHILIPPINES</p>
                                 <p> PROVINCE OF LAGUNA </p>
-                                <p> MUNICIPLITY LOS BAÑOS </p>
-                                <p> BARANGAY BAYOG </p>
+                                <p> MUNICIPLITY OF CALAUAN </p>
+                                <p> {{ $barangay->name }} </p>
 
                                 <div class="title-wrapper">
-                                    <h1 class="mb-0" style="border-left: 2px solid black; border-right: 2px solid black;">
-                                        Barangay Clearance Certificate</h1>
+                                    <h1 class="mb-0" style="border-left: 2px solid black; border-right: 2px solid black;">{{ $certificate }}</h1>
                                 </div>
                             </div>
 
@@ -239,38 +238,38 @@
                             <div class="body">
                                 <div class="officials" style="width: 2.75in; border-left: 2px solid black;">
                                     <div class="official-wrapper">
-                                        <img id="logo-img" src="{{ asset('../img/brgy-bayog-logo.png') }}"
+                                        <img id="logo-img" src="{{ asset($barangay->logo) }}"
                                             alt="brgy-bayog-logo">
-                                        <p style="margin-bottom: 20px;"> <strong> Barangay Bayog </strong></p>
-                                        @foreach ($b_officials as $b_official)
-                                            @if ($b_official->brgy_official_position == 'Barangay Chairman')
+                                        <p style="margin-bottom: 20px;"> <strong> {{ $barangay->name }} </strong></p>
+                                        @foreach ($barangay_officials as $barangay_official)
+                                            @if ($barangay_official->position == 'Chairman')
                                                 <p>
-                                                    <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
-                                                    {{ $b_official->brgy_official_position }}
+                                                    <strong>Hon. {{ $barangay_official->name }}</strong><br>
+                                                    {{ $barangay_official->position }}
                                                 </p>
 
                                                 <p id="councelor-label">
                                                     <strong>COUNCILORS</strong><br>
                                                 </p>
-                                            @elseif($b_official->brgy_official_position == 'Barangay Secretary')
+                                            @elseif($barangay_official->position == 'Secretary')
                                                 <p>
-                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                    {{ $b_official->brgy_official_role }}
+                                                    <strong>{{ $barangay_official->name }}</strong><br>
+                                                    {{ $barangay_official->position }}
                                                 </p>
-                                            @elseif($b_official->brgy_official_position == 'Barangay Treasurer')
+                                            @elseif($barangay_official->position == 'Treasurer')
                                                 <p>
-                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                    {{ $b_official->brgy_official_role }}
+                                                    <strong>{{ $barangay_official->name }}</strong><br>
+                                                    {{ $barangay_official->position }}
                                                 </p>
-                                            @elseif($b_official->brgy_official_position == 'Barangay Clerk')
+                                            @elseif($barangay_official->position == 'Clerk')
                                                 <p>
-                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                    {{ $b_official->brgy_official_role }}
+                                                    <strong>{{ $barangay_official->name }}</strong><br>
+                                                    {{ $barangay_official->position }}
                                                 </p>
                                             @else
                                                 <p>
-                                                    <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
-                                                    {{ $b_official->brgy_official_role }}
+                                                    <strong>Hon. {{ $barangay_official->name }}</strong><br>
+                                                    {{ $barangay_official->position }}
                                                 </p>
                                             @endif
                                         @endforeach
@@ -356,7 +355,7 @@
                                                     @if ($b_official->brgy_official_position == 'Barangay Chairman')
                                                         <p>
                                                             <strong>Hon.
-                                                                {{ $b_official->brgy_official_name }}</strong><br>
+                                                                {{ $b_official->name }}</strong><br>
                                                             {{ $b_official->brgy_official_position }}
                                                         </p>
                                                     @endif
@@ -408,6 +407,7 @@
     </section>
 @endsection
 @section('scripts')
+    <script src="{{ asset('assets/packages/html2pdf/html2pdf.main.js') }}"></script>
     <script type="text/javascript">
         function generatepdf() {
             var element = document.getElementById('element-to-print');

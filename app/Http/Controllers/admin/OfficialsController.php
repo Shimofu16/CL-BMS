@@ -6,25 +6,40 @@ use App\Http\Controllers\Controller;
 use App\Model\Barangay;
 use Illuminate\Http\Request;
 use App\Model\Officials;
+use App\Year;
 
 class OfficialsController extends Controller
 {
-    public function index($year, $barangay_id = null)
+    public function index($year_id = null, $barangay_id = null)
     {
-        $officials = Officials::query()->where('toArchive', false)->where('year', $year);
         $positions = ['Chairman', 'Co-Chairman', 'Councilor', 'Treasurer', 'Secretary'];
-        $years = $officials->distinct('year')->pluck('year')->toArray();
 
+        $officials = Officials::query()->where('toArchive', false);
+
+        // Find current year (if not provided)
+        $current_year = Year::where('isCurrentYear', true)->firstOrFail();
+        $year = Year::find($year_id) ?? $current_year;
+
+        // Apply year filter
+        $officials->whereHas('year', function ($query) use ($year) {
+            $query->where('year_id', $year->id);
+        });
+
+        // Apply barangay filter
         if ($barangay_id) {
             $officials->where('barangay_id', $barangay_id);
+            $barangay =  Barangay::find($barangay_id);
+        } else {
+            $barangay = null;
         }
 
         $officials = $officials->get();
-        $barangay = $barangay_id ? Barangay::find($barangay_id) : null;
         $barangays = Barangay::all();
+        $years = Year::all();
 
         return view('backend.admin.officials.index', compact('officials', 'barangay', 'barangay_id', 'barangays', 'year', 'years', 'positions'));
     }
+
 
     public function store(Request $request)
     {
@@ -34,11 +49,12 @@ class OfficialsController extends Controller
                 'position' => ['required', 'string'],
                 'barangay_id' => ['required', 'integer'],
             ]);
+            $current_year = Year::where('isCurrentYear', true)->firstOrFail();
             Officials::create([
                 'name' => $request->name,
                 'position' => $request->position,
+                'year_id' => $current_year->id,
                 'barangay_id' => $request->barangay_id,
-                'year' => date('Y', strtotime(now())),
             ]);
             return redirect()->back()->with('success', 'Barangay Official Successfully Added');
         } catch (\Throwable $th) {
@@ -60,7 +76,7 @@ class OfficialsController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-    
+
     public function delete($id)
     {
         try {

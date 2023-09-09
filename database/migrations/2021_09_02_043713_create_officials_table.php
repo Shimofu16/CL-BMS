@@ -16,15 +16,17 @@ class CreateOfficialsTable extends Migration
         Schema::create('officials', function (Blueprint $table) {
 
             $table->id();
-
-            $table->string('name', 32);
+            $table->string('first_name', 32);
+            $table->string('middle_name', 32)->nullable();
+            $table->string('last_name', 32);
             $table->string('position', 32);
             $table->string('path')->nullable();
             $table->string('img', 64)->nullable();
-            $table->string('year');
+            $table->unsignedBigInteger('year_id');
             $table->boolean('toArchive')->default(0);
             $table->unsignedBigInteger('barangay_id');
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
+            $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->timestamps();
         });
     }

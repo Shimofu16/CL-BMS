@@ -15,11 +15,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $officials  = Officials::where('position','Chairman')->get();
+        $officials  = Officials::where('position','Captain')->get();
         foreach ($officials as $key => $official) {
             User::create( [
-                'email' => Str::lower(str_replace(' ', '', $official->name)).'@app.com',
-                'name' => $official->name,
+                'email' => Str::lower(str_replace(' ', '', $official->full_name)).'@app.com',
+                'name' => $official->full_name,
                 'password' => Hash::make('password'),
                 'official_id' => $official->id,
             ]);

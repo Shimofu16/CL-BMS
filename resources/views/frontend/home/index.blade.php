@@ -12,7 +12,7 @@
                         <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="CL LOGO"
                             style="height: 140px; width:150px;" style="bg-white">
                     </div>
-                    <h3 class="text-center">CALAUAN BARANGAY MANAGEMENT SYSTEM</h3>
+                    <h3 class="text-center">Centralized Web-based Information System</h3>
                     <span class="text-center">Select your Barangay to start your session</span>
                 </div>
                 <div class="card-body">

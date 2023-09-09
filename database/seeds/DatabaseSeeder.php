@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             [
                 BarangaySeeder::class,
                 PurokSeeder::class,
+                YearSeeder::class,
                 OfficialsSeeder::class,
                 UserSeeder::class,
             ]);

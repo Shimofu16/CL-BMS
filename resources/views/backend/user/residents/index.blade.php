@@ -40,33 +40,18 @@
                                         <td>{{ $resident->birthday->age }}</td>
                                         <td>{{ $resident->address }}</td>
                                         <td>
-                                            <div class="d-flex">
-                                                {{-- dropdown for certificates --}}
-                                                <div class="dropdown me-1">
-                                                    <button class="btn btn-outline-violet btn-sm dropdown-toggle"
-                                                        type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        Certificates
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        @foreach ($certificates as $certificate)
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('user.barangay.certificate.create', ['certificate_type' => $certificate['type'], 'resident_id' => $resident->id]) }}">
-                                                                    {{ $certificate['title'] }}
-                                                                </a>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-
+                                            <button class="btn btn-outline-violet btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#certificate{{ $resident->id }}">
+                                                <i class="fa-regular fa-file-lines"></i>
+                                                Create Certificate
+                                            </button>
+                                            @include('backend.user.residents.modals._create')
                                         </td>
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('user.barangay.resident.edit', $resident->id) }}"
                                                     class="btn btn-outline-info btn-sm ms-1">
                                                     <i class="fa-solid fa-pen-to-square"></i>
+                                                    Edit
                                                 </a>
                                             </div>
                                         </td>
