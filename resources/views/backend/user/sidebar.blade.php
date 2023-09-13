@@ -14,6 +14,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="nav-heading">Menu</li>
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('user.barangay.*') ? 'active' : '' }}"
                     href="{{ route('user.barangay.resident.index') }}">

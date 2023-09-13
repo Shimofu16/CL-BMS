@@ -25,8 +25,10 @@
     <!-- Vendor CSS Files -->
     <link href="{{ asset('assets/packages/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/packages/fontawesome/css/all.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/packages/DataTables/datatables.min.css') }}" rel="stylesheet">
 
+    @if (!Route::is('*.dashboard.index'))
+        <link href="{{ asset('assets/packages/DataTables/datatables.min.css') }}" rel="stylesheet">
+    @endif
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
@@ -88,19 +90,23 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="{{ asset('assets/packages/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/packages/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/packages/chart.js/chart.umd.js') }}"></script>
-    <script src="{{ asset('assets/packages/echarts/echarts.min.js') }}"></script>
-    <script src="{{ asset('assets/packages/quill/quill.min.js') }}"></script>
     <script src="{{ asset('assets/packages/jQuery-3.6.0/jquery-3.6.0.min.js') }}"></script>
+
+    @if (Route::is('*.dashboard.index'))
+        <script src="{{ asset('assets/packages/apexcharts/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('assets/packages/chart.js/chart.umd.js') }}"></script>
+        <script src="{{ asset('assets/packages/echarts/echarts.min.js') }}"></script>   
+        <script src="{{ asset('assets/packages/quill/quill.min.js') }}"></script>
+    @endif
+
     <script src="{{ asset('assets/packages/DataTables/datatables.min.js') }}"></script>
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     {{-- sweetalert --}}
-    @include('sweetalert::alert')
+    {{-- @include('sweetalert::alert') --}}
     @yield('scripts')
     <script>
         $(document).ready(function() {

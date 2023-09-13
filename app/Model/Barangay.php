@@ -17,4 +17,9 @@ class Barangay extends Model
     {
         return $this->hasMany(Purok::class, 'barangay_id');
     }
+
+    public function residents()
+    {
+        return $this->hasMany(Resident::class, 'barangay_id');
+    }
 }

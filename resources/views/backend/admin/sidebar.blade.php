@@ -6,7 +6,6 @@
         <aside id="sidebar" class="sidebar">
 
             <ul class="sidebar-nav" id="sidebar-nav">
-
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('admin.dashboard.index') ? 'active' : '' }}"
                         href="{{ route('admin.dashboard.index') }}">
@@ -14,6 +13,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-heading">Menu</li>
                 <li class="nav-item ">
                     <a class="nav-link {{ Route::is('admin.official.index') ? 'active' : '' }}"
                         href="{{ route('admin.official.index') }}">
@@ -29,16 +29,18 @@
                     </a>
                 </li>
 
+                <li class="nav-heading">Settings</li>
+
                 <li class="nav-item">
-                    <a class="nav-link collapsed {{ Route::is('admin.archieve.*') ? 'active' : '' }}" data-bs-target="#archieves"
-                        data-bs-toggle="collapse" href="#">
+                    <a class="nav-link collapsed {{ Route::is('admin.archieve.*') ? 'active' : '' }}"
+                        data-bs-target="#archieves" data-bs-toggle="collapse" href="#">
                         <i class="fa-regular fa-folder-open"></i>
                         <span>Archieves</span>
                         <i class="fa-solid fa-chevron-down ms-auto"></i>
                     </a>
                     <ul id="archieves" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
                         <li class="{{ Route::is('admin.archive.index') ? 'collapse-active' : '' }}">
-                            <a href="{{ route('admin.archive.index',['folder' => 'official']) }}">
+                            <a href="{{ route('admin.archive.index', ['folder' => 'official']) }}">
                                 <i class="fa-regular fa-circle"></i>
                                 <span>Official</span>
                             </a>
@@ -46,7 +48,13 @@
                     </ul>
 
                 </li>
-
+                <li class="nav-item ">
+                    <a class="nav-link {{ Route::is('admin.settings.year.index') ? 'active' : '' }}"
+                        href="{{ route('admin.settings.year.index') }}">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>Years</span>
+                    </a>
+                </li>
         </aside>
     </ul>
 @endsection

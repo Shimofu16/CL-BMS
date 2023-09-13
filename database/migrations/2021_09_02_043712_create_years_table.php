@@ -16,7 +16,7 @@ class CreateYearsTable extends Migration
         Schema::create('years', function (Blueprint $table) {
             $table->id();
             $table->string('year');
-            $table->boolean('isCurrentYear')->default(false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

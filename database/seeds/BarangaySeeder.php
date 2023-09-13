@@ -16,23 +16,72 @@ class BarangaySeeder extends Seeder
         // seed barangay with jason file
 
         $barangays = [
-            ['name' => 'Balayhangin'],
-            ['name' => 'Bangyas'],
-            ['name' => 'Dayap'],
-            ['name' => 'Hanggan'],
-            ['name' => 'Imok'],
-            ['name' => 'Kanluran (Pob.)'],
-            ['name' => 'Lamot 1'],
-            ['name' => 'Lamot 2'],
-            ['name' => 'Limao'],
-            ['name' => 'Mabacan'],
-            ['name' => 'Masiit'],
-            ['name' => 'Paliparan'],
-            ['name' => 'Perez'],
-            ['name' => 'Prinza'],
-            ['name' => 'San Isidro'],
-            ['name' => 'Santo Tomas'],
-            ['name' => 'Silangan (Pob.)'],
+            [
+                'name' => 'Balayhangin',
+                'logo' => 'uploads/barangay-logos/balayhangin.png',
+            ],
+            [
+                'name' => 'Bangyas'
+            ],
+            [
+                'name' => 'Dayap',
+                'logo' => 'uploads/barangay-logos/dayap.png',
+            ],
+            [
+                'name' => 'Hanggan',
+                'logo' => 'uploads/barangay-logos/hanggan.png',
+            ],
+            [
+                'name' => 'Imok',
+                'logo' => 'uploads/barangay-logos/imok.png',
+            ],
+            [
+                'name' => 'Kanluran (Pob.)',
+                'logo' => 'uploads/barangay-logos/kanluran.png',
+            ],
+            [
+                'name' => 'Lamot 1',
+                'logo' => 'uploads/barangay-logos/lamot_1.png',
+            ],
+            [
+                'name' => 'Lamot 2',
+                'logo' => 'uploads/barangay-logos/lamot_2.png',
+            ],
+            [
+                'name' => 'Limao',
+                'logo' => 'uploads/barangay-logos/limao.png',
+            ],
+            [
+                'name' => 'Mabacan',
+                'logo' => 'uploads/barangay-logos/mabacan.png',
+            ],
+            [
+                'name' => 'Masiit',
+                'logo' => 'uploads/barangay-logos/masiit.png',
+            ],
+            [
+                'name' => 'Paliparan',
+                'logo' => 'uploads/barangay-logos/paliparan.png',
+            ],
+            [
+                'name' => 'Perez',
+            ],
+            [
+                'name' => 'Prinza',
+                'logo' => 'uploads/barangay-logos/prinza.png',
+            ],
+            [
+                'name' => 'San Isidro',
+                'logo' => 'uploads/barangay-logos/san_isidro.png',
+            ],
+            [
+                'name' => 'Santo Tomas',
+                'logo' => 'uploads/barangay-logos/santo_tomas.png',
+            ],
+            [
+                'name' => 'Silangan (Pob.)',
+                'logo' => 'uploads/barangay-logos/silangan.png',
+            ],
         ];
 
         foreach ($barangays as $barangay) {

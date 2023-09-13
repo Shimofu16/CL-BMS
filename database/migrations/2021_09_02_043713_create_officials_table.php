@@ -20,8 +20,7 @@ class CreateOfficialsTable extends Migration
             $table->string('middle_name', 32)->nullable();
             $table->string('last_name', 32);
             $table->string('position', 32);
-            $table->string('path')->nullable();
-            $table->string('img', 64)->nullable();
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('year_id');
             $table->boolean('toArchive')->default(0);
             $table->unsignedBigInteger('barangay_id');

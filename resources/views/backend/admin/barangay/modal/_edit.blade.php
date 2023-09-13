@@ -17,7 +17,7 @@
             </div>
             <form
                 action="{{ route('admin.barangay.update', ['isBarangay' => $isBarangay, 'id' => $id, 'barangay_id' => $barangay->id]) }}"
-                method="post">
+                method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body row g-3">
@@ -26,6 +26,12 @@
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ $name }}">
                     </div>
+                    @if ($isBarangay == 1)
+                        <div class="col-12">
+                            <label for="logo" class="form-label fw-bold">Logo</label>
+                            <input type="file" class="form-control" id="logo" name="logo">
+                        </div>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

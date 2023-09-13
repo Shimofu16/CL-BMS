@@ -1,6 +1,7 @@
 <?php
 
-use App\Year;
+use App\Model\Year;
+
 use Illuminate\Database\Seeder;
 
 class YearSeeder extends Seeder
@@ -15,12 +16,12 @@ class YearSeeder extends Seeder
         $data = [
             [
                 'year' => '2018-2020',
-                'isCurrentYear' => true,
+                'status' => true,
             ],
             [
                 'year' => '2021-2024',
             ],
-            
+
         ];
         foreach ($data as $key => $value) {
             Year::create($value);

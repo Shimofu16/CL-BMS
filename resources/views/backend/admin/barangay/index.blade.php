@@ -27,6 +27,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Logo</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Porok</th>
                                     <th scope="col">Actions</th>
@@ -36,11 +37,14 @@
                                 @foreach ($barangays as $index => $barangay)
                                     <tr>
                                         <th scope="row">{{ $index + 1 }}</th>
+                                        <th>
+                                            <a href="#"><img loading="lazy" src="{{ asset('storage/'.$barangay->logo) }}" alt="" style="height: 50px; width: 50px;"></a>
+                                        </th>
                                         <td>{{ $barangay->name }}</td>
                                         <td>
                                             {{-- view button --}}
                                             <a href="{{ route('admin.barangay.show', ['id' => $barangay->id]) }}"
-                                                class="btn btn-outline-info btn-sm">    
+                                                class="btn btn-outline-info btn-sm">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
                                         </td>

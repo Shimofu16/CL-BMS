@@ -2,14 +2,14 @@
 
 namespace App\Model;
 
-use App\Year;
+use App\Model\Year;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Officials extends Model
 {
     protected $table = 'officials';
-    protected $guarded = [];  
+    protected $guarded = [];
 
     protected $appends = [
         'full_name',
@@ -26,11 +26,11 @@ class Officials extends Model
     public function barangay()
     {
         return $this->belongsTo(Barangay::class);
-    }  
+    }
 
     public function year()
     {
         return $this->belongsTo(Year::class);
     }
-     
+
 }

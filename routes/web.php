@@ -22,7 +22,8 @@ Route::post('/user/logout', [App\Http\Controllers\HomeController::class, 'logout
 
 /* admin */
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::get('/dashboard/{year_id}', [App\Http\Controllers\admin\DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::prefix('barangay/official')->name('official.')->group(function () {
         Route::get('/{year_id?}/{barangay_id?}', [App\Http\Controllers\admin\OfficialsController::class, 'index'])->name('index');
@@ -42,16 +43,26 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/{folder}', [App\Http\Controllers\admin\ArchiveController::class, 'index'])->name('index');
         Route::put('/restore/{folder}/{id}', [App\Http\Controllers\admin\ArchiveController::class, 'update'])->name('restore');
     });
+
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::prefix('year')->name('year.')->group(function () {
+            Route::get('/', [App\Http\Controllers\admin\settings\YearController::class, 'index'])->name('index');
+            Route::post('/store', [App\Http\Controllers\admin\settings\YearController::class, 'store'])->name('store');
+            Route::put('/update/{id}', [App\Http\Controllers\admin\settings\YearController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [App\Http\Controllers\admin\settings\YearController::class, 'delete'])->name('delete');
+        });
+
+    });
 });
 
 /* user */
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 
+    Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::prefix('barangay')->name('barangay.')->group(function () {
         Route::prefix('resident')->name('resident.')->group(function () {
-            Route::get('/index', [App\Http\Controllers\user\ResidentsController::class, 'index'])->name('index');
+            Route::get('/', [App\Http\Controllers\user\ResidentsController::class, 'index'])->name('index');
             Route::get('/create', [App\Http\Controllers\user\ResidentsController::class, 'create'])->name('create');
             Route::get('/show/{id}', [App\Http\Controllers\user\ResidentsController::class, 'show'])->name('show');
             Route::get('/edit/{id}', [App\Http\Controllers\user\ResidentsController::class, 'edit'])->name('edit');

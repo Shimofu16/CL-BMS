@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Model\Barangay;
 use App\Model\Purok;
+use App\Model\Barangay;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class BarangayController extends Controller
 {
+
 
     /**
      * Display a listing of the resource.
@@ -42,21 +45,35 @@ class BarangayController extends Controller
     {
         try {
             $message = "Added Successfully";
+
             if ($isBarangay == 1) {
+                $request->validate([
+                    'name' => 'required|unique:barangays,name',
+                    'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                ]);
+
+                $fileName = Str::lower($request->name) . '.' . $request->file('logo')->getClientOriginalExtension();
+                $filePath = 'uploads/barangay-logos/' . $fileName;
+
+                $request->file('logo')->storeAs('public', $filePath);
+
                 Barangay::create([
                     'name' => $request->name,
+                    'logo' => $filePath,
                 ]);
-                $message = "Barangay " . $request->name . ' ' . $message;
+
+                $message = "Barangay {$request->name} {$message}";
             } else {
                 Purok::create([
                     'name' => $request->name,
                     'barangay_id' => $barangay_id,
                 ]);
-                $message = "Purok " . $request->name . ' ' . $message;
+
+                $message = "Purok {$request->name} {$message}";
             }
-            return redirect()->back()->with('success', $message);
+            return back()->with('success', $message);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
     }
 
@@ -99,9 +116,19 @@ class BarangayController extends Controller
             $message = "Updated Successfully";
             if ($isBarangay == 1) {
                 $barangay = Barangay::find($id);
-                $barangay->update([
-                    'name' => $request->name,
-                ]);
+
+                if ($request->has('logo')) {
+
+                    $fileName = Str::lower($request->name) . '.' . $request->file('logo')->getClientOriginalExtension();
+                    $filePath = 'uploads/barangay-logos/' . $fileName;
+                    Storage::disk('public')->put($filePath, file_get_contents($request->file('logo')));
+                    if (Storage::disk('public')->exists($barangay->logo)) {
+                        Storage::disk('public')->delete($barangay->logo);
+                    }
+                    $barangay->logo = $filePath;
+                }
+                $barangay->name = $request->name;   
+                $barangay->save();
                 $message = "Barangay " .  $request->name . ' ' . $message;
             } else {
                 $purok = Purok::find($id);
@@ -110,9 +137,9 @@ class BarangayController extends Controller
                 ]);
                 $message = "Purok " .  $request->name . ' ' . $message;
             }
-            return redirect()->back()->with('success', $message);
+            return back()->with('success', $message);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
     }
 
@@ -138,9 +165,9 @@ class BarangayController extends Controller
                 $purok->delete();
                 $message = "Purok " .  $purok->name . ' ' . $message;
             }
-            return redirect()->back()->with('success', $message);
+            return back()->with('success', $message);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
     }
 }
