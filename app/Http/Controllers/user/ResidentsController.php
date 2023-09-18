@@ -65,6 +65,7 @@ class ResidentsController extends Controller
                 'type' => 'settlement',
             ]
         ];
+
         return view('backend.user.residents.index', [
             'residents' => $this->residents->get(),
             'certificates' => $certificates,
@@ -110,6 +111,7 @@ class ResidentsController extends Controller
             'membership_prog' => ['required'],
             'purok_id' => ['required'],
         ]);
+        
         $img = $request->get('image');
         $image_parts = explode(";base64,", $img);
         $image_base64 = base64_decode(end($image_parts));

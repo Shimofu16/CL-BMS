@@ -2,44 +2,57 @@
 
 namespace App\Http\Controllers\user;
 
-use Illuminate\Http\Request;
+use App\Permit;
+use Carbon\Carbon;
+use App\Model\Resident;
 use App\Model\Franchise;
 use App\Model\Officials;
-use App\Model\Resident;
-use Carbon\Carbon;
 use App\Model\ActivityLog;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class FranchiseClearanceController extends Controller
 {
     public function index()
     {
-        return view('brgy_permit.franchise_clearance.index', [
-            'franchises' => Franchise::with('resident')->orderBy('id','desc')->get(),
+        return view('backend.user.permits.franchise.index', [
+            'franchises' => Permit::with('owner')
+                                    ->where('type', 'Franchise clearance')
+                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->get(),
         ]);
     }
 
     public function create()
     {
-        return view('brgy_permit.franchise_clearance.create', [
-            'residents' => Resident::all(),
+        return view('backend.user.permits.franchise.create', [
+            'residents' => Resident::where('barangay_id', Auth::user()->official_id)->get(),
         ]);
     }
 
     public function store(Request $request)
     {
         $year = Carbon::now()->year;  
-        $franchise_cnt = Franchise::all()->count();
+        $franchise_cnt = Permit::where('type', 'Franchise clearance')
+                                ->where('barangay_id',Auth::user()->official_id)
+                                ->count();
 
         $franchise_cnt =  $franchise_cnt + 1;    
-        $franchise_number = $year . '-' . $franchise_cnt;
+        $franchise_number = $year.'-'.Auth::user()->official->barangay->name.'-'.$franchise_cnt;
+
+        $details = [
+            'number' => $franchise_number,
+            'chassis' => $request->chassis_number,
+            'motor' => $request->motor_number,
+            'plate' => $request->plate_number,
+        ];
         
-        $franchise = Franchise::create([
-            'franchisee_id' => $request->resident,
-            'franchise_number' => $franchise_number,
-            'chasis_number' => $request->chasis_number,
-            'motor_number' => $request->motor_number,
-            'plate_number' => $request->plate_number,
+        $franchise = Permit::create([
+            'type' => 'Franchise clearance',
+            'resident_id' => $request->resident,
+            'barangay_id' => Auth::user()->official_id,
+            'details' => $details,
         ]);
 
         return redirect()->route('franchise_clearance.index')->withStatus('Franschise Added Succesfully!');
@@ -47,27 +60,23 @@ class FranchiseClearanceController extends Controller
 
     public function show($id)
     {
-        return view('brgy_permit.franchise_clearance.show', [
-            'franchise' => Franchise::with('resident')->findOrFail($id),
+        return view('backend.user.permits.franchise.show', [
+            'franchise' => Permit::with('owner')->findOrFail($id),
         ]);
 
     }
 
     public function clearance($id)
     {
-        // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
-        
         ActivityLog::create([
-            'user' => Auth::user()->name,
+            'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Franchise Clearance',
             'subject' => 'Brgy Franchise',
         ]);
 
-        return view('brgy_permit.franchise_clearance.clearance', [
-            'franchise' => Franchise::with('resident')->findOrFail($id),
-            'b_officials' => $b_officials,
+        return view('backend.user.permits.franchise.clearance', [
+            'franchise' => Permit::with('owner')->findOrFail($id),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
         ]); 
     }
 }

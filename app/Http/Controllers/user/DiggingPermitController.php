@@ -2,41 +2,52 @@
 
 namespace App\Http\Controllers\user;
 
-use Illuminate\Http\Request;
-use App\Model\Digging;
-use App\Model\Officials;
+use App\Permit;
 use Carbon\Carbon;
+use App\Model\Officials;
 use App\Model\ActivityLog;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class DiggingPermitController extends Controller
 {
     public function index()
     {
-        return view('brgy_permit.digging_permit.index', [
-            'diggings' => Digging::orderBy('id','desc')->get(),
+        return view('backend.user.permits.digging.index', [
+            'diggings' => Permit::where('type', 'Digging permit')
+                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->get(),
         ]);
     }
 
     public function create()
     {
-        return view('brgy_permit.digging_permit.create');
+        return view('backend.user.permits.digging.create');
     }
 
     public function store(Request $request)
     {
         $year = Carbon::now()->year;  
-        $digging_cnt = Digging::all()->count();
+        $digging_cnt = Permit::where('type', 'Digging permit')
+                                ->where('barangay_id',Auth::user()->official_id)
+                                ->count();
 
         $digging_cnt =  $digging_cnt + 1;    
-        $digging_number = $year . '-' . $digging_cnt;
+        $digging_number = $year . '-'.Auth::user()->official->barangay->name.'-'. $digging_cnt;
 
-        $digging = Digging::create([
-            'digging_number' => $digging_number,
+        $details = [
+            'number' => $digging_number,
             'name' => $request->name,
             'address' => $request->address,
-            'digging_location' => $request->digging_location,
+            'location' => $request->location,
             'purpose' => $request->purpose,
+        ];
+
+        $digging = Permit::create([
+            'type' => 'Digging permit',
+            'barangay_id' => Auth::user()->official_id,
+            'details' => $details,
         ]);
 
         return redirect()->route('digging_permit.index')->withStatus('Digging Added Succesfully!');
@@ -44,25 +55,22 @@ class DiggingPermitController extends Controller
 
     public function show($id)
     {
-        return view('brgy_permit.digging_permit.show', [
-            'digging' => Digging::findOrFail($id)
+        return view('backend.user.permits.digging.show', [
+            'digging' => Permit::findOrFail($id)
         ]);
     }
     
-    public function clearance($id){
-        // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
-
+    public function clearance($id)
+    {
         ActivityLog::create([
-            'user' => Auth::user()->name,
+            'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Digging Permit',
             'subject' => 'Brgy Digging',
         ]);
 
-        return view('brgy_permit.digging_permit.clearance', [
-            'digging' => Digging::findOrFail($id),
-            'b_officials' => $b_officials,
+        return view('backend.user.permits.digging.clearance', [
+            'digging' => Permit::findOrFail($id),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
         ]); 
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\user;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\Building;
-use App\Model\Officials;
+use App\Permit;
 use Carbon\Carbon;
+use App\Model\Building;
+use App\Model\Resident;
+use App\Model\Officials;
 use App\Model\ActivityLog;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class BuildingPermitController extends Controller
@@ -23,31 +25,42 @@ class BuildingPermitController extends Controller
         //         }
         // }
 
-        return view('brgy_permit.building_permit.index', [
-            'buildings' => Building::orderBy('id','desc')->get(),
+        return view('backend.user.permits.building.index', [
+            'buildings' => Permit::where('type', 'Building permit')
+                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->get(),
         ]);
     }
 
     public function create()
     {
-        // $residence = Residence::all();
-        return view('brgy_permit.building_permit.create');
+        return view('backend.user.permits.building.create', [
+            'residents' => Resident::where('barangay_id',Auth::user()->official_id)->get()
+        ]);
     }
 
     public function store(Request $request)
     {
         $year = Carbon::now()->year;  
-        $building_cnt = Building::all()->count();
+        $building_cnt = Permit::where('type', 'Building permit')
+                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->count();
 
         $building_cnt =  $building_cnt + 1;    
-        $building_number = $year . '- BAYOG -' . $building_cnt;
+        $building_number = $year . '-'.Auth::user()->official->barangay->name .'-' . $building_cnt;
 
-        $building = Building::create([
-            'building_number' => $building_number,
-            'building_type' => $request->building_type,
-            'building_owner' => $request->building_owner,
-            'building_address' => $request->building_address,
+        $details = [
+            'number' => $building_number,
+            'type' => $request->building_type,
+            'address' => $request->building_address,
             'reg_date' => $request->reg_date,
+        ];
+
+        $buildingPermit = Permit::create([
+            'type' => 'Building permit',
+            'resident_id' => $request->resident,
+            'barangay_id' => Auth::user()->official_id,
+            'details' => $details,
         ]);
 
         return redirect()->route('building_permit.index')->withStatus('Building Added Succesfully!');
@@ -55,26 +68,23 @@ class BuildingPermitController extends Controller
 
     public function show($id)
     {
-        return view('brgy_permit.building_permit.show', [
-            'building' => Building::findOrFail($id),
+        return view('backend.user.permits.building.show', [
+            'building' => Permit::where('type','Building permit')
+                                    ->findOrFail($id),
         ]);
     }
 
     public function clearance($id)
     {
-        // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
-
         ActivityLog::create([
-            'user' => Auth::user()->name,
+            'user_id' => Auth::user()->id,
             'subject' => 'Brgy Building',
             'description' => 'Issue Brgy Building Clearance',
         ]);
 
-        return view('brgy_permit.building_permit.clearance', [
-            'building' => Building::findOrFail($id),
-            'b_officials' => $b_officials,
+        return view('backend.user.permits.building.clearance', [
+            'building' => Permit::findOrFail($id),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
         ]); 
     }
 

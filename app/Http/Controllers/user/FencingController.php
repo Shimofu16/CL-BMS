@@ -2,41 +2,53 @@
 
 namespace App\Http\Controllers\user;
 
-use Illuminate\Http\Request;
+use App\Permit;
+use Carbon\Carbon;
 use App\Model\Fencing;
 use App\Model\Officials;
-use Carbon\Carbon;
 use App\Model\ActivityLog;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class FencingController extends Controller
 {
     public function index()
     {
-        return view('brgy_permit.fencing_permit.index', [
-            'fencings' => Fencing::orderBy('id','desc')->get(),
+        return view('backend.user.permits.fencing.index', [
+            'fencings' => Permit::where('type','Fencing permit')
+                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->get(),
         ]);
     }
 
     public function create()
     {
-        return view('brgy_permit.fencing_permit.create');
+        return view('backend.user.permits.fencing.create');
     }
 
     public function store(Request $request)
     {
         $year = Carbon::now()->year;  
-        $fencing_cnt = Fencing::all()->count();
+        $fencing_cnt = Permit::where('type', 'Fencing permit')
+                                ->where('barangay_id', Auth::user()->official_id)
+                                ->count();
 
         $fencing_cnt =  $fencing_cnt + 1;    
-        $fencing_number = $year . '-' . $fencing_cnt;
+        $fencing_number = $year.'-'.Auth::user()->official->barangay->name.'-'. $fencing_cnt;
 
-        $fencing = Fencing::create([
-            'fencing_number' => $fencing_number,
+        $details = [
+            'number' => $fencing_number,
             'name' => $request->name,
             'address' => $request->address,
-            'fencing_location' => $request->fencing_location,
+            'location' => $request->location,
             'purpose' => $request->purpose,
+        ];
+
+        $fencing = Permit::create([
+            'type' => 'Fencing permit',
+            'barangay_id' => Auth::user()->official_id,
+            'details' => $details,
         ]);
 
         return redirect()->route('fencing_permit.index')->withStatus('Fencing Added Succesfully!');
@@ -44,26 +56,22 @@ class FencingController extends Controller
 
     public function show($id)
     {
-        return view('brgy_permit.fencing_permit.show', [
-            'fencing' => Fencing::findOrFail($id),
+        return view('backend.user.permits.fencing.show', [
+            'fencing' => Permit::findOrFail($id),
         ]);
     }
 
     public function clearance($id)
     {
-        // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
-
         ActivityLog::create([
-            'user' => Auth::user()->name,
+            'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Fencing Permit',
             'subject' => 'Brgy Fencing',
         ]);
 
-        return view('brgy_permit.fencing_permit.clearance', [
-            'fencing' => Fencing::findOrFail($id),
-            'b_officials' => $b_officials,
+        return view('backend.user.permits.fencing.clearance', [
+            'fencing' => Permit::findOrFail($id),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
         ]); 
     }
 }

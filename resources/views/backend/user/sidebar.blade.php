@@ -23,45 +23,45 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed {{ Route::is('user.barangay.permit.*') ? 'active' : '' }}" data-bs-target="#permits"
-                    data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed {{ Route::is('building_permit.index', 'business_clearance.index') ? 'active' : '' }}"
+                    data-bs-target="#permits" data-bs-toggle="collapse" href="#">
                     <i class="fa-regular fa-file"></i>
                     <span>Permits</span>
                     <i class="fa-solid fa-chevron-down ms-auto"></i>
                 </a>
                 <ul id="permits" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'building_permit']) }}">
+                    <li class="{{ Route::is('building_permit.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('building_permit.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Building Permit</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'digging_permit']) }}">
+                    <li class="{{ Route::is('digging_permit.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('digging_permit.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Digging Permit</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'fencing_permit']) }}">
+                    <li class="{{ Route::is('fencing_permit.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('fencing_permit.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Fencing Permit</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'business_clearance']) }}">
+                    <li class="{{ Route::is('business_clearance.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('business_clearance.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Business Clearance</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'franchise_clearance']) }}">
+                    <li class="{{ Route::is('franchise_clearance.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('franchise_clearance.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Franchise Clearance</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('user.barangay.permit.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('user.barangay.permit.index',['permit_type' => 'meralco_clearance']) }}">
+                    <li class="{{ Route::is('meralco_clearance.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('meralco_clearance.index') }}">
                             <i class="fa-regular fa-circle"></i>
                             <span>Meralco Clearance</span>
                         </a>
