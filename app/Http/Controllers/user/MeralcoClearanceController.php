@@ -17,7 +17,7 @@ class MeralcoClearanceController extends Controller
     {
         return view('backend.user.permits.meralco.index', [
             'meralcos' => Permit::where('type', 'Meralco clearance')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->get()
         ]);
     }
@@ -31,7 +31,7 @@ class MeralcoClearanceController extends Controller
     {
         $year = Carbon::now()->year;  
         $meralco_cnt = Permit::where('type', 'Meralco clearance')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->count();
 
         $meralco_cnt =  $meralco_cnt + 1;    
@@ -46,7 +46,7 @@ class MeralcoClearanceController extends Controller
         
         $meralco = Permit::create([
             'type' => 'Meralco clearance',
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -70,7 +70,7 @@ class MeralcoClearanceController extends Controller
 
         return view('backend.user.permits.meralco.clearance', [
             'meralco' => Permit::findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }
 }

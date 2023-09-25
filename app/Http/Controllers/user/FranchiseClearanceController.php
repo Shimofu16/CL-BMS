@@ -19,7 +19,7 @@ class FranchiseClearanceController extends Controller
         return view('backend.user.permits.franchise.index', [
             'franchises' => Permit::with('owner')
                                     ->where('type', 'Franchise clearance')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->get(),
         ]);
     }
@@ -27,7 +27,7 @@ class FranchiseClearanceController extends Controller
     public function create()
     {
         return view('backend.user.permits.franchise.create', [
-            'residents' => Resident::where('barangay_id', Auth::user()->official_id)->get(),
+            'residents' => Resident::where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]);
     }
 
@@ -35,7 +35,7 @@ class FranchiseClearanceController extends Controller
     {
         $year = Carbon::now()->year;  
         $franchise_cnt = Permit::where('type', 'Franchise clearance')
-                                ->where('barangay_id',Auth::user()->official_id)
+                                ->where('barangay_id',Auth::user()->official->barangay->id)
                                 ->count();
 
         $franchise_cnt =  $franchise_cnt + 1;    
@@ -51,7 +51,7 @@ class FranchiseClearanceController extends Controller
         $franchise = Permit::create([
             'type' => 'Franchise clearance',
             'resident_id' => $request->resident,
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -76,7 +76,7 @@ class FranchiseClearanceController extends Controller
 
         return view('backend.user.permits.franchise.clearance', [
             'franchise' => Permit::with('owner')->findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }
 }

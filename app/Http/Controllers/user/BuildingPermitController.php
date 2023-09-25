@@ -27,7 +27,7 @@ class BuildingPermitController extends Controller
 
         return view('backend.user.permits.building.index', [
             'buildings' => Permit::where('type', 'Building permit')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->get(),
         ]);
     }
@@ -35,7 +35,7 @@ class BuildingPermitController extends Controller
     public function create()
     {
         return view('backend.user.permits.building.create', [
-            'residents' => Resident::where('barangay_id',Auth::user()->official_id)->get()
+            'residents' => Resident::where('barangay_id',Auth::user()->official->barangay->id)->get()
         ]);
     }
 
@@ -43,7 +43,7 @@ class BuildingPermitController extends Controller
     {
         $year = Carbon::now()->year;  
         $building_cnt = Permit::where('type', 'Building permit')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->count();
 
         $building_cnt =  $building_cnt + 1;    
@@ -59,7 +59,7 @@ class BuildingPermitController extends Controller
         $buildingPermit = Permit::create([
             'type' => 'Building permit',
             'resident_id' => $request->resident,
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -84,7 +84,7 @@ class BuildingPermitController extends Controller
 
         return view('backend.user.permits.building.clearance', [
             'building' => Permit::findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }
 

@@ -17,7 +17,7 @@ class FencingController extends Controller
     {
         return view('backend.user.permits.fencing.index', [
             'fencings' => Permit::where('type','Fencing permit')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->get(),
         ]);
     }
@@ -31,7 +31,7 @@ class FencingController extends Controller
     {
         $year = Carbon::now()->year;  
         $fencing_cnt = Permit::where('type', 'Fencing permit')
-                                ->where('barangay_id', Auth::user()->official_id)
+                                ->where('barangay_id', Auth::user()->official->barangay->id)
                                 ->count();
 
         $fencing_cnt =  $fencing_cnt + 1;    
@@ -47,7 +47,7 @@ class FencingController extends Controller
 
         $fencing = Permit::create([
             'type' => 'Fencing permit',
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -71,7 +71,7 @@ class FencingController extends Controller
 
         return view('backend.user.permits.fencing.clearance', [
             'fencing' => Permit::findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }
 }

@@ -18,6 +18,7 @@ class BusinessClearanceController extends Controller
     {
         $businesses = Permit::where('type','Business clearance')
                                 ->with('owner')
+                                ->where('barangay_id', Auth::user()->official->barangay->id)
                                 ->orderBy('id','desc')
                                 ->get();
         $expired_business = 0;
@@ -39,7 +40,7 @@ class BusinessClearanceController extends Controller
     public function create_business()
     {
         return view('backend.user.permits.business.create', [
-            'residents' => Resident::where('barangay_id',Auth::user()->official_id)->get(),
+            'residents' => Resident::where('barangay_id',Auth::user()->official->barangay->id)->get(),
         ]);
     }
 
@@ -47,7 +48,7 @@ class BusinessClearanceController extends Controller
     {
         $year = Carbon::now()->year;  
         $business_cnt = Permit::where('type','Business clearance')
-                                ->where('barangay_id',Auth::user()->official_id)
+                                ->where('barangay_id',Auth::user()->official->barangay->id)
                                 ->count();
 
         $business_cnt =  $business_cnt + 1;    
@@ -65,7 +66,7 @@ class BusinessClearanceController extends Controller
         $business = Permit::create([
             'type' => 'Business clearance',
             'resident_id' => $request->resident,
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -94,7 +95,7 @@ class BusinessClearanceController extends Controller
 
         return view('backend.user.permits.business.clearance', [
             'business' => Permit::with('owner')->findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
             'amount' => $request->amount,
             'or_number' => $request->or_number,
         ]);

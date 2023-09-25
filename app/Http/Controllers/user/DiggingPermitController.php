@@ -16,7 +16,7 @@ class DiggingPermitController extends Controller
     {
         return view('backend.user.permits.digging.index', [
             'diggings' => Permit::where('type', 'Digging permit')
-                                    ->where('barangay_id',Auth::user()->official_id)
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->get(),
         ]);
     }
@@ -30,7 +30,7 @@ class DiggingPermitController extends Controller
     {
         $year = Carbon::now()->year;  
         $digging_cnt = Permit::where('type', 'Digging permit')
-                                ->where('barangay_id',Auth::user()->official_id)
+                                ->where('barangay_id',Auth::user()->official->barangay->id)
                                 ->count();
 
         $digging_cnt =  $digging_cnt + 1;    
@@ -46,7 +46,7 @@ class DiggingPermitController extends Controller
 
         $digging = Permit::create([
             'type' => 'Digging permit',
-            'barangay_id' => Auth::user()->official_id,
+            'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
 
@@ -70,7 +70,7 @@ class DiggingPermitController extends Controller
 
         return view('backend.user.permits.digging.clearance', [
             'digging' => Permit::findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official_id)->get(),
+            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }
 }
