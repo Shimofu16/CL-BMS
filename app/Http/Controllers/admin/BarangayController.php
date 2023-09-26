@@ -121,13 +121,13 @@ class BarangayController extends Controller
 
                     $fileName = Str::lower($request->name) . '.' . $request->file('logo')->getClientOriginalExtension();
                     $filePath = 'uploads/barangay-logos/' . $fileName;
-                    Storage::disk('public')->put($filePath, file_get_contents($request->file('logo')));
                     if (Storage::disk('public')->exists($barangay->logo)) {
                         Storage::disk('public')->delete($barangay->logo);
                     }
+                    Storage::disk('public')->put($filePath, file_get_contents($request->file('logo')));
                     $barangay->logo = $filePath;
                 }
-                $barangay->name = $request->name;   
+                $barangay->name = $request->name;
                 $barangay->save();
                 $message = "Barangay " .  $request->name . ' ' . $message;
             } else {

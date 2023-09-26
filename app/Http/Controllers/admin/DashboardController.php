@@ -30,6 +30,6 @@ class DashboardController extends Controller
         // Execute the query
         $total_residents_per_barangay = $barangays->get();
 
-        return view('backend.admin.dashbaord.index', compact('total_residents_per_barangay'));
+        return view('backend.admin.dashbaord.index', compact('total_residents_per_barangay','years'));
     }
 }

@@ -18,11 +18,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Resident #</th>
+                                    <th scope="col">Picture</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Birthday</th>
                                     <th scope="col">Age</th>
                                     <th scope="col">Address</th>
-                                    <th scope="col">Certificates</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -30,30 +30,80 @@
                                 @foreach ($residents as $index => $resident)
                                     <tr>
                                         <th scope="row">{{ $resident->res_num }}</th>
+                                        <th>
+                                            <a href="#"><img loading="lazy"
+                                                    src="{{ asset('storage/uploads/residents/' . $resident->image) }}"
+                                                    alt="{{ $resident->full_name }}" style="height: 80px; width: 80px;"></a>
+                                        </th>
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <h5 class="mb-0"> {{ $resident->full_name }}</h5>
+                                                <h5 class="mb-0">{{ $resident->full_name }}</h5>
                                                 <small>{{ $resident->gender }}</small>
                                             </div>
                                         </td>
                                         <td>{{ date('F d, Y', strtotime($resident->birthday)) }}</td>
                                         <td>{{ $resident->birthday->age }}</td>
                                         <td>{{ $resident->address }}</td>
+
                                         <td>
-                                            <button class="btn btn-outline-violet btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#certificate{{ $resident->id }}">
-                                                <i class="fa-regular fa-file-lines"></i>
-                                                Create Certificate
-                                            </button>
-                                            @include('backend.user.residents.modals._create')
-                                        </td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="{{ route('user.barangay.resident.edit', $resident->id) }}"
-                                                    class="btn btn-outline-info btn-sm ms-1">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                    Edit
+                                            <a class="icon" href="#" data-bs-toggle="dropdown">
+                                                <i
+                                                    class="fa-solid fa-ellipsis-vertical"></i>
                                                 </a>
-                                            </div>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                <li class="dropdown-header text-start">
+                                                    <h6>Actions</h6>
+                                                </li>
+
+                                                <li>
+                                                    <button class="dropdown-item" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#family{{ $resident->id }}">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                        View Family
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#certificate{{ $resident->id }}">
+                                                        <i class="fa-regular fa-file-lines"></i>
+                                                        Create Certificate
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('user.barangay.resident.edit', $resident->id) }}">
+                                                          <i class="fa-solid fa-pen-to-square"></i> Edit
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                                @include('backend.user.residents.modals._view')
+                                                @include('backend.user.residents.modals._create')
+                                            {{-- <div class="d-flex flex-column">
+
+                                                <div data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-original-title="View Family">
+                                                    <button class="btn btn-outline-primary btn-sm mb-1" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#family{{ $resident->id }}">
+                                                        <i class="fa-regular fa-eye p-1"></i>
+                                                    </button>
+                                                </div>
+                                                <div data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-original-title="Create Certificate">
+                                                    <button class="btn btn-outline-primary btn-sm mb-1" type="button"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#certificate{{ $resident->id }}">
+                                                        <i class="fa-regular fa-file-lines p-1"></i>
+                                                    </button>
+                                                </div>
+
+
+
+                                                <a href="" class="btn btn-outline-primary btn-sm ms-1"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-original-title="Edit Resident">
+
+                                                </a>
+                                            </div> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -63,7 +113,6 @@
 
                     </div>
                 </div>
-
             </div>
         </div>
     </section>

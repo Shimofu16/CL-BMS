@@ -39,7 +39,7 @@ Route::post('/user/logout', [HomeController::class, 'logout'])->name('logout.aut
 /* admin */
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
-    Route::get('/dashboard/{year_id}', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{year_id?}', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::prefix('barangay/official')->name('official.')->group(function () {
         Route::get('/{year_id?}/{barangay_id?}', [OfficialsController::class, 'index'])->name('index');
@@ -96,10 +96,9 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
             Route::put('/update/{id}', [PermitController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [PermitController::class, 'delete'])->name('delete');
         });
-        
-        Route::prefix('certificate')->name('certificate.')->group(function () {
-            Route::get('/create/resident/{resident_id}', [CertificateListController::class, 'create'])->name('create');
 
+        Route::prefix('certificate')->name('certificate.')->group(function () {
+            Route::post('/create/resident/{resident_id}', [CertificateListController::class, 'create'])->name('create');
         });
     });
 });

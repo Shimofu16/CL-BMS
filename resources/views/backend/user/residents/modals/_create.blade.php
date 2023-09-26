@@ -2,19 +2,31 @@
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header bg-violet">
-                <h5 class="modal-title">Create Certificate for {{ $resident->full_name }}</h5>
+                <h5 class="modal-title">Create Certificate</h5>
             </div>
 
-            <form action="{{ route('user.barangay.resident.create',['resident_id' => $resident->id]) }}" method="post">
+            <form action="{{ route('user.barangay.certificate.create',['resident_id' => $resident->id]) }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <label class="form-label fw-bold" for="">Certificate</label>
-                            <select class="form-select" name="certificate">
+                            <label class="form-label fw-bold" for="certificate">Certificate</label>
+                            <select class="form-select" name="certificate" id="certificate">
                                 <option selected value="">----- Select Certificate -----</option>
                                 @foreach ($certificates as $certificate)
                                     <option value="{{ $certificate['type'] }}">{{ $certificate['title'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-bold" for="receiver_id">Reciever</label>
+                            <select class="form-select" name="receiver_id" id="receiver_id">
+                                <option selected value="">----- Select Reciever -----</option>
+                                <option value="father">{{ $resident->full_name }} - Family Head</option>
+                                @foreach ($resident->members as $member)
+                                    <option value="{{ $member->id }}">{{ $member->name }} - {{ $member->relationship }}</option>
                                 @endforeach
                             </select>
                         </div>

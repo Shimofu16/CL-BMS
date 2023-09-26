@@ -123,7 +123,7 @@ class ResidentsController extends Controller
 
         $year = Carbon::now()->year;
         $resident_cnt = $this->residents->count() + 1;
-        $resident_number = "Brgy-{$year}-{$resident_cnt}";
+        $resident_number = "Brgy-{$this->barangay_id}-{$year}-{$resident_cnt}";
 
         $resident = Resident::create([
             'res_num' => $resident_number,

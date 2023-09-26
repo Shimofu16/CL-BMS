@@ -35,6 +35,7 @@
     {{-- page css --}}
     @yield('styles')
 
+
 </head>
 
 <body>
@@ -96,7 +97,7 @@
     @if (Route::is('*.dashboard.index'))
         <script src="{{ asset('assets/packages/apexcharts/apexcharts.min.js') }}"></script>
         <script src="{{ asset('assets/packages/chart.js/chart.umd.js') }}"></script>
-        <script src="{{ asset('assets/packages/echarts/echarts.min.js') }}"></script>   
+        <script src="{{ asset('assets/packages/echarts/echarts.min.js') }}"></script>
         <script src="{{ asset('assets/packages/quill/quill.min.js') }}"></script>
     @endif
 
@@ -106,7 +107,7 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     {{-- sweetalert --}}
-    {{-- @include('sweetalert::alert') --}}
+    @include('sweetalert::alert')
     @yield('scripts')
     <script>
         $(document).ready(function() {
