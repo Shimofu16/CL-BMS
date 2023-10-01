@@ -29,6 +29,12 @@ class CertificateListController extends Controller
     public function create(Request $request, $resident_id)
     {
 
+        $request->validate([
+            'certificate' => 'required',
+            'receiver_id' => 'required',
+            'purpose' => 'required',
+        ]);
+        
         $isHeadOfTheFamily = false;
         // certificate
         $certificate = $request->certificate;
@@ -48,12 +54,13 @@ class CertificateListController extends Controller
 
         // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
         $certificate = ucwords(str_replace("_", " ", $certificate)) . " Certificate";
-        $clearance_count = ActivityLog::where('subject', '=', $certificate)
-            ->whereBetween('created_at', [
-                Carbon::now()->startOfYear(),
-                Carbon::now()->endOfYear(),
-            ])
-            ->count() + 1;
+        $clearance_count = 1;
+        // $clearance_count = ActivityLog::where('subject', '=', $certificate)
+        //     ->whereBetween('created_at', [
+        //         Carbon::now()->startOfYear(),
+        //         Carbon::now()->endOfYear(),
+        //     ])
+        //     ->count() + 1;
 
         // $clearance_count = $clearance_count + 1;
 
