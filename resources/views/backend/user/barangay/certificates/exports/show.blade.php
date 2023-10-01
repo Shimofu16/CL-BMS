@@ -94,92 +94,108 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div id="element-to-print">
-                            <div class="card p-1" >
-                                <div class="card-header text-center border-0 p-1">
-                                    <p class="mt-3">REPUBLIC OF THE PHILIPPINES</p>
-                                    <p> PROVINCE OF LAGUNA </p>
-                                    <p> MUNICIPLITY OF CALAUAN </p>
-                                    <p class="mb-3"> Brgy. {{ $barangay->name }} </p>
-                                    <h1 class="mb-0 border border-dark p-2">{{ $certificate }}</h1>
-                                </div>
-                                <div class="card-body row p-1">
-                                    <div class="col-4 pe-1">
-                                        <div
-                                            class="d-flex flex-column align-items-center text-center border border-dark h-100">
-                                            <img style="height: 80px; width: 80px;"
-                                                src="{{ asset('storage/' . $barangay->logo) }}" alt="brgy-bayog-logo">
-                                            <p style="margin-bottom: 20px;"> <strong> {{ $barangay->name }} </strong></p>
+                </div>
+                <div class="card-body">
 
-                                            @foreach ($barangay_officials as $barangay_official)
-                                                @if ($barangay_official->position == 'Captain')
-                                                    <p>
-                                                        <strong>Hon. {{ $barangay_official->full_name }}</strong><br>
-                                                        {{ $barangay_official->position }}
-                                                    </p>
+                    <div id="border-blue">
+                        <div class="certificate-container">
+                            <div class="page" id="element-to-print">
+                                <div class="wrapper">
+                                    <div class="header">
+                                        <p>REPUBLIC OF THE PHILIPPINES</p>
+                                        <p> PROVINCE OF LAGUNA </p>
+                                        <p> MUNICIPLITY OF CALAUAN </p>
+                                        <p> {{ $barangay->name }} </p>
 
-                                                    <p id="councelor-label">
-                                                        <strong>COUNCILORS</strong><br>
-                                                    </p>
-                                                @else
-                                                    <p>
-                                                        <strong>Hon. {{ $barangay_official->full_name }}</strong><br>
-                                                        {{ $barangay_official->position }}
-                                                    </p>
-                                                @endif
-                                            @endforeach
+                                        <div class="title-wrapper">
+                                            <h1 class="mb-0"
+                                                style="border-left: 2px solid black; border-right: 2px solid black;">
+                                                {{ $certificate }}</h1>
                                         </div>
                                     </div>
-                                    <div class="col-8 ps-1">
-                                        <div class="border border-dark h-100">
-                                            <div class="d-flex align-items-center justify-content-between px-3 mt-3 mx-5"
-                                                style="margin-bottom: 70px">
-                                                <div>
-                                                    <p>
-                                                        {{ $barangay->name }}-{{ \Carbon\Carbon::now()->format('Y') }}-{{ $clearance_count }}
-                                                    </p>
-                                                </div>
-                                                <div class="border border-dark"
-                                                    style="height: 120px; width: 120opx; border: 1px solid black;">
-                                                    @if ($isHeadOfTheFamily)
-                                                        <img src="{{ asset('storage/uploads/residents/' . $resident->image) }}"
-                                                            alt="resident-picture" style="height: 120px; width: 120opx;">
+
+
+                                    <div class="body">
+                                        <div class="officials" style="width: 2.75in; border-left: 2px solid black;">
+                                            <div class="official-wrapper">
+                                                <img id="logo-img" src="{{ asset('storage/' . $barangay->logo) }}"
+                                                    alt="brgy-bayog-logo">
+                                                <p style="margin-bottom: 20px;"> <strong> {{ $barangay->name }} </strong>
+                                                </p>
+                                                @foreach ($barangay_officials as $barangay_official)
+                                                    @if ($barangay_official->position == 'Captain')
+                                                        <p>
+                                                            <strong>Hon. {{ $barangay_official->full_name }}</strong><br>
+                                                            {{ $barangay_official->position }}
+                                                        </p>
+
+                                                        <p id="councelor-label">
+                                                            <strong>COUNCILORS</strong><br>
+                                                        </p>
                                                     @else
-                                                        <img src="" alt="" id="output"
-                                                            style="height: 120px; width: 120opx;">
+                                                        <p>
+                                                            <strong>Hon. {{ $barangay_official->full_name }}</strong><br>
+                                                            {{ $barangay_official->position }}
+                                                        </p>
                                                     @endif
-                                                </div>
+                                                @endforeach
+
 
                                             </div>
-                                            <div class="px-3">
-                                                <p style="margin-left: 20px;" class="text-start">TO WHOM IT MAY CONCERN,</p>
-                                                <p style="text-indent: 50px; margin-top: 20px; line-height: 25px;"
-                                                    class="text-center">
-                                                    This is to certify that according to our records available in this
-                                                    barangay
-                                                    and to the best of my actual knowledge, reliable information and
-                                                    honest
-                                                    belief that <strong>{{ $resident->full_name }}, </strong>
-                                                    <strong>{{ $resident->birthday->age }} years old,</strong>
-                                                    <strong> {{ $resident->civil_status }} </strong> residing and with
-                                                    postal
-                                                    address at <strong> {{ $resident->address }}</strong> is a person
-                                                    of good
-                                                    moral character and reputation He/She is peacefull and law abiding
-                                                    citizen.
-                                                <p style="text-indent: 50px; margin-top: 20px; line-height: 25px;">
-                                                    Issued upon request of subject person in connection with his/her
-                                                    application
-                                                    for <strong> {{ Str::upper($purpose) }}</strong>
-                                                </P>
+                                        </div>
 
-                                                <p style="text-indent: 50px; margin-top: 20px; line-height: 25px;">
-                                                    Witness my hand and seal, this <strong>
-                                                        {{ \Carbon\Carbon::today()->format('jS \\of F Y') }}</strong>
-                                                    at<strong>
-                                                        Barangay {{ $barangay->name }} Calauan, Laguna. </strong>
-                                                </p>
+                                        <div class="content" style=" border-right: 2px solid black;">
+                                            <div class="content-wrapper">
+                                                <div class="top-part">
+                                                    <p id="bayog">
+                                                        BAYOG-{{ \Carbon\Carbon::now()->format('Y') }}-{{ $clearance_count }}
+                                                    </p>
+                                                    {{-- <img id="resident-picture" src="{{ asset('../img/brgy-logo.jpg') }}"
+                                                        alt=""> --}}
+                                                    <div id="resident-picture">
+                                                        {{-- webcam video snapshot --}}
+                                                        @if ($isHeadOfTheFamily)
+                                                            <img src="{{ asset($resident->image) }}" alt="resident-picture"
+                                                                width="120" height="120">
+                                                        @else
+                                                            <img src="" alt="" id="output"  width="120" height="120">
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-part">
+                                                    <p id="to-whom">TO WHOM IT MAY CONCERN,</p>
+                                                    <p id="content">
+
+                                                        This is to certify that according to our records available in this
+                                                        barangay
+                                                        and to the best of my actual knowledge, reliable information and
+                                                        honest
+                                                        belief that <strong>{{ $resident->full_name }}, </strong>
+                                                        <strong>{{ $resident->birthday->age }} years old,</strong>
+                                                        <strong> {{ $resident->civil_status }} </strong> residing and with
+                                                        postal
+                                                        address at <strong> {{ $resident->address }}</strong> is a person
+                                                        of good
+                                                        moral character and reputation He/She is peacefull and law abiding
+                                                        citizen.
+                                                    <P id="issue-for">
+                                                        Issued upon request of subject person in connection with his/her
+                                                        application
+                                                        for <strong id="transform-upppercase"> {{ $purpose }}
+                                                        </strong>
+                                                    </P>
+
+                                                    <p id="witness">
+                                                        Witness my hand and seal, this <strong>
+                                                            {{ \Carbon\Carbon::today()->format('jS \\of F Y') }}</strong>
+                                                        at<strong>
+                                                            Barangay {{ $barangay->name }} Calauan, Laguna. </strong>
+                                                    </p>
+
+                                                    </p>
+                                                </div>
+
                                                 <div class="sign-part">
                                                     <div class=sign-wrapper>
                                                         <p id="signature">SIGNATURE</p>
@@ -188,31 +204,31 @@
                                                         <p id="tumb-box"></p>
 
 
-                                                        <p>RIGHT THUMB MARK</p>
-                                                    </div>
+                                                    <p>RIGHT THUMB MARK</p>
                                                 </div>
+                                            </div>
 
-                                                <div class="cap-sign-part">
-                                                    <div class="cap-sign-wrapper">
-                                                        <p>
-                                                            <strong>Hon.{{ $chairman->full_name }}</strong>
-                                                            <span>{{ $chairman->position }}</span>
-                                                        </p>
-                                                    </div>
+                                            <div class="cap-sign-part">
+                                                <div class="cap-sign-wrapper">
+                                                    <p>
+                                                        <strong>Hon.{{ $chairman->full_name }}</strong>
+                                                        <span>{{ $chairman->position }}</span>
+                                                    </p>
                                                 </div>
+                                            </div>
 
-                                                <div class="issued">
-                                                    <div class="issued-wrapper">
-                                                        <p>
-                                                            CTC No.:
-                                                        </p>
-                                                    </div>
+                                            <div class="issued">
+                                                <div class="issued-wrapper">
+                                                    <p>
+                                                        CTC No.:
+                                                    </p>
                                                 </div>
+                                            </div>
 
                                             </div>
                                             <div class="validity">
                                                 <div class="validity-wrapper">
-                                                    <p class="text-center">
+                                                    <p>
                                                         *VALID UNTIL THREE(3) MONTHS FROM THE DATE ISSUED*
                                                     </p>
                                                 </div>
@@ -223,6 +239,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
