@@ -53,12 +53,12 @@ class Resident extends Model
 
     public function barangay()
     {
-        return $this->belongsTo(Barangay::class);
+        return $this->belongsTo(Barangay::class, 'barangay_id');
     }
 
     public function purok()
     {
-        return $this->belongsTo(Purok::class);
+        return $this->belongsTo(Purok::class, 'purok_id');
     }
 
     public function business()

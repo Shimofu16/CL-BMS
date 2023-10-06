@@ -3,337 +3,226 @@
     Dashboard
 @endsection
 
-@section('content')
-    {{-- <style>
+@section('contents')
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
 
-        .card-body {
-            background-color: #071bb4
-        }
-        /* officials */
-        .officials {
-            background-color: whitesmoke;
-            border: 1px solid #017cfd;
-            border-radius: 3px;
-        }
+                            {{-- <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                              <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                              </li>
 
-        .official-wrapper {
-            padding: 5px;
-            text-align: center;
-        }
+                              <li><a class="dropdown-item" href="#">Today</a></li>
+                              <li><a class="dropdown-item" href="#">This Month</a></li>
+                              <li><a class="dropdown-item" href="#">This Year</a></li>
+                            </ul>
+                          </div> --}}
 
-        .officials p {
-            line-height: 20px;
-            font-size: 15px;
-        }
+                            <div class="card-body">
+                                <h5 class="card-title">Total Residents</h5>
 
-        #councelor-label {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            margin-bottom: 10px;
-            margin-top: 30px;
-        }
-
-        #logo-img {
-            width: 80px;
-            height: auto;
-            margin-bottom: 30px;
-        }
-
-        #brgy {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-    </style>
-    <section class="section">
-        <div class="section-header d-flex justify-content-between">
-            <h3 class="page__heading">Dashboard</h3>
-        </div>
-        <div class="section-body">
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="card">
-
-                        <div class="card-body rounded" id="border-blue">
-                            <div class="row">
-                                
-                               
-
-                                <div class="col-lg-4">
-                                    <div class="card card-primary" id="border-blue" >
-
-                                        <div class="pt-2">
-                                            <h5 class="text-center">Total Population</h5>
-                                        </div>
-                                        <div class="card-body py-2 px-2">
-                                            <h1 class="text-center text-primary">{{ $total_res }}</h1>
-                                                <canvas id="genderChart"></canvas>
-                                        </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-people-roof"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $residents_count }}</h6>
+                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                     </div>
                                 </div>
-
-                                <div class="col-lg-4">
-                                    <div class="card card-primary" id="border-blue" >
-                                        <div class="pt-2">
-                                            <h5 class="text-center">Total Senior and PWD</h5>
-                                        </div>
-                                        <div class="card-body py-2 px-2">
-                                            <h1 class="text-center text-primary">{{$senior_and_pwd_total_cnt }}</h1>
-                                            <canvas id="seniorChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>      
-                                
-                                <div class="col-lg-4"> 
-                                    <div class="card card-primary" id="border-blue" >
-                                        <div class="pt-2">
-                                            <h5 class="text-center">No. of Blotters</h5>
-                                        </div>
-                                        <div class="card-body py-2 px-2">
-                                            <h1 class="text-center text-primary">{{ $total_blotters }}</h1>
-                                            <canvas id="blotterChart"></canvas>
-                                        </div>     
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4" >
-                                    <div class="card card-primary " id="border-blue" >
-                                            <div class="card-body py-0">
-                                                <img src="{{ '../img/Projections-bro.png' }}" alt="" style = "width: 200px;" class = "p-2">
-                                            </div>
-                                            <div class="pt-2">
-                                                <h5 class="text-center">No. of Business</h5>
-                                            </div>
-                                            
-                                     
-                                        <div class="card-body py-2 ">
-                                            <h1 class="text-center text-primary">{{ $total_business }}</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-lg-4">
-                                    <div class="card card-primary" id="border-blue" >
-                                        <div class="card-body py-0">
-                                            <img src="{{ '../img/pwd-bro.png' }}" alt="" style = "width: 200px;">
-                                        </div>
-                                        <div class="pt-2">
-                                            <h5 class="text-center">No. of PWD</h5>
-                                        </div>
-                                        <div class="card-body py-2 ">
-                                            <h1 class="text-center text-primary">{{ $senior_Cnt }}</h1>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="card card-primary" id="border-blue" >
-                                        <div class="card-body py-0">
-                                            <img src="{{ '../img/Plain credit card-pana.png' }}" alt="" style = "width: 200px;">
-                                        </div>
-                                        <div class="pt-2">
-                                            <h5 class="text-center">No. of 4P's Beficiaries</h5>
-                                        </div>
-                                        <div class="card-body py-2 ">
-                                            <h1 class="text-center text-primary">{{ $total_business }}</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                                   
-
                             </div>
+
                         </div>
                     </div>
-                </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
 
-                <div class="col-lg-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Total PWD Residents</h5>
 
-                    <div class="card ">
-                        
-
-                            <div class="officials">
-                                <p id="brgy">Barangay Bayog <br> Officials
-                                <p>
-                                <div class="official-wrapper">
-                                    <img id="logo-img" src="{{ asset('../img/brgy-bayog-logo.png') }}"
-                                        alt="brgy-bayog-logo">
-
-                                    @foreach ($b_officials as $b_official)    
-                                                
-                                       @if ($b_official->brgy_official_position == 'Barangay Chairman')
-                                            <p>
-                                                <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
-                                                {{ $b_official->brgy_official_position }}
-                                            </p>
-
-                                            <p id="councelor-label">
-                                                <strong>COUNCILORS</strong><br>
-                                            </p>
-
-                                        
-                                        @elseif($b_official->brgy_official_position == 'Barangay Secretary')
-                                        <p>
-                                            <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                            {{ $b_official->brgy_official_role }}
-                                        </p>
-
-                                        @elseif($b_official->brgy_official_position == 'Barangay Treasurer')
-                                        <p>
-                                            <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                            {{ $b_official->brgy_official_role }}
-                                        </p>
-
-                                        @elseif($b_official->brgy_official_position == 'Barangay Clerk')
-                                        <p>
-                                            <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                            {{ $b_official->brgy_official_role }}
-                                        </p>
-
-                                        @else
-                                            <p>
-                                                <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
-                                                {{ $b_official->brgy_official_role }}
-                                            </p>
-                                            
-                                        @endif
-                                                         
-                                    
-                                    @endforeach
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-person-walking-with-cane"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $pwd_residents_count }}</h6>
+                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                    </div>
                                 </div>
                             </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Sinior Citezen Residents</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="fa-solid fa-hospital-user"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $senior_residents_count }}</h6>
+                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xxl-3 col-md-4 px-1">
+                <div class="card">
+                    {{-- <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            @foreach ($years as $year)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard.index',['year_id' => $year->year]) }}">{{ $year->year
+                                     }}</a>
+                                </li>
+                            @endforeach
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        </ul>
+                    </div> --}}
 
-        <script>
-            var ctx = document.getElementById('blotterChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [
-                            {{$unsettled_blotters}},
-                            {{$settled_blotters}}
-                            // 40,
-                            // 30,
-                            // 20,
-                        ],
-                        backgroundColor: [
-                            '#191d21',
-                            '#017cfd'
-                            // '#ffa426',
-                            // '#fc544b',
-                            // '#6777ef',
-                        ],
-                        label: 'Dataset 1'
-                    }],
-                    labels: [
-                        'Unsettle',
-                        'Settled'
-                        //     'Yellow',
-                        //     'Red',
-                        //     'Blue'
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'bottom',
-                    },
-                }
-            });
-        </script>
+                    <div class="card-body pb-0">
+                        <h5 class="card-title text-center">Residents with subsudy program</h5>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <!-- Pie Chart -->
+                            @if (count($residents_with_subsidy) > 0)
+                                <canvas id="subsidy" style=""></canvas>
+                            @else
+                                <div class="alert alert-info text-center">
+                                    <strong>No data found!</strong>
+                                </div>
+                            @endif
 
-        <script>
-            var ctx = document.getElementById('genderChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [
-                            {{ $female_Cnt }},
-                            {{ $male_Cnt }}
-                            // 40,
-                            // 30,
-                            // 20,
-                        ],
-                        backgroundColor: [
-                            '#191d21',
-                            '#017cfd'
-                            // '#ffa426',
-                            // '#fc544b',
-                            // '#6777ef',
-                        ],
-                        label: 'Dataset 1'
-                    }],
-                    labels: [
-                        'Female',
-                        'Male'
-                        //     'Yellow',
-                        //     'Red',
-                        //     'Blue'
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'bottom',
-                    },
-                }
-            });
-        </script>
+                        </div>
 
-        <script>
-            var ctx = document.getElementById('seniorChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [
-                            {{$senior_notpwd_Cnt}},
-                            {{$senior_pwd_Cnt}},
-                            {{$PWD_Cnt_two}},
-                            // 40,
-                            // 30,
-                            // 20,
-                        ],
-                        backgroundColor: [
-                            '#191d21',
-                            '#017cfd',
-                            '#455a64',
-                            // '#ffa426',
-                            // '#fc544b',
-                            // '#6777ef',
-                        ],
-                        label: 'Dataset 1'
-                    }],
-                    labels: [
-                        'Senior',
-                        'Senior/PWD',
-                        'PWD',
-                        //     'Yellow',
-                        //     'Red',
-                        //     'Blue'
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'bottom',
-                    },
-                }
-            });
-        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-md-4 px-1">
+                <div class="card">
+                    {{-- <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            @foreach ($years as $year)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard.index',['year_id' => $year->year]) }}">{{ $year->year
+                                     }}</a>
+                                </li>
+                            @endforeach
 
-    </section> --}}
+                        </ul>
+                    </div> --}}
 
-    <section class="section dashboard">
-        hatdog
+                    <div class="card-body pb-0">
+                        <h5 class="card-title text-center">Residents Per Purok</h5>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <!-- Pie Chart -->
+                            @if (count($residents_per_purok) > 0)
+                                <canvas id="purok" style=""></canvas>
+                            @else
+                                <div class="alert alert-info text-center">
+                                    <strong>No data found!</strong>
+                                </div>
+                            @endif
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-md-4 px-1">
+                <div class="card">
+                    {{-- <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="#">Today</a></li>
+                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                  </div> --}}
+
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Blotters {{-- <span>| Today</span> --}}</h5>
+
+                        <div class="activity">
+                            @forelse ($blotters as $blotter)
+                                <div class="activity-item d-flex">
+                                    <div class="activity-label">{{ $blotter->created_at->diffForHuman() }}</div>
+                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                    <div class="activity-content">
+                                        <p>{{ 'blotter ino' }}</p>
+                                        <a href="#" class="fw-bold text-dark">View</a>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="activity-item d-flex justify-content-center">
+                                    <div class="activity-label ">No Blotters</div>
+                                </div>
+                            @endforelse
+                            <!-- End activity item-->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+@endsection
+@section('scripts')
+    <script>
+        const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+            '#17becf', '#1b9e77', '#d95f02', '#7570b3', '#e7298a'
+        ];
+
+        function generateCharts(selector, label, data) {
+            const dataLength = data.length;
+            const backgroundColors = colors.slice(0, dataLength);
+            new Chart(document.querySelector(selector), {
+                type: 'pie',
+                data: {
+                    labels: data.map(d => d.name),
+                    datasets: [{
+                        label: label,
+                        data: data.map(d => d.residents_count),
+                        backgroundColor: backgroundColors,
+                        hoverOffset: 4
+                    }]
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            generateCharts('#purok', 'Residents Per Purok ', {!! json_encode($residents_per_purok) !!});
+            generateCharts('#subsidy', 'Residents with subsudy program', {!! json_encode($residents_with_subsidy) !!});
+
+        });
+    </script>
 @endsection

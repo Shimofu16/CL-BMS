@@ -4,32 +4,41 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Barangay;
+use App\Model\Officials;
+use App\Model\Resident;
 use App\Model\Year;
 
 class DashboardController extends Controller
 {
     public function index($year = null)
     {
-        $years = Year::all();
-        // Initialize the query builder
         $barangays = Barangay::query();
 
-        if ($year) {
-            // Split the year range
-            list($from, $to) = explode('-', $year);
+        $residents_per_barangay = $barangays->has('residents')->withCount('residents')->get();
 
-            // Filter residents based on the year range
-            $barangays->withCount(['residents' => function ($query) use ($from, $to) {
-                $query->whereBetween('year', [$from, $to]);
-            }]);
-        } else {
-            // If no year range is specified, get all residents
-            $barangays->withCount('residents');
-        }
+        $residents_count = Resident::count();
 
-        // Execute the query
-        $total_residents_per_barangay = $barangays->get();
+        $brangay_count = Barangay::count();
 
-        return view('backend.admin.dashbaord.index', compact('total_residents_per_barangay','years'));
+        $officials_count = Officials::count();
+
+        $residents_with_subsidy_per_brgy = Barangay::has('residents')->withCount('residents')
+            ->whereHas('residents', function ($query) {
+                $query->whereIn('membership_prog', ['Solo Parent', '4Ps', 'TUPAD']);
+            })
+            ->get();
+
+
+
+        return view(
+            'backend.admin.dashbaord.index',
+            compact(
+                'residents_per_barangay',
+                'residents_count',
+                'brangay_count',
+                'officials_count',
+                'residents_with_subsidy_per_brgy'
+            )
+        );
     }
 }

@@ -20,7 +20,7 @@ class ResidentsController extends Controller
     public function __construct(Request $request)
     {
         // Initialize a default value for barangay_id in case it's not in the session
-        $this->barangay_id = session('barangay_id');
+        $this->barangay_id = auth()->user()->official->barangay->id;
         $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
         $this->path = 'uploads/residents/';
     }
@@ -92,6 +92,7 @@ class ResidentsController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'image' => ['required'],
             'last_name' => ['required'],
@@ -99,7 +100,7 @@ class ResidentsController extends Controller
             'middle_name' => ['nullable'],
             'suffix_name' => ['nullable'],
             'gender' => ['required'],
-            'birthday' => ['required'],
+            'birthday' => ['required', 'date', 'before:-18 years', 'before_or_equal:today'],
             'birthplace' => ['nullable'],
             'civil_status' => ['required'],
             'house_number' => ['nullable'],
@@ -111,7 +112,6 @@ class ResidentsController extends Controller
             'membership_prog' => ['required'],
             'purok_id' => ['required'],
         ]);
-        
         $img = $request->get('image');
         $image_parts = explode(";base64,", $img);
         $image_base64 = base64_decode(end($image_parts));
@@ -173,7 +173,7 @@ class ResidentsController extends Controller
         //   $residence->image = $imageName;
         //   $residence->path = '/storage/'.$path;
 
-        return redirect()->route('user.barangay.resident.index')->with('success', 'Residence added sucessfully');
+        return redirect()->route('user.barangay.resident.index')->with('success', 'Residence added successfully');
     }
 
     /**

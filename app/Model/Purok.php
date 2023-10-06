@@ -15,4 +15,9 @@ class Purok extends Model
     {
         return $this->belongsTo(Barangay::class, 'barangay_id');
     }
+
+    public function residents()
+    {
+        return $this->hasMany(Resident::class, 'purok_id');
+    }
 }

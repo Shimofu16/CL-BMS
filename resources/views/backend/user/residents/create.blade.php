@@ -206,6 +206,8 @@ Residents
                                     </option>
                                     <option value="None" {{ old('membership_prog')==='None' ? 'selected' : '' }}>
                                         None</option>
+                                    <option value="Solo Parent" {{ old('membership_prog')==='Solo Parent' ? 'selected' : '' }}>
+                                        Solo Parent</option>
                                     <option value="4Ps" {{ old('membership_prog')==='4Ps' ? 'selected' : '' }}>
                                         4Ps</option>
                                     <option value="TUPAD" {{ old('membership_prog')==='TUPAD' ? 'selected' : '' }}>

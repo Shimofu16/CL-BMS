@@ -18,7 +18,7 @@
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('user.barangay.*') ? 'active' : '' }}"
                     href="{{ route('user.barangay.resident.index') }}">
-                    <i class="fa-solid fa-house-chimney"></i>
+                    <i class="fa-solid fa-people-roof"></i>
                     <span>Residents</span>
                 </a>
             </li>

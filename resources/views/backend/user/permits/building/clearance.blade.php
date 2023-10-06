@@ -21,7 +21,7 @@ Barangay Building Clearance
             <div class="certificate-container">
                 <div class="page" style="width: 8.3in;" id="element-to-print">
                     <div class="wrapper">
-                        <div class="header">
+                        <div class="head">
 
                             <p>REPUBLIC OF THE PHILIPPINES</p>
                             <p> PROVINCE OF LAGUNA </p>
@@ -217,12 +217,12 @@ Barangay Building Clearance
     }
 
     /* header */
-    .header p {
+    .head p {
         text-align: center;
         line-height: 18px;
     }
 
-    .header h1 {
+    .head h1 {
         padding: 10px;
         text-align: center;
         border: 1px solid black;

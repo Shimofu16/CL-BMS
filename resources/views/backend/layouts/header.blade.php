@@ -7,7 +7,11 @@
         </a>
         <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
+    @if (Route::is('user.*'))
+    <div class="ms-5">
+       <h4 class="mb-0 text-violet"> Barangay {{ Str::ucfirst(auth()->user()->official->barangay->name) }}</h4>
+    </div>
+    @endif
 
 
     <nav class="header-nav ms-auto">
@@ -129,7 +133,8 @@
                         </a>
                     </li>
                 </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav -->
+            </li>
+            <!-- End Profile Nav -->
 
         </ul>
     </nav>

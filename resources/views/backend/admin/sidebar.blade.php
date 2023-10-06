@@ -17,7 +17,7 @@
                 <li class="nav-item ">
                     <a class="nav-link {{ Route::is('admin.official.index') ? 'active' : '' }}"
                         href="{{ route('admin.official.index') }}">
-                        <i class="fa-solid fa-people-roof"></i>
+                        <i class="fa-solid fa-people-line"></i>
                         <span>Officials</span>
                     </a>
                 </li>
