@@ -6,6 +6,7 @@
 @section('content')
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tinos:wght@400;700&display=swap');
+
         p {
             color: black;
             font-family: 'Tinos', serif;
@@ -35,7 +36,7 @@
 
         /* wrapper */
         .wrapper {
-            margin-top: 30px; 
+            margin-top: 30px;
         }
 
         .title-wrapper {
@@ -205,15 +206,13 @@
         .issued {
             margin-top: 40px;
         }
-
-
     </style>
     <section class="section">
         <div class="section-header">
             <h3 class="page__heading">Brgy Indigency Certificate</h3>
         </div>
         <div class="d-flex justify-content-around">
-            <div id = "border-blue">
+            <div id="border-blue">
                 <div class="certificate-container">
                     <div class="page" style="width: 8.3in;" id="element-to-print">
                         <div class="wrapper">
@@ -221,22 +220,22 @@
 
                                 <p>REPUBLIC OF THE PHILIPPINES</p>
                                 <p> PROVINCE OF LAGUNA </p>
-                                <p>   MUNICIPLITY LOS BAÑOS </p>
-                                <p> BARANGAY BAYOG  </p>
+                                <p> MUNICIPLITY LOS BAÑOS </p>
+                                <p> BARANGAY BAYOG </p>
 
                                 <div class="title-wrapper">
-                                    <h3 style="border-left: 2px solid black; border-right: 2px solid black;">SERTIPIKASYON NA NABIBILANG <br> SA MAHIHIRAP NA PAMILYA</h3>
+                                    <h3 style="border-left: 2px solid black; border-right: 2px solid black;">SERTIPIKASYON
+                                        NA NABIBILANG <br> SA MAHIHIRAP NA PAMILYA</h3>
 
                                 </div>
                             </div>
                             <div class="body">
                                 <div class="officials" style="width: 2.75in; border-left: 2px solid black;">
                                     <div class="official-wrapper">
-                                            <img id="logo-img" src="{{ asset('../img/brgy-bayog-logo.png') }}"
-                                            alt="brgy-bayog-logo" >
-                                        <p style = "margin-bottom: 20px;"> <strong> Barangay Bayog </strong></p>
+                                        <img id="logo-img" src="{{ asset('../img/brgy-bayog-logo.png') }}"
+                                            alt="brgy-bayog-logo">
+                                        <p style="margin-bottom: 20px;"> <strong> Barangay Bayog </strong></p>
                                         @foreach ($b_officials as $b_official)
-
                                             @if ($b_official->brgy_official_position == 'Barangay Chairman')
                                                 <p>
                                                     <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
@@ -246,34 +245,27 @@
                                                 <p id="councelor-label">
                                                     <strong>COUNCILORS</strong><br>
                                                 </p>
-
-                                            
                                             @elseif($b_official->brgy_official_position == 'Barangay Secretary')
-                                            <p>
-                                                <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                {{ $b_official->brgy_official_role }}
-                                            </p>
-
+                                                <p>
+                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
+                                                    {{ $b_official->brgy_official_role }}
+                                                </p>
                                             @elseif($b_official->brgy_official_position == 'Barangay Treasurer')
-                                            <p>
-                                                <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                {{ $b_official->brgy_official_role }}
-                                            </p>
-
+                                                <p>
+                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
+                                                    {{ $b_official->brgy_official_role }}
+                                                </p>
                                             @elseif($b_official->brgy_official_position == 'Barangay Clerk')
-                                            <p>
-                                                <strong>{{ $b_official->brgy_official_name }}</strong><br>
-                                                {{ $b_official->brgy_official_role }}
-                                            </p>
-
+                                                <p>
+                                                    <strong>{{ $b_official->brgy_official_name }}</strong><br>
+                                                    {{ $b_official->brgy_official_role }}
+                                                </p>
                                             @else
                                                 <p>
                                                     <strong>Hon. {{ $b_official->brgy_official_name }}</strong><br>
                                                     {{ $b_official->brgy_official_role }}
                                                 </p>
-                                                
                                             @endif
-
                                         @endforeach
 
 
@@ -293,57 +285,57 @@
 
                                         <div class="text-part">
                                             <p id="content">
-                                                Ito ay nagpapatunay na si <strong>{{ $resident->first_name }} {{ $resident->middle_name }}
-                                                {{ $resident->last_name }} {{ $resident->suffix_name }}, {{ \Carbon\Carbon::parse($resident->birthday)->diff(\Carbon\Carbon::now())->format('%y') }} taong gulang </strong> ipinanganak noong
-                                            <strong>{{ \Carbon\Carbon::parse($resident->birthday)->format('F d, Y') }} </strong> sa <strong> {{$resident->birthplace}} </strong> at kasalukuyang nakatira sa Tagpuan St., Bayog, Los
-                                                Baños, Laguna ay nabibilang sa mahihirap na pamilya sa aming Barangay at walang
+                                                Ito ay nagpapatunay na si <strong>{{ name }}, {{ age }}
+                                                    taong gulang </strong> ipinanganak noong
+                                                <strong>{{ date('F d, Y', strtotime($resident->birthday)) }} </strong> sa
+                                                <strong> {{ $resident->birthplace }} </strong> at kasalukuyang nakatira sa
+                                                {{ address }} ay nabibilang sa mahihirap na pamilya sa aming Barangay
+                                                at walang
                                                 pirmihang pinagkakakitaan.
+                                            </P>
                                             <P id="issue-for">
                                                 Ang pagpapatunay na ito ay para sa kahilingan ni
-                                                <strong>{{ $resident->first_name }} {{ $resident->middle_name }}
-                                                    {{ $resident->last_name }} {{ $resident->suffix_name }}</strong> para magamit bilang requirement sa
+                                                <strong>{{ name }}</strong> para magamit bilang requirement sa
                                                 <strong style="text-transform:uppercase;">{{ $purpose }}</strong>.
                                             </P>
 
                                             <p id="witness">
-                                                Ipinagkaloob ngayong ika - 
+                                                Ipinagkaloob ngayong ika -
 
                                                 <strong>
-                                                
-                                                {{\Carbon\Carbon::today()->format('d')}}
-                                                  
-                                                ng
+                                                    {{ \Carbon\Carbon::today()->format('d') }}
 
-                                                @if ((\Carbon\Carbon::today()->format('F')) == 'January')
-                                                    Enero,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'February')
-                                                    Pebrero,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'March')
-                                                    Marso,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'April')
-                                                    Abril,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'May')
-                                                    Mayo,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'June')
-                                                    Hunyo,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'July')
-                                                    Hulyo,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'August')
-                                                    Agosto,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'September')
-                                                    Setyembre,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'October')
-                                                    Octobre,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'November')
-                                                    Nobyembre,
-                                                @elseif ((\Carbon\Carbon::today()->format('F')) == 'December')
-                                                    Disyembre,
-                                                @else
+                                                    ng
 
-                                                @endif
+                                                    @if (\Carbon\Carbon::today()->format('F') == 'January')
+                                                        Enero,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'February')
+                                                        Pebrero,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'March')
+                                                        Marso,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'April')
+                                                        Abril,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'May')
+                                                        Mayo,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'June')
+                                                        Hunyo,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'July')
+                                                        Hulyo,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'August')
+                                                        Agosto,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'September')
+                                                        Setyembre,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'October')
+                                                        Octobre,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'November')
+                                                        Nobyembre,
+                                                    @elseif (\Carbon\Carbon::today()->format('F') == 'December')
+                                                        Disyembre,
+                                                    @else
+                                                    @endif
 
-                                                {{\Carbon\Carbon::today()->format('Y')}}
-                                     
+                                                    {{ \Carbon\Carbon::today()->format('Y') }}
+
                                                 </strong>
                                             </p>
 
@@ -358,16 +350,14 @@
                                             <div class="cap-sign-wrapper">
 
                                                 @foreach ($b_officials as $b_official)
-
-                                                @if ($b_official->brgy_official_position == 'Barangay Chairman')
-                                                    <p>
-                                                        <strong>Kgg.
-                                                            {{ $b_official->brgy_official_name }}</strong><br>
-                                                        Punong Barangay
-                                                    </p>
-                                       
-                                                @endif
-                                         @endforeach
+                                                    @if ($b_official->brgy_official_position == 'Barangay Chairman')
+                                                        <p>
+                                                            <strong>Kgg.
+                                                                {{ $b_official->brgy_official_name }}</strong><br>
+                                                            Punong Barangay
+                                                        </p>
+                                                    @endif
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -376,8 +366,8 @@
                         </div>
                     </div>
                 </div>
-        </div>
-            <div class="camera-container d-flex p-3" id = "border-blue">
+            </div>
+            <div class="camera-container d-flex p-3" id="border-blue">
                 <div class="camera-wrapper">
                     <h3 class="text-center">Take a Picture</h3>
                     {{-- stream video via webcam --}}
@@ -397,8 +387,8 @@
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
-                integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
             function generatepdf() {
                 var element = document.getElementById('element-to-print');
@@ -462,6 +452,4 @@
             });
         </script>
     </section>
-
-
 @endsection

@@ -1,11 +1,7 @@
 @extends('backend.admin.sidebar')
 @section('page-title')
-    Brangay
+    Users
 @endsection
-@php
-    $title = 'Brangay';
-    $isBarangay = 1;
-@endphp
 @section('contents')
     <section class="section">
         <div class="row">
@@ -27,45 +23,44 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Logo</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Porok</th>
-                                    <th scope="col">Residents</th>
+                                    <th scope="col">Barangay</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Activities</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($barangays as $index => $barangay)
+                                @foreach ($users as $index => $user)
                                     <tr>
                                         <td scope="row">{{ $index + 1 }}</td>
                                         <td>
-                                            <a href="#"><img loading="lazy"
-                                                    src="{{ asset('storage/' . $barangay->logo) }}" alt=""
-                                                    style="height: 50px; width: 50px;"></a>
+                                            <div class="d-flex flex-column">
+                                                <h6 class="mb-0">{{ $user->name }}</h6>
+                                                <span>{{ $user->email }}</span>
+                                            </div>
                                         </td>
-                                        <td>{{ $barangay->name }}</td>
+                                        <td>{{ $user->official->barangay->name }}</td>
+                                        <td>{{ $user->official->position }}</td>
                                         <td>
-                                            {{-- view button --}}
-                                            <a href="{{ route('admin.barangay.show', ['id' => $barangay->id]) }}"
-                                                class="btn btn-outline-info btn-sm">
+                                            <a class="btn btn-outline-primary btn-sm" href="#">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
                                         </td>
-                                        <td>{{ $barangay->residents()->count() }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <button type="button" class="btn btn-outline-primary btn-sm ms-1"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $barangay->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-outline-danger btn-sm ms-1"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $barangay->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $user->id }}">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
                                             </div>
 
-                                            @include('backend.admin.barangay.modal._edit')
-                                            @include('backend.admin.barangay.modal._delete')
+                                            {{-- @include('backend.admin.barangay.modal._edit')
+                                            @include('backend.admin.barangay.modal._delete') --}}
 
                                         </td>
                                     </tr>
@@ -84,7 +79,7 @@
 
 @section('add')
     <button class="btn btn-outline-violet" data-bs-toggle="modal" data-bs-target="#add">
-        Add Barangay
+        Add User
     </button>
-    @include('backend.admin.barangay.modal._add')
+    {{-- @include('backend.admin.barangay.modal._add') --}}
 @endsection

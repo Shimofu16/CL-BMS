@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $officials  = Officials::where('position','Captain')->get();
+        $officials  = Officials::where('position','Secretary')->get();
         foreach ($officials as $key => $official) {
             User::create( [
                 'email' => Str::lower(str_replace(' ', '', $official->full_name)).'@app.com',

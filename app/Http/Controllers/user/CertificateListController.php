@@ -34,17 +34,18 @@ class CertificateListController extends Controller
             'receiver_id' => 'required',
             'purpose' => 'required',
         ]);
-        
+
         $isHeadOfTheFamily = false;
         // certificate
-        $certificate = $request->certificate;
+        $certificate_type = $request->certificate;
         // receiver id
         $receiver_id = $request->receiver_id;
         // resident
         $resident =  Resident::with('members')->findOrFail($resident_id);
         // receiver
         $isHeadOfTheFamily = $receiver_id == "father";
-        $receiver = $isHeadOfTheFamily ? $resident : $resident->members()->where('id', $receiver_id)->first();
+        $resident = $isHeadOfTheFamily ? $resident : $resident->members()->where('id', $receiver_id)->first();
+
 
         // officials
         $barangay_officials = Officials::query()->where('barangay_id', $this->barangay_id)->get();
@@ -53,7 +54,7 @@ class CertificateListController extends Controller
 
 
         // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
-        $certificate = ucwords(str_replace("_", " ", $certificate)) . " Certificate";
+        $title = ucwords(str_replace("_", " ", $certificate_type)) . " Certificate";
         $clearance_count = 1;
         // $clearance_count = ActivityLog::where('subject', '=', $certificate)
         //     ->whereBetween('created_at', [
@@ -74,8 +75,8 @@ class CertificateListController extends Controller
         // dd($receiver,$resident,$resident->members()->find($receiver_id),$receiver_id);
         return view('backend.user.barangay.certificates.exports.show', [
             'resident' => $resident,
-            'receiver' => $receiver,
-            'certificate' => $certificate,
+            'certificate_type' => $certificate_type,
+            'title' => $title,
             'purpose' => $request->purpose,
             'barangay_officials' => $barangay_officials,
             'barangay' => $this->barangay,

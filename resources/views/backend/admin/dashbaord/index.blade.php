@@ -12,14 +12,14 @@
                         <div class="card info-card sales-card">
 
                             <div class="card-body">
-                                <h5 class="card-title">Total Residents</h5>
+                                <h5 class="card-title">Total Barangay</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-people-roof"></i>
+                                        <i class="fa-solid text-violet fa-people-roof"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $residents_count }}</h6>
+                                        <h6>{{ $brangay_count }}</h6>
                                         {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                     </div>
                                 </div>
@@ -31,14 +31,14 @@
                         <div class="card info-card sales-card">
 
                             <div class="card-body">
-                                <h5 class="card-title">Total barangay</h5>
+                                <h5 class="card-title">Total Residents</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-person-walking-with-cane"></i>
+                                        <i class="fa-solid text-violet fa-person-walking-with-cane"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $brangay_count }}</h6>
+                                        <h6>{{ $residents_count }}</h6>
                                         {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid fa-hospital-user"></i>
+                                        <i class="fa-solid text-violet fa-hospital-user"></i>
                                     </div>
                                     <div class="ps-3">
                                         <h6>{{ $officials_count }}</h6>
@@ -78,7 +78,7 @@
                         <div class="d-flex align-items-center justify-content-center">
                             <!-- Pie Chart -->
                             @if (count($residents_per_barangay) > 0)
-                                <canvas id="residents" style=""></canvas>
+                                <canvas id="residents" style="height: 300px;"></canvas>
                             @else
                                 <div class="alert alert-info text-center">
                                     <strong>No data found!</strong>
@@ -99,7 +99,7 @@
                         <div class="d-flex align-items-center justify-content-center">
                             <!-- Pie Chart -->
                             @if (count($residents_with_subsidy_per_brgy) > 0)
-                                <canvas id="subsidy" style=""></canvas>
+                                <canvas id="subsidy" style="height: 300px;"></canvas>
                             @else
                                 <div class="alert alert-info text-center">
                                     <strong>No data found!</strong>

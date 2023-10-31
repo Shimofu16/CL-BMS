@@ -9,9 +9,23 @@ class FamilyMember extends Model
 {
     protected $fillable = ['head_id', 'resident_number', 'name', 'birthdate', 'relationship'];
 
+    protected $appends = [
+        'full_name',
+        'address',
+    ];
     protected $casts = [
         'birthdate' => 'date'
     ];
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->name}";
+    }
+
+    public function getAddressAttribute()
+    {
+        return "{$this->head->address}";
+    }
 
     public function head()
     {

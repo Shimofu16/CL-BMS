@@ -90,28 +90,21 @@
                                         <div class="text-part">
                                             <p id="to-whom">To Whom It May Concern:</p>
                                             <p id="content">
-                                                This is to certify that <strong>{{ $resident->first_name }}
-                                                    {{ $resident->middle_name }}
-                                                    {{ $resident->last_name }} {{ $resident->suffix_name }} </strong> of legal age and bonafide
-                                                resident of <strong>Purok-{{ $resident->purok }}
-                                                    {{ $resident->street }}, Barangay Bayog, Los Baños, Laguna.</strong>
+                                                This is to certify that <strong>{{ name }}, Barangay {{ barangay }}, Calauan, Laguna.</strong>
                                             </p>
                                             <p id="content">
-                                                This is to certify further that <strong>{{ $resident->first_name }}
-                                                    {{ $resident->middle_name }}
-                                                    {{ $resident->last_name }} {{ $resident->suffix_name }}</strong> is not a Person Under Monitoring
+                                                This is to certify further that <strong>{{ name }}</strong> is not a Person Under Monitoring
                                                 (PUM) nor a Person Under Investigation (PUI) in relation to COVID 19 while
                                                 he/she is in the barangay.
                                             </p>
                                             <P id="issue-for">
                                                 This CERTIFICATION is being issued upon the request of
-                                                <strong>{{ $resident->first_name }} {{ $resident->middle_name }}
-                                                    {{ $resident->last_name }}</strong> for any legal purpose this may
+                                                <strong>{{ name }}</strong> for any legal purpose this may
                                                 serve.
                                             </P>
 
                                             <p id="witness">
-                                                Given this <strong> {{ \Carbon\Carbon::today()->format('jS \\of F Y') }}
+                                                Given this <strong> {{ date('jS \\of F Y') }}
                                                 </strong>
                                             </p>
 

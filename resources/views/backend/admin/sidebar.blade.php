@@ -13,7 +13,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-heading">Menu</li>
+                <li class="nav-heading">Barangay</li>
                 <li class="nav-item ">
                     <a class="nav-link {{ Route::is('admin.official.index') ? 'active' : '' }}"
                         href="{{ route('admin.official.index') }}">
@@ -53,6 +53,13 @@
                         href="{{ route('admin.settings.year.index') }}">
                         <i class="fa-solid fa-gears"></i>
                         <span>Years</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link {{ Route::is('admin.users.index') ? 'active' : '' }}"
+                        href="{{ route('admin.users.index') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Users</span>
                     </a>
                 </li>
         </aside>

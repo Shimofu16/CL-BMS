@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\OfficialsController;
 use App\Http\Controllers\user\DiggingPermitController;
 use App\Http\Controllers\admin\settings\YearController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\BuildingPermitController;
 use App\Http\Controllers\user\CertificateListController;
 use App\Http\Controllers\user\MeralcoClearanceController;
@@ -68,6 +69,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             Route::delete('/delete/{id}', [YearController::class, 'delete'])->name('delete');
         });
 
+    });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('delete');
     });
 });
 

@@ -70,20 +70,14 @@
                                     <div class="text-part">
                                         <p id="to-whom">Sa kinauukulan,</p>
                                         <p id="content">
-                                            Ito ay nagpapatunay na si <strong>{{ $resident->first_name }}
-                                                {{ $resident->middle_name }}
-                                                {{ $resident->last_name }} {{ $resident->suffix_name }} </strong> ,
-                                            <strong>{{ \Carbon\Carbon::parse($resident->birthday)->diff(\Carbon\Carbon::now())->format('%y') }}
+                                            Ito ay nagpapatunay na si <strong>{{ name }}</strong> ,
+                                            <strong>{{ age }}
                                             </strong> taong gulang ipinanganak noong
-                                            <strong>{{ \Carbon\Carbon::parse($resident->birthday)->format('F d, Y') }}</strong>
-                                            sa {{$resident->birthplace}} at naninirahan sa <strong> {{ $resident->house_number }}
-                                                Purok-{{ $resident->purok }} {{ $resident->street }}, Barangay Bayog,
-                                                Los Baños, Laguna.</strong>
+                                            <strong>{{ birthday }}</strong>
+                                            sa {{$resident->birthplace}} at naninirahan sa <strong> {{ address }}</strong>
                                         <P id="issue-for">
-                                            Pagpapatunay pa din na si <strong>{{ $resident->first_name }}
-                                                {{ $resident->middle_name }}
-                                                {{ $resident->last_name }} {{ $resident->suffix_name }} </strong>, 8 buwan ng naninirahan sa Barangay
-                                            Bayog hangang sa kasalukuyan.
+                                            Pagpapatunay pa din na si <strong>{{ name }} </strong>, 8 buwan ng naninirahan sa Barangay
+                                            {{ marangay }} hangang sa kasalukuyan.
                                         </P>
 
                                         <p id="witness">
