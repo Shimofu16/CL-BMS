@@ -1,24 +1,39 @@
-<h1 align="center">Welcome to Barangay Bayog Management System 👋</h1>
-<p>
-</p>
+### How to install
 
-> This system is made by PUPCC BSIT as their Capstone Project 
+1. Clone the repository:
 
-## Install
-
-```sh
-npm install
+```bash
+git clone https://github.com/Shimofu16/Library-Management-System-Filament-.git
 ```
 
-## Author
+2. Install Composer dependencies:
 
-👤 **Mark Anthony Bautista**
+```bash
+composer install
+```
 
-* Github: [@mrksss8](https://github.com/mrksss8)
+3. Create a `.env` file and copy the contents of `.env.example` into it.
 
-## Show your support
+4. Update the database connection information in the `.env` file.
 
-Give a ⭐️ if this project helped you!
+5. Create a database for the system.
 
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+6. Run the following command to migrate the database:
+
+```bash
+php artisan migrate
+```
+
+7. Run the following command to seed the database with some sample data:
+
+```bash
+php artisan db:seed
+```
+
+8. Start the development server:
+
+```bash
+php artisan serve
+```
+
+9. Visit `http://127.0.0.1:8000` in your web browser.
