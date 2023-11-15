@@ -17,31 +17,31 @@ class BlottersController extends Controller
         // $blotters = Blotter::with('residents')->where('status', '!=', 'Settled')->get();
         return view('backend.user.blotters.index', [
             'blotters' => Blotter::with('residents')
-                                    ->where('barangay_id',Auth::user()->official->barangay->id)
-                                    ->orderBy('id','desc')
-                                    ->get()
+                ->where('barangay_id', Auth::user()->official->barangay->id)
+                ->orderBy('id', 'desc')
+                ->get()
         ]);
     }
 
     public function create()
     {
         return view('backend.user.blotters.create', [
-            'residents' => Resident::where('barangay_id',Auth::user()->official->barangay->id)->get(),
+            'residents' => Resident::where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]);
     }
 
     public function store(Request $request)
     {
-        $year = Carbon::now()->year;  
-        $blot_cnt = Blotter::where('barangay_id',Auth::user()->official->barangay->id)->count();
+        $year = Carbon::now()->year;
+        $blot_cnt = Blotter::where('barangay_id', Auth::user()->official->barangay->id)->count();
 
-        $case_cnt =  $blot_cnt + 1;    
+        $case_cnt =  $blot_cnt + 1;
         $case_number = $year . '-' . Auth::user()->official->barangay->name . '-' . $case_cnt;
 
         Blotter::create([
             'case_number' => $case_number,
             'complainant_name' => $request->complainant_name,
-            'complained_resident' => $request->complained_resident,       
+            'complained_resident' => $request->complained_resident,
             'blotters_info' => $request->blotter_info,
             'case_type' => $request->case_type,
             'status' => $request->status,
@@ -74,68 +74,63 @@ class BlottersController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('blotters.show',$id)->withStatus('Case has been settlled!');
+        return redirect()->route('blotters.show', $id)->withStatus('Case has been settlled!');
     }
 
     public function update(Request $request, $id)
-    {    
+    {
         $blotter = Blotter::findOrfail($id);
-        if($request->patawag === "bcp1"){
+        if ($request->patawag === "bcp1") {
             $blotter->bcp1 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Brgy Captain Patawag 1 has been created!');
-        }      
-        elseif($request->patawag === "bcp2"){
+            return redirect()->route('blotters.show', $id)->withStatus('Brgy Captain Patawag 1 has been created!');
+        } elseif ($request->patawag === "bcp2") {
             $blotter->bcp2 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Brgy Captain Patawag 2 has been created!');
-        }
-        elseif($request->patawag === "bcp3"){
+            return redirect()->route('blotters.show', $id)->withStatus('Brgy Captain Patawag 2 has been created!');
+        } elseif ($request->patawag === "bcp3") {
             $blotter->bcp3 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Brgy Captain Patawag 3 has been created!');
-        }
-        elseif($request->patawag === "lbp1"){
+            return redirect()->route('blotters.show', $id)->withStatus('Brgy Captain Patawag 3 has been created!');
+        } elseif ($request->patawag === "lbp1") {
             $blotter->lbp1 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Lupon ng Tagapamayapa Patawag 1 has been created!');
-        }  
-        elseif($request->patawag === "lbp2"){
+            return redirect()->route('blotters.show', $id)->withStatus('Lupon ng Tagapamayapa Patawag 1 has been created!');
+        } elseif ($request->patawag === "lbp2") {
             $blotter->lbp2 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Lupon ng Tagapamayapa Patawag 2 has been created!');
-        }  
-        elseif($request->patawag === "lbp3"){
+            return redirect()->route('blotters.show', $id)->withStatus('Lupon ng Tagapamayapa Patawag 2 has been created!');
+        } elseif ($request->patawag === "lbp3") {
             $blotter->lbp3 = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Lupon ng Tagapamayapa Patawag 3 has been created!');
-        }  
+            return redirect()->route('blotters.show', $id)->withStatus('Lupon ng Tagapamayapa Patawag 3 has been created!');
+        }
 
 
-        if($request->patawag === "Settled"){
-            return redirect()->route('blotters.settelement',$id);
-        }  
+        if ($request->patawag === "Settled") {
+            return redirect()->route('blotters.settelement', $id);
+        }
 
-        if($request->patawag === "Cancelled"){
+        if ($request->patawag === "Cancelled") {
             $blotter->status = $request->patawag;
             $blotter->save();
-            return redirect()->route('blotters.show',$id)->withStatus('Case has been cancelled!');
+            return redirect()->route('blotters.show', $id)->withStatus('Case has been cancelled!');
         }
     }
 
     public function Manage(Request $request, $id)
     {
         $blotter = Blotter::findOrfail($id);
-        
+
         $blotter->bcp1_date = $request->bcp1_date;
         $blotter->bcp1_note = $request->bcp1_note;
-        
+
         $blotter->bcp2_date = $request->bcp2_date;
         $blotter->bcp2_note = $request->bcp2_note;
-    
+
         $blotter->bcp3_date = $request->bcp3_date;
         $blotter->bcp3_note = $request->bcp3_note;
-        
+
         $blotter->lbp1_date = $request->lbp1_date;
         $blotter->lbp1_note = $request->lbp1_note;
 
@@ -152,8 +147,8 @@ class BlottersController extends Controller
 
     public function patawag($date, $id)
     {
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
+        $latest_id = Officials::max('batch_id');
+        $b_officials = Officials::where('batch_id', $latest_id)->get();
 
         // return view('blotters.patawag',compact('date','blotter','b_officials'));
         // idk why there's a date here so i will just comment it for now

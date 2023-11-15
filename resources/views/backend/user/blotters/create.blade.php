@@ -2,7 +2,9 @@
 @section('page-title')
 Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
 @endsection
-
+@section('styles')
+    <link rel="stylesheet" href="{{asset('assets/packages/select2/css/select2.min.css')}}">
+@endsection
 @section('contents')
 <section class="section">
     <div class="section-body">
@@ -19,12 +21,10 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
                             <div class="row d-flex justify-content-center">
                                 <div class="col-8">
                                     <div class="col-sm-12">
-
                                         <div class="form-group">
                                             <label>Respondent/s</label>
                                             <select name="resident_id[]"
-                                                class="form-control select2 select2-hidden-accessible" multiple=""
-                                                tabindex="-1" aria-hidden="true" style="width: 100%">
+                                                class="form-control" multiple="multiple" id="resident_id">
                                                 @foreach ($residents as $resident)
                                                 <option value={{$resident->id}}> {{$resident->last_name}}
                                                     {{$resident->first_name}} {{$resident->middle_name}}</option>
@@ -127,7 +127,15 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
             </div>
         </div>
     </div>
-    </div>
-    </div>
 </section>
 @endsection
+@section('scripts')
+    <script src="{{asset('assets/packages/select2/js/select2.full.min.js')}}"></script>
+    <script>
+        // In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('#resident_id').select2();
+});
+    </script>
+@endsection
+

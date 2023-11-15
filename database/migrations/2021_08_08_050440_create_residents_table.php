@@ -15,24 +15,24 @@ class CreateResidentsTable extends Migration
     {
         Schema::create('residents', function (Blueprint $table) {
             $table->id();
-            $table->string('res_num', 32)->nullable();
-            $table->string('last_name', 32);
-            $table->string('first_name', 32);
-            $table->string('middle_name', 32)->nullable();
-            $table->string('suffix_name', 32)->nullable();
-            $table->string('gender', 32);
+            $table->string('res_num')->nullable();
+            $table->string('last_name');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('suffix_name')->nullable();
+            $table->string('gender');
             $table->date('birthday');
-            $table->string('birthplace', 32)->nullable();
-            $table->string('civil_status', 32);
-            $table->string('house_number', 32)->nullable();
+            $table->string('birthplace')->nullable();
+            $table->string('civil_status');
+            $table->string('house_number')->nullable();
 
-            $table->string('street', 32)->nullable();
-            $table->string('occupation', 32);
-            $table->string('student', 32);
-            $table->string('type_of_house', 32);
-            $table->string('pwd', 32);
-            $table->string('membership_prog', 32);
-            $table->string('image', 64)->nullable();
+            $table->string('street')->nullable();
+            $table->string('occupation');
+            $table->string('student');
+            $table->string('type_of_house');
+            $table->string('pwd');
+            $table->string('membership_prog');
+            $table->string('image')->nullable();
 
             $table->unsignedBigInteger('barangay_id');
             $table->unsignedBigInteger('purok_id');
