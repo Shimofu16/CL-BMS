@@ -2,42 +2,47 @@
 
 namespace App\Http\Controllers\user;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Model\Resident;
-use App\Model\Blotter;
-use App\Model\Officials;
 use Carbon\Carbon;
+use App\Model\Blotter;
+use App\Model\Resident;
+use App\Model\Officials;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 class BlottersController extends Controller
 {
     public function index()
     {
         // $blotters = Blotter::with('residents')->where('status', '!=', 'Settled')->get();
-        return view('blotters.index', [
-            'blotters' => Blotter::with('residents')->orderBy('id','desc')->get()
+        return view('backend.user.blotters.index', [
+            'blotters' => Blotter::with('residents')
+                                    ->where('barangay_id',Auth::user()->official->barangay->id)
+                                    ->orderBy('id','desc')
+                                    ->get()
         ]);
     }
 
     public function create()
     {
-        return view('blotters.create', [
-            'residence' => Resident::all(),
+        return view('backend.user.blotters.create', [
+            'residents' => Resident::where('barangay_id',Auth::user()->official->barangay->id)->get(),
         ]);
     }
 
     public function store(Request $request)
     {
         $year = Carbon::now()->year;  
-        $blot_cnt = Blotter::all()->count();
+        $blot_cnt = Blotter::where('barangay_id',Auth::user()->official->barangay->id)->count();
 
         $case_cnt =  $blot_cnt + 1;    
-        $case_number = $year . '-' . $case_cnt;
+        $case_number = $year . '-' . Auth::user()->official->barangay->name . '-' . $case_cnt;
 
         Blotter::create([
             'case_number' => $case_number,
             'complainant_name' => $request->complainant_name,
             'complained_resident' => $request->complained_resident,       
-            'Blotters_info' => $request->blotter_info,
+            'blotters_info' => $request->blotter_info,
             'case_type' => $request->case_type,
             'status' => $request->status,
             'date_of_incident' => $request->date_of_incident,

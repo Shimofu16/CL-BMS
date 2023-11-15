@@ -16,10 +16,17 @@
             </li>
             <li class="nav-heading">Menu</li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('user.barangay.*') ? 'active' : '' }}"
+                <a class="nav-link {{ Route::is('user.barangay.resident.*') ? 'active' : '' }}"
                     href="{{ route('user.barangay.resident.index') }}">
                     <i class="fa-solid fa-people-roof"></i>
                     <span>Residents</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('user.barangay.blotters.*') ? 'active' : '' }}"
+                    href="{{ route('user.barangay.blotters.index') }}">
+                    <i class="fa-solid fa-user-lock"></i>
+                    <span>Blotters</span>
                 </a>
             </li>
             <li class="nav-item">

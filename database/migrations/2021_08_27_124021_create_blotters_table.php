@@ -15,15 +15,16 @@ class CreateBlottersTable extends Migration
     {
         Schema::create('blotters', function (Blueprint $table) {
             $table->id();
+            $table->smallInteger('barangay_id');
 
             $table->string('case_number', 32);
             $table->string('complainant_name', 32);
             $table->string('complained_resident', 32)->nullable();
-            $table->string('Blotters_info', 32);
+            $table->string('blotters_info', 32);
             $table->string('case_type', 32);
             $table->date('date_of_incident');
-            $table->string('status', 32);
-            $table->string('agreement', 1500)->nullable();
+            $table->dateTime('settled_at')->nullable();
+            $table->text('agreement')->nullable();
 
             $table->string('bcp1', 32)->nullable();
             $table->string('bcp1_note', 32)->nullable();

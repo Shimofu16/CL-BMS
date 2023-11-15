@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\user\PermitController;
 use App\Http\Controllers\user\FencingController;
 use App\Http\Controllers\admin\ArchiveController;
+use App\Http\Controllers\user\BlottersController;
 use App\Http\Controllers\admin\BarangayController;
 use App\Http\Controllers\user\AnalyticsController;
 use App\Http\Controllers\user\ResidentsController;
@@ -109,6 +110,20 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
         Route::prefix('certificate')->name('certificate.')->group(function () {
             Route::post('/create/resident/{resident_id}', [CertificateListController::class, 'create'])->name('create');
         });
+
+        Route::prefix('blotters')->name('blotters.')->middleware(['auth'])->group(function() {
+            Route::get('/index', [BlottersController::class, 'index'])->name('index');
+            Route::get('/create', [BlottersController::class, 'create'])->name('create');
+            Route::post('/store', [BlottersController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [BlottersController::class, 'show'])->name('show');
+            Route::get('/settelement-agreement/{id}', [BlottersController::class, 'settelement'])->name('settelement');
+            Route::put('/settelement-agreement/save/{id}', [BlottersController::class, 'settelement_save'])->name('settelement_save');
+            Route::post('/update/{id}', [BlottersController::class, 'update'])->name('update');
+            Route::post('/manage/{id}', [BlottersController::class, 'manage'])->name('manage');
+            Route::get('/patawag-form/{date}/{id}', [BlottersController::class, 'patawag'])->name('patawag');
+
+            // Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
+        });
     });
 });
 
@@ -170,23 +185,6 @@ Route::group(['prefix' => 'residents/brgy_income', 'middleware' => 'auth'], func
 
 Route::group(['prefix' => 'Blotters/settlement_agreement', 'middleware' => 'auth'], function () {
     Route::get('/show/{id}', [App\Http\Controllers\BarangaySettlementAgreementController::class, 'show'])->name('settlement_agreement.show');
-});
-
-
-
-//Blotters
-Route::group(['prefix' => 'Blotters', 'middleware' => 'auth'], function () {
-    Route::get('/index', [App\Http\Controllers\BlottersController::class, 'index'])->name('blotters.index');
-    Route::get('/create', [App\Http\Controllers\BlottersController::class, 'create'])->name('blotters.create');
-    Route::post('/store', [App\Http\Controllers\BlottersController::class, 'store'])->name('blotters.store');
-    Route::get('/show/{id}', [App\Http\Controllers\BlottersController::class, 'show'])->name('blotters.show');
-    Route::get('/settelement-agreement/{id}', [App\Http\Controllers\BlottersController::class, 'settelement'])->name('blotters.settelement');
-    Route::put('/settelement-agreement/save/{id}', [App\Http\Controllers\BlottersController::class, 'settelement_save'])->name('blotters.settelement_save');
-    Route::post('/update/{id}', [App\Http\Controllers\BlottersController::class, 'update'])->name('blotters.update');
-    Route::post('/manage/{id}', [App\Http\Controllers\BlottersController::class, 'manage'])->name('blotters.manage');
-    Route::get('/patawag-form/{date}/{id}', [App\Http\Controllers\BlottersController::class, 'patawag'])->name('blotters.patawag');
-
-    // Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
 });
 
 //Reports

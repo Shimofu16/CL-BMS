@@ -18,4 +18,9 @@ class Blotter extends Model
   protected $casts = [
     'person_to_complain_id' => 'array',
   ];
+
+  public function getStatusAttribute()
+  {
+    return $this->settled_at == null ? 'Unsettled' : 'Settled';
+  }
 }
