@@ -24,6 +24,7 @@ class CreateBlottersTable extends Migration
             $table->string('case_type', 32);
             $table->date('date_of_incident');
             $table->dateTime('settled_at')->nullable();
+            $table->dateTime('cancelled_at')->nullable();
             $table->text('agreement')->nullable();
 
             $table->string('bcp1', 32)->nullable();

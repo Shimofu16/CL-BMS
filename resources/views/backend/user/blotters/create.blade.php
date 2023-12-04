@@ -1,10 +1,13 @@
 @extends('backend.user.sidebar')
+
 @section('page-title')
 Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
 @endsection
+
 @section('styles')
-    <link rel="stylesheet" href="{{asset('assets/packages/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/packages/select2/css/select2.min.css')}}">
 @endsection
+
 @section('contents')
 <section class="section">
     <div class="section-body">
@@ -21,20 +24,17 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
                             <div class="row d-flex justify-content-center">
                                 <div class="col-8">
                                     <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Respondent/s</label>
-                                            <select name="resident_id[]"
-                                                class="form-control" multiple="multiple" id="resident_id">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="resident_id">Respondent/s</label>
+                                            <select name="resident_id[]" id="resident_id" class="form-select" multiple>
                                                 @foreach ($residents as $resident)
-                                                <option value={{$resident->id}}> {{$resident->last_name}}
-                                                    {{$resident->first_name}} {{$resident->middle_name}}</option>
+                                                <option value="{{ $resident->id }}">{{ $resident->full_name }}</option>
                                                 @endforeach
                                             </select>
-
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label>Respondent/s not resident</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -44,8 +44,16 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
                                                 </div>
                                                 <input type="text" name="complained_resident"
                                                     class="form-control phone-number">
-
                                             </div>
+                                        </div> --}}
+                                        <label for="complained_resident" class="form-label">Respondent/s not
+                                            resident</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <i class="fas fa-user input-group-text"></i>
+                                            </div>
+                                            <input type="text" class="form-control" name="complained_resident"
+                                                id="complained_resident" aria-describedby="basic-addon1">
                                         </div>
                                     </div>
 
@@ -122,6 +130,7 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                     </form>
                 </div>
             </div>
@@ -129,13 +138,13 @@ Add Blotter - Brgy. {{ auth()->user()->official->barangay->name }}
     </div>
 </section>
 @endsection
-@section('scripts')
-    <script src="{{asset('assets/packages/select2/js/select2.full.min.js')}}"></script>
-    <script>
-        // In your Javascript (external .js resource or <script> tag)
-$(document).ready(function() {
-    $('#resident_id').select2();
-});
-    </script>
-@endsection
 
+@section('scripts')
+<script src="{{asset('assets/packages/select2/js/select2.full.min.js')}}"></script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('#resident_id').select2();
+    });
+</script>
+@endsection

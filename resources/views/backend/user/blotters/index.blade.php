@@ -43,8 +43,7 @@ Blotters - Brgy. {{ auth()->user()->official->barangay->name }}
                                         <td>{{$blotter->complainant_name}}</td>
                                         <td>
                                             @foreach ($blotter->residents as $resident)
-                                            <p>{{$resident->last_name}} {{$resident->first_name}}
-                                                {{$resident->middle_name}} </p>
+                                            <p>{{$resident->full_name}}</p>
                                             @endforeach
                                             <p>{{$blotter->complained_resident}}</p>
                                         </td>

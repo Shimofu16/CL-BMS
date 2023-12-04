@@ -93,11 +93,9 @@ Issue Fencing Permit
                                         <p id="to-whom">Sa Kinauukulan,</p>
                                         <p id="content">
                                             Ito ay pagpapatunay na si <strong> {{ $fencing->details['name']}} </strong>
-                                            may sapat
-                                            na gulang at kasalukuyang naninirahan sa <strong>{{
+                                            may sapat na gulang at kasalukuyang naninirahan sa <strong>{{
                                                 $fencing->details['address']}}.</strong> At ang kanyang lupain ay nasa
-                                            Dulong
-                                            Silangan Bayog Los Baños Laguna.
+                                            {{ $fencing->details['location'] }}.
 
 
                                         <P id="issue-for">

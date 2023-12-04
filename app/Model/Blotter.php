@@ -21,6 +21,11 @@ class Blotter extends Model
 
   public function getStatusAttribute()
   {
-    return $this->settled_at == null ? 'Unsettled' : 'Settled';
+    if ($this->settled_at || $this->cancelled_at) {
+      if ($this->settled_at) return 'Settled';
+      if ($this->cancelled_at) return 'Cancelled';
+    } else {
+      return 'Unsettled';
+    }
   }
 }

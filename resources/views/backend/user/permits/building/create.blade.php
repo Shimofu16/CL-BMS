@@ -4,6 +4,10 @@
 Add Building Permit
 @endsection
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('assets/packages/select2/css/select2.min.css')}}">
+@endsection
+
 @section('contents')
 <section class="section">
     <div class="section-header">
@@ -12,7 +16,7 @@ Add Building Permit
     <div class="section-body">
         <div class="card">
             <div class="row">
-                <div class="col-12 ">
+                <div class="col-12">
                     <div class="card" id="border-blue">
                         <div class="card-header">
                             <h4>Building Information</h4>
@@ -30,8 +34,16 @@ Add Building Permit
                                                         <i class="fas fa-user"></i>
                                                     </div>
                                                 </div>
-                                                <select name="resident" class="form-select">
+                                                {{-- <select name="resident" class="form-select">
                                                     <option value="" selected disabled hidden>Select a resident</option>
+                                                    @foreach ($residents as $resident)
+                                                    <option value="{{ $resident->id }}">{{ $resident->full_name }}
+                                                    </option>
+                                                    @endforeach
+                                                </select> --}}
+                                                <select name="resident" id="resident_id" class="form-select"
+                                                    style="width: 94%">
+                                                    <option value="" selected hidden disabled></option>
                                                     @foreach ($residents as $resident)
                                                     <option value="{{ $resident->id }}">{{ $resident->full_name }}
                                                     </option>
@@ -47,7 +59,7 @@ Add Building Permit
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-building"></i>
                                                     </div>
                                                 </div>
                                                 <input type="text" name="building_type"
@@ -64,7 +76,7 @@ Add Building Permit
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-location-dot"></i>
                                                     </div>
                                                 </div>
                                                 <input type="text" name="building_address"
@@ -79,7 +91,7 @@ Add Building Permit
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-calendar"></i>
                                                     </div>
                                                 </div>
                                                 <input type="date" name="reg_date" class="form-control phone-number"
@@ -106,4 +118,16 @@ Add Building Permit
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+<script src="{{asset('assets/packages/select2/js/select2.full.min.js')}}"></script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('#resident_id').select2({
+            width: 'resolve'
+        });
+    });
+</script>
 @endsection

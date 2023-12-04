@@ -22,8 +22,6 @@ class CreateBlotterResidentTable extends Migration
             $table->unsignedBigInteger('blotter_id');
             $table->foreign('blotter_id')->references('id')->on('blotters')->onDelete('cascade');
 
-            $table->unsignedBigInteger('barangay_id');
-            $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->timestamps();
         });
     }

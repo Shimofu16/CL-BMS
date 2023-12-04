@@ -1,5 +1,13 @@
 @extends('backend.user.sidebar')
 
+@section('page-title')
+Add Business
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="{{asset('assets/packages/select2/css/select2.min.css')}}">
+@endsection
+
 @section('contents')
 <section class="section">
     <div class="section-header">
@@ -26,8 +34,9 @@
                                                         <i class="fas fa-user"></i>
                                                     </div>
                                                 </div>
-                                                <select name="resident" class="form-select">
-                                                    <option value="" selected disabled hidden>Select a resident</option>
+                                                <select name="resident" class="form-select" id="resident_id"
+                                                    style="width: 94%">
+                                                    <option value="" selected disabled hidden></option>
                                                     @foreach ($residents as $resident)
                                                     <option value="{{ $resident->id }}">{{ $resident->full_name }}
                                                     </option>
@@ -43,7 +52,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-copyright"></i>
                                                     </div>
                                                 </div>
                                                 <input type="text" name="business_name"
@@ -58,7 +67,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-briefcase"></i>
                                                     </div>
                                                 </div>
                                                 <input type="text" name="business_type"
@@ -73,7 +82,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-location-dot"></i>
                                                     </div>
                                                 </div>
                                                 <input type="text" name="business_address"
@@ -88,7 +97,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">
-                                                        <i class="fas fa-user"></i>
+                                                        <i class="fas fa-calendar"></i>
                                                     </div>
                                                 </div>
                                                 <input type="date" name="reg_date" class="form-control phone-number"
@@ -115,4 +124,16 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+<script src="{{asset('assets/packages/select2/js/select2.full.min.js')}}"></script>
+<script>
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('#resident_id').select2({
+            width: 'resolve'
+        });
+    });
+</script>
 @endsection

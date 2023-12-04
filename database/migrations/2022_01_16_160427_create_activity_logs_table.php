@@ -16,7 +16,7 @@ class CreateActivityLogsTable extends Migration
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('action'); // e.g., 'create', 'edit', 'delete', 'login', 'logout'
+            $table->string('action')->nullable(); // e.g., 'create', 'edit', 'delete', 'login', 'logout'
             $table->string('description'); // e.g., 'Added a new post', 'Edited user profile'
             $table->timestamps();
         });
