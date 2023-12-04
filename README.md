@@ -3,7 +3,7 @@
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Shimofu16/Library-Management-System-Filament-.git
+git clone https://github.com/Shimofu16/CWIS.git
 ```
 
 2. Install Composer dependencies:
