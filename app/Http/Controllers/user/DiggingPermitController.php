@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Permit;
 use Carbon\Carbon;
 use App\Model\Officials;
-use App\Model\ActivityLog;
+use App\model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +50,13 @@ class DiggingPermitController extends Controller
             'details' => $details,
         ]);
 
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'scope' => 'Permits/Clearances',
+            'action' => 'create',
+            'description' => 'Registered digging',
+        ])->subject()->associate($digging)->save();
+
         return redirect()->route('digging_permit.index')->withStatus('Digging Added Succesfully!');
     }
 
@@ -62,14 +69,17 @@ class DiggingPermitController extends Controller
     
     public function clearance($id)
     {
+        $digging = Permit::with('owner')->findOrFail($id);
+
         ActivityLog::create([
             'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Digging Permit',
-            'subject' => 'Brgy Digging',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance'
+        ])->subject()->associate($digging)->save();
 
         return view('backend.user.permits.digging.clearance', [
-            'digging' => Permit::findOrFail($id),
+            'digging' => $digging,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }

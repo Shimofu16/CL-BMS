@@ -26,6 +26,7 @@ class CertificateListController extends Controller
         $this->barangay = Barangay::findOrFail($this->barangay_id);
         $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
     }
+
     public function create(Request $request, $resident_id)
     {
 
@@ -85,6 +86,7 @@ class CertificateListController extends Controller
             'isHeadOfTheFamily' => $isHeadOfTheFamily
         ]);
     }
+
     public function store(Request $request, $certificate, $id)
     {
         // officials
@@ -104,13 +106,11 @@ class CertificateListController extends Controller
 
         // $clearance_count = $clearance_count + 1;
 
-        // ActivityLog::create([
-        //     'user' => Auth::user()->name,
-        //     'description' => 'Issue ' . $title . ' to ' . $resident->name,
-        //     'subject' => $title,
-        // ]);
-
-
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'description' => 'Issue ' . $title . ' to ' . $resident->name,
+            'subject' => $title,
+        ]);
 
         return view('backend.user.barangay.certificates.exports.show', [
             'resident' => $resident,

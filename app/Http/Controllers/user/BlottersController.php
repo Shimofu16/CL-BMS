@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Model\Blotter;
 use App\Model\Resident;
 use App\Model\Officials;
+use App\model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class BlottersController extends Controller
         $case_cnt =  $blot_cnt + 1;
         $case_number = $year . '-' . Auth::user()->official->barangay->name . '-' . $case_cnt;
 
-        Blotter::create([
+        $blotter = Blotter::create([
             'barangay_id' => Auth::user()->official->barangay->id,
             'case_number' => $case_number,
             'complainant_name' => $request->complainant_name,
@@ -48,7 +49,15 @@ class BlottersController extends Controller
             'case_type' => $request->case_type,
             'status' => $request->status,
             'date_of_incident' => $request->date_of_incident,
-        ])->residents()->attach($request->resident_id);
+        ]);
+        $blotter->residents()->attach($request->resident_id);
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'action' => 'create',
+            'scope' => 'Blotter',
+            'description' => "Added blotter case",
+        ])->subject()->associate($blotter)->save();
 
         return redirect()->route('user.barangay.blotters.index')->withStatus('Blotter Added Succesfully!');
     }
@@ -70,6 +79,13 @@ class BlottersController extends Controller
     public function settelement_save(Request $request, $id)
     {
         $blotter = Blotter::findOrfail($id);
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'scope' => 'Blotter',
+            'action' => 'settle',
+            'description' => "Settled blotter case",
+        ])->subject()->associate($blotter)->save();
 
         $blotter->update([
             'agreement' => $request->agreement,
@@ -108,12 +124,18 @@ class BlottersController extends Controller
             return redirect()->route('user.barangay.blotters.show', $id)->withStatus('Lupon ng Tagapamayapa Patawag 3 has been created!');
         }
 
-
         if ($request->patawag === "Settled") {
             return redirect()->route('user.barangay.blotters.settelement', $id);
         }
 
         if ($request->patawag === "Cancelled") {
+            ActivityLog::create([
+                'user_id' => Auth::user()->id,
+                'scope' => 'Blotter',
+                'action' => 'cancel',
+                'description' => 'Cancelled blotter case',
+            ])->subject()->associate($blotter)->save();
+            
             $blotter->cancelled_at = now();
             $blotter->save();
             return redirect()->route('user.barangay.blotters.show', $id)->withStatus('Case has been cancelled!');

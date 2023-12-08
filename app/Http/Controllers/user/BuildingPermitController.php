@@ -53,7 +53,7 @@ class BuildingPermitController extends Controller
             'number' => $building_number,
             'type' => $request->building_type,
             'address' => $request->building_address,
-            'reg_date' => $request->reg_date,
+            'registration_date' => $request->reg_date,
         ];
 
         $buildingPermit = Permit::create([
@@ -62,6 +62,13 @@ class BuildingPermitController extends Controller
             'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'scope' => 'Permits/Clearances',
+            'action' => 'create',
+            'description' => 'Registered building',
+        ])->subject()->associate($buildingPermit)->save();
 
         return redirect()->route('building_permit.index')->withStatus('Building Added Succesfully!');
     }
@@ -76,14 +83,17 @@ class BuildingPermitController extends Controller
 
     public function clearance($id)
     {
+        $building = Permit::with('owner')->findOrFail($id);
+
         ActivityLog::create([
             'user_id' => Auth::user()->id,
-            'subject' => 'Brgy Building',
-            'description' => 'Issue Brgy Building Clearance',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance',
+            'description' => 'Issued Brgy Building Clearance',
+        ])->subject()->associate($buildilng)->save();
 
         return view('backend.user.permits.building.clearance', [
-            'building' => Permit::findOrFail($id),
+            'building' => $building,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }

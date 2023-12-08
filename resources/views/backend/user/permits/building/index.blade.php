@@ -64,7 +64,8 @@ Building Permits - Brgy. {{ auth()->user()->official->barangay->name }}
                                         {{$building->details['address']}}
                                     </td>
                                     <td>
-                                        {{ \Carbon\Carbon::parse($building->details['reg_date'])->format('F d, Y') }}
+                                        {{ \Carbon\Carbon::parse($building->details['registration_date'])->format('F j,
+                                        Y') }}
                                     </td>
                                 </tr>
 

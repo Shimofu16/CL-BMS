@@ -78,6 +78,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('delete');
+        Route::get('/{id}/activities', [UserController::class, 'activities'])->name('activities');
     });
 });
 
@@ -270,5 +271,5 @@ Route::post('residence/import', [App\Http\Controllers\ResidenceImportController:
 
 
 Route::group(['prefix' => 'ActivityLog', 'middleware' => 'auth'], function () {
-    Route::get('/index', [App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity_logs.index');
+    Route::get('/index', [App\Http\Controllers\user\ActivityLogController::class, 'index'])->name('activity_logs.index');
 });

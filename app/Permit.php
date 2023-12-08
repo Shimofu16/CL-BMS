@@ -19,4 +19,9 @@ class Permit extends Model
     {
         return $this->belongsTo(Resident::class, 'resident_id');
     }
+
+    public function activity()
+    {
+        return $this->morphOne(ActivityLog::class, 'subject');
+    }
 }

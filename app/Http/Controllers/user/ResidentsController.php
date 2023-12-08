@@ -5,10 +5,12 @@ namespace App\Http\Controllers\user;
 use Carbon\Carbon;
 use App\Model\Barangay;
 use App\Model\Resident;
+use App\model\ActivityLog;
 use App\Model\FamilyMember;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ResidentsController extends Controller
@@ -92,7 +94,6 @@ class ResidentsController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'image' => ['required'],
             'last_name' => ['required'],
@@ -112,6 +113,7 @@ class ResidentsController extends Controller
             'membership_prog' => ['required'],
             'purok_id' => ['required'],
         ]);
+
         $img = $request->get('image');
         $image_parts = explode(";base64,", $img);
         $image_base64 = base64_decode(end($image_parts));
@@ -148,18 +150,27 @@ class ResidentsController extends Controller
             'purok_id' => $request->purok_id,
         ]);
 
-        $memberCount = 1;
-        foreach ($request->member as $member) {
-            FamilyMember::create([
-                'head_id' => $resident->id,
-                'resident_number' => $resident->res_num.'-'.chr(ord('A') + $memberCount - 1),
-                'name' => $member['name'],
-                'relationship' => $member['relationship'],
-                'birthdate' => $member['birthday']
-            ]);
+        if ($request->member) {
+            $memberCount = 1;
+            foreach ($request->member as $member) {
+                FamilyMember::create([
+                    'head_id' => $resident->id,
+                    'resident_number' => $resident->res_num.'-'.chr(ord('A') + $memberCount - 1),
+                    'name' => $member['name'],
+                    'relationship' => $member['relationship'],
+                    'birthdate' => $member['birthday']
+                ]);
 
-            $memberCount += 1;
+                $memberCount += 1;
+            }
         }
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'action' => 'create',
+            'description' => "Added resident",
+            'scope' => 'Resident',
+        ])->subject()->associate($resident)->save();
 
         // $request->validate([
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -279,6 +290,13 @@ class ResidentsController extends Controller
                 FamilyMember::where('head_id', $resident->id)->delete();
             }
 
+            ActivityLog::create([
+                'user_id' => Auth::user()->id,
+                'action' => 'update',
+                'description' => "Updated profile",
+                'scope' => 'Resident',
+            ])->subject()->associate($resident)->save();
+
             return redirect()->back()->with('success', 'Resident Updated Successfully.');
         } catch (\Throwable $th) {
             dd($th->getMessage());
@@ -295,6 +313,13 @@ class ResidentsController extends Controller
     public function destroy($id)
     {
         $resident = Resident::findOrfail($id);
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'action' => 'delete',
+            'scope' => 'Resident',
+            'description' => "Deleted record",
+        ])->subject()->associate($resident)->save();
 
         $resident->delete();
 

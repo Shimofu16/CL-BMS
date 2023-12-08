@@ -50,6 +50,13 @@ class MeralcoClearanceController extends Controller
             'details' => $details,
         ]);
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'create',
+            'scope' => 'Permits/Clearances',
+            'description' => 'Added Meralco clearance',
+        ])->subject()->associate($meralco)->save();
+
         return redirect()->route('meralco_clearance.index')->withStatus('Meralco Clearance Added Succesfully!');
     }
 
@@ -62,14 +69,17 @@ class MeralcoClearanceController extends Controller
 
     public function clearance($id)
     {
+        $meralco = Permit::with('owner')->findOrFail($id);
+
         ActivityLog::create([
             'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Meralco Clearance',
-            'subject' => 'Brgy Meralco',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance'
+        ])->subject()->associate($meralco)->save();
 
         return view('backend.user.permits.meralco.clearance', [
-            'meralco' => Permit::findOrFail($id),
+            'meralco' => $meralco,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }

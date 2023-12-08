@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
 use App\User;
+use App\model\ActivityLog;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -83,5 +84,29 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function activities($id, Request $request)
+    {
+        $activities = ActivityLog::query()
+                                    ->with('user')
+                                    ->where('user_id',$id)
+                                    ->filter($request->only(['type']))
+                                    ->orderBy('created_at','desc')
+                                    ->paginate(10)
+                                    ->withQueryString();
+
+        if ($request->ajax()) {
+            return view('backend.admin.activity_log.partials.activities', [
+                'activities' => $activities,
+            ])->render();
+        }
+
+        return view('backend.admin.users.activities', [
+            'activities' => $activities,
+            'filters' => ActivityLog::select('scope')->distinct()->get()->pluck('scope'),
+            'params' => $request->only(['type']),
+            'userId' => $id
+        ]);
     }
 }

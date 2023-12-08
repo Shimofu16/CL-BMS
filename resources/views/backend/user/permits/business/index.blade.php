@@ -58,7 +58,8 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                                         {{$business->details['number']}}
                                     </td>
                                     <td>
-                                        {{$business->owner->full_name}}
+                                        {{$business->owner?->full_name}}
+                                        {{ $business->details['non-resident_owner'] }}
                                     </td>
                                     <td>
                                         {{$business->details['name']}}
@@ -70,7 +71,8 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                                         {{$business->details['type']}}
                                     </td>
                                     <td>
-                                        {{ \Carbon\Carbon::parse($business->details['reg_date'])->format('F d, Y') }}
+                                        {{ \Carbon\Carbon::parse($business->details['registration_date'])->format('F d,
+                                        Y') }}
                                     </td>
                                 </tr>
 

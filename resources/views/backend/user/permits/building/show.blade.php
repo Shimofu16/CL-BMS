@@ -21,7 +21,8 @@ Issue Building Clearance
                         <p><strong>Building Type:</strong> {{ $building->details['type'] }}</p>
                         <p><strong>Building Address:</strong> {{ $building->details['address'] }}</p>
                         <p><strong>Date Registered:</strong> {{
-                            \Carbon\Carbon::parse($building->details['reg_date'])->format('F d, Y') }}</strong></p>
+                            \Carbon\Carbon::parse($building->details['registration_date'])->format('F d, Y') }}</strong>
+                        </p>
                     </div>
                 </div>
             </div>

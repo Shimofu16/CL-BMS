@@ -17,6 +17,8 @@ class CreateActivityLogsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('action')->nullable(); // e.g., 'create', 'edit', 'delete', 'login', 'logout'
+            $table->string('scope')->nullable();
+            $table->nullableMorphs('subject');
             $table->string('description'); // e.g., 'Added a new post', 'Edited user profile'
             $table->timestamps();
         });

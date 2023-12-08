@@ -55,6 +55,13 @@ class FranchiseClearanceController extends Controller
             'details' => $details,
         ]);
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'create',
+            'scope' => 'Permits/Clearances',
+            'description' => 'Registered franchise'
+        ])->subject()->associate($franchise)->save();
+
         return redirect()->route('franchise_clearance.index')->withStatus('Franschise Added Succesfully!');
     }
 
@@ -68,14 +75,17 @@ class FranchiseClearanceController extends Controller
 
     public function clearance($id)
     {
+        $franchise = Permit::with('owner')->findOrFail($id);
+
         ActivityLog::create([
             'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Franchise Clearance',
-            'subject' => 'Brgy Franchise',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance',
+        ])->subject()->associate($franchise)->save();
 
         return view('backend.user.permits.franchise.clearance', [
-            'franchise' => Permit::with('owner')->findOrFail($id),
+            'franchise' => $franchise,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }

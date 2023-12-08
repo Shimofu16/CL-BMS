@@ -1,126 +1,129 @@
 @extends('backend.admin.sidebar')
 
 @section('page-title')
-    Dashboard
+Dashboard
 @endsection
 @section('contents')
-    <section class="section dashboard">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card">
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Total Barangay</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Total Barangay</h5>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid text-violet fa-people-roof"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $brangay_count }}</h6>
-                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
-                                    </div>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid text-violet fa-people-roof"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ $brangay_count }}</h6>
+                                    {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                        class="text-muted small pt-2 ps-1">increase</span> --}}
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card">
+                </div>
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Total Residents</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Total Residents</h5>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid text-violet fa-person-walking-with-cane"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $residents_count }}</h6>
-                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
-                                    </div>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid text-violet fa-person"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ $residents_count }}</h6>
+                                    {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                        class="text-muted small pt-2 ps-1">increase</span> --}}
                                 </div>
                             </div>
-
-
                         </div>
+
+
                     </div>
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card">
+                </div>
+                <div class="col-xxl-4 col-md-6">
+                    <div class="card info-card sales-card">
 
-                            <div class="card-body">
-                                <h5 class="card-title">Total Officials</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Total Officials</h5>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="fa-solid text-violet fa-hospital-user"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $officials_count }}</h6>
-                                        {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> --}}
-                                    </div>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid text-violet fa-hospital-user"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ $officials_count }}</h6>
+                                    {{-- <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                        class="text-muted small pt-2 ps-1">increase</span> --}}
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-3 col-md-4 px-1">
+            <div class="card">
+
+                <div class="card-body pb-0">
+                    <h5 class="card-title text-center">Residents Per Barangay</h5>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <!-- Pie Chart -->
+                        @if (count($residents_per_barangay) > 0)
+                        <canvas id="residents" style="height: 300px;"></canvas>
+                        @else
+                        <div class="alert alert-info text-center">
+                            <strong>No data found!</strong>
+                        </div>
+                        @endif
+
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xxl-3 col-md-4 px-1">
-                <div class="card">
 
-                    <div class="card-body pb-0">
-                        <h5 class="card-title text-center">Residents Per Barangay</h5>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <!-- Pie Chart -->
-                            @if (count($residents_per_barangay) > 0)
-                                <canvas id="residents" style="height: 300px;"></canvas>
-                            @else
-                                <div class="alert alert-info text-center">
-                                    <strong>No data found!</strong>
-                                </div>
-                            @endif
+        <div class="col-xxl-3 col-md-4 px-1">
+            <div class="card">
 
+                <div class="card-body pb-0">
+                    <h5 class="card-title text-center">Total Residents with Subsidy Program Per Barangay</h5>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <!-- Pie Chart -->
+                        @if (count($residents_with_subsidy_per_brgy) > 0)
+                        <canvas id="subsidy" style="height: 300px;"></canvas>
+                        @else
+                        <div class="alert alert-info text-center">
+                            <strong>No data found!</strong>
                         </div>
+                        @endif
 
                     </div>
+
                 </div>
             </div>
-
-            <div class="col-xxl-3 col-md-4 px-1">
-                <div class="card">
-
-                    <div class="card-body pb-0">
-                        <h5 class="card-title text-center">Total Residents with Subsudy Program Per Barangay</h5>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <!-- Pie Chart -->
-                            @if (count($residents_with_subsidy_per_brgy) > 0)
-                                <canvas id="subsidy" style="height: 300px;"></canvas>
-                            @else
-                                <div class="alert alert-info text-center">
-                                    <strong>No data found!</strong>
-                                </div>
-                            @endif
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-
         </div>
 
-    </section>
+
+    </div>
+
+</section>
 @endsection
 
 @section('scripts')
-    <script>
-        const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+<script>
+    const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
             '#17becf', '#1b9e77', '#d95f02', '#7570b3', '#e7298a'
         ];
 
@@ -146,5 +149,5 @@
             generateCharts('#subsidy', 'Residents with Subsudy Program Per Barangay', {!! json_encode($residents_with_subsidy_per_brgy) !!});
 
         });
-    </script>
+</script>
 @endsection

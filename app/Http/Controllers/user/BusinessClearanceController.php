@@ -24,7 +24,7 @@ class BusinessClearanceController extends Controller
         $expired_business = 0;
 
         foreach ($businesses as $business){
-            $registration_date = Carbon::parse($business->details['reg_date'])->diff(Carbon::now())->format('%y');
+            $registration_date = Carbon::parse($business->details['registration_date'])->diff(Carbon::now())->format('%y');
             
             if($registration_date > 1){
                 $expired_business += 1;
@@ -56,11 +56,11 @@ class BusinessClearanceController extends Controller
 
         $details = [
             'number' => $business_number,
-            'owner_not_resident' => $request->business_owner_not_resident,
+            'non-resident_owner' => $request->business_owner_not_resident,
             'name' => $request->business_name,
             'address' => $request->business_address,
             'type' => $request->business_type,
-            'reg_date' => $request->reg_date,
+            'registration_date' => $request->reg_date,
         ];
 
         $business = Permit::create([
@@ -69,6 +69,13 @@ class BusinessClearanceController extends Controller
             'barangay_id' => Auth::user()->official->barangay->id,
             'details' => $details,
         ]);
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'scope' => 'Permits/Clearances',
+            'action' => 'create',
+            'description' => 'Registered business',
+        ])->subject()->associate($business)->save();
 
         return redirect()->route('business_clearance.index')->withStatus('Business Added Succesfully!');
     }
@@ -87,14 +94,17 @@ class BusinessClearanceController extends Controller
 
     public function show_clearance($id, Request $request)
     {
+        $business = Permit::with('owner')->findOrFail($id);
+
         ActivityLog::create([
             'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Business Clearance',
-            'subject' => 'Brgy Business',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance',
+        ])->subject()->associate($business)->save();
 
         return view('backend.user.permits.business.clearance', [
-            'business' => Permit::with('owner')->findOrFail($id),
+            'business' => $business,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
             'amount' => $request->amount,
             'or_number' => $request->or_number,

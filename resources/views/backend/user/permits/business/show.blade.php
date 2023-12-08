@@ -20,12 +20,13 @@
                     <div class="card-body">
                         <p><strong> Business: </strong> {{ $business->details['name'] }}</p>
                         <p><strong> Business Owner: </strong> {{$business->resident_id ? $business->owner->full_name :
-                            $business->details['owner_not_resident']}}</p>
+                            $business->details['non-resident_owner']}}</p>
                         <p><strong> Business Address: </strong> {{ $business->details['address'] }}</p>
                         <p><strong> Business Type: </strong>{{ $business->details['type'] }}</p>
                     </div>
                     <div class="card-footer">
-                        <p><strong> Date Register: </strong>{{ \Carbon\Carbon::parse($business->reg_date)->format('F d,
+                        <p><strong> Date Register: </strong>{{
+                            \Carbon\Carbon::parse($business->details['registration_date'])->format('F d,
                             Y') }}</p>
 
                     </div>

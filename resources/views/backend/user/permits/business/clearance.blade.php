@@ -99,7 +99,7 @@ Barangay Business Clearance
                                         <p>
                                         <p style="text-align:center; line-height:10px; text-transform: uppercase;">
                                             {{ $business->resident_id ? $business->owner->full_name :
-                                            $business->details['owner_not_resident'] }}</p>
+                                            $business->details['owner__resident'] }}</p>
                                         </p>
                                         <p style="text-align:center;"><strong> NAME OF OWNER</strong></p>
 
@@ -125,7 +125,7 @@ Barangay Business Clearance
                                                 <p
                                                     style="line-height:10px; margin-left:50px; text-transform: uppercase;">
                                                     {{ $business->resident_id ? $business->owner->full_name :
-                                                    $business->details['business_owner_not_resident'] }}
+                                                    $business->details['non-resident_owner'] }}
                                                 </p>
                                             </strong>
                                         <p style="margin-left:120px;">APPLICANT</p><br>

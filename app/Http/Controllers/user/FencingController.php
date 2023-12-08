@@ -51,6 +51,13 @@ class FencingController extends Controller
             'details' => $details,
         ]);
 
+        ActivityLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'create',
+            'scope' => 'Permits/Clearances',
+            'description' => 'Registered fencing',
+        ])->subject()->associate($fencing)->save();
+
         return redirect()->route('fencing_permit.index')->withStatus('Fencing Added Succesfully!');
     }
 
@@ -63,14 +70,17 @@ class FencingController extends Controller
 
     public function clearance($id)
     {
+        $fencing = Permit::with('owner')->findOrFail($id);
+        
         ActivityLog::create([
             'user_id' => Auth::user()->id,
             'description' => 'Issue Brgy Fencing Permit',
-            'subject' => 'Brgy Fencing',
-        ]);
+            'scope' => 'Permits/Clearances',
+            'action' => 'issuance',
+        ])->subject()->associate($fencing)->save();
 
         return view('backend.user.permits.fencing.clearance', [
-            'fencing' => Permit::findOrFail($id),
+            'fencing' => $fencing,
             'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]); 
     }

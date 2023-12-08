@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Model\Resident;
+use Illuminate\Database\Eloquent\Model;
 
 class Blotter extends Model
 {
@@ -27,5 +27,10 @@ class Blotter extends Model
     } else {
       return 'Unsettled';
     }
+  }
+
+  public function activity()
+  {
+    return $this->morphOne(ActivityLog::class, 'subject');
   }
 }
