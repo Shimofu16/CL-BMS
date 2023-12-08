@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Resident;
 use App\Model\Blotter;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 use Carbon\carbon;
@@ -31,8 +31,8 @@ class BarangayClearanceController extends Controller
     public function show($id, Request $request)
     {
          // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
+        $latest_id= Officialmax('batch_id');
+        $b_officials= Official::where('batch_id',$latest_id)->get();
 
         $clearance_cnt = ActivityLog::where('subject', '=', 'Brgy Clearance')
                                         ->whereBetween('created_at', [

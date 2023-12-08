@@ -4,7 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Permit;
 use Carbon\Carbon;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Model\MeralcoClearance;
@@ -29,12 +29,12 @@ class MeralcoClearanceController extends Controller
 
     public function store(Request $request)
     {
-        $year = Carbon::now()->year;  
+        $year = Carbon::now()->year;
         $meralco_cnt = Permit::where('type', 'Meralco clearance')
                                     ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->count();
 
-        $meralco_cnt =  $meralco_cnt + 1;    
+        $meralco_cnt =  $meralco_cnt + 1;
         $meralco_number = $year . '-'.Auth::user()->official->barangay->name.'-'.$meralco_cnt;
 
         $details = [
@@ -43,7 +43,7 @@ class MeralcoClearanceController extends Controller
             'address' => $request->address,
             'building_type' => $request->building_type
         ];
-        
+
         $meralco = Permit::create([
             'type' => 'Meralco clearance',
             'barangay_id' => Auth::user()->official->barangay->id,
@@ -80,7 +80,7 @@ class MeralcoClearanceController extends Controller
 
         return view('backend.user.permits.meralco.clearance', [
             'meralco' => $meralco,
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
-        ]); 
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+        ]);
     }
 }

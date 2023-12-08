@@ -3,10 +3,11 @@
 namespace App\Model;
 
 use App\Model\Year;
+use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class Officials extends Model
+class Official extends Model
 {
     protected $table = 'officials';
     protected $guarded = [];
@@ -19,7 +20,7 @@ class Officials extends Model
         if ($this->middle_name) {
             return $this->first_name . ' ' . Str::ucfirst(Str::substr($this->middle_name, 0, 1)) . '. ' . $this->last_name;
         } else {
-            return $this->first_name.' '.$this->last_name;
+            return $this->first_name . ' ' . $this->last_name;
         }
     }
 
@@ -32,5 +33,8 @@ class Officials extends Model
     {
         return $this->belongsTo(Year::class);
     }
-
+    public function user()
+    {
+        return $this->hasOne(User::class, 'official_id', 'id');
+    }
 }

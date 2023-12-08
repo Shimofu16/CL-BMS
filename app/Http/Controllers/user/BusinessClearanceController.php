@@ -6,7 +6,7 @@ use App\Permit;
 use Carbon\Carbon;
 use App\Model\Business;
 use App\Model\Resident;
-use App\model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,12 +46,12 @@ class BusinessClearanceController extends Controller
 
     public function store_business(Request $request)
     {
-        $year = Carbon::now()->year;  
+        $year = Carbon::now()->year;
         $business_cnt = Permit::where('type','Business clearance')
                                 ->where('barangay_id',Auth::user()->official->barangay->id)
                                 ->count();
 
-        $business_cnt =  $business_cnt + 1;    
+        $business_cnt =  $business_cnt + 1;
         $business_number = $year . '-'.Auth::user()->official->barangay->name.'-' . $business_cnt;
 
         $details = [
@@ -89,7 +89,7 @@ class BusinessClearanceController extends Controller
 
     public function create_clearance($id)
     {
-        return view('brgy_permit.business_clearance.clearance'); 
+        return view('brgy_permit.business_clearance.clearance');
     }
 
     public function show_clearance($id, Request $request)
@@ -105,7 +105,7 @@ class BusinessClearanceController extends Controller
 
         return view('backend.user.permits.business.clearance', [
             'business' => $business,
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
             'amount' => $request->amount,
             'or_number' => $request->or_number,
         ]);

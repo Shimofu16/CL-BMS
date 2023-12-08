@@ -6,7 +6,7 @@ use App\Permit;
 use Carbon\Carbon;
 use App\Model\Building;
 use App\Model\Resident;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,12 +41,12 @@ class BuildingPermitController extends Controller
 
     public function store(Request $request)
     {
-        $year = Carbon::now()->year;  
+        $year = Carbon::now()->year;
         $building_cnt = Permit::where('type', 'Building permit')
                                     ->where('barangay_id',Auth::user()->official->barangay->id)
                                     ->count();
 
-        $building_cnt =  $building_cnt + 1;    
+        $building_cnt =  $building_cnt + 1;
         $building_number = $year . '-'.Auth::user()->official->barangay->name .'-' . $building_cnt;
 
         $details = [
@@ -93,15 +93,15 @@ class BuildingPermitController extends Controller
         ])->subject()->associate($buildilng)->save();
 
         return view('backend.user.permits.building.clearance', [
-            'building' => $building,
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
-        ]); 
+            'building' => $buildilng,
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+        ]);
     }
 
     // idk what happened here and at this point im too afraid to ask
 
      //public function create_clearance($id){
-     //    return view('brgy_permit.business_clearance.clearance'); 
+     //    return view('brgy_permit.business_clearance.clearance');
      //}
 
 
@@ -121,7 +121,7 @@ class BuildingPermitController extends Controller
     //     $b_clerk = Officials::where('brgy_official_position','Barangay Clerk')->first();
     //     //
 
-    //     $business = Business::with('residence')->findOrfail($id);  
-    //     return view('brgy_permit.business_clearance.clearance',compact('business', 'b_cap','b_councelor1','b_councelor2','b_councelor3','b_councelor4','b_councelor5','b_councelor6' ,'b_councelor7', 'b_sk', 'b_sec' , 'b_tres', 'b_clerk')); 
+    //     $business = Business::with('residence')->findOrfail($id);
+    //     return view('brgy_permit.business_clearance.clearance',compact('business', 'b_cap','b_councelor1','b_councelor2','b_councelor3','b_councelor4','b_councelor5','b_councelor6' ,'b_councelor7', 'b_sk', 'b_sec' , 'b_tres', 'b_clerk'));
     // }
 }

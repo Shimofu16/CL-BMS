@@ -4,8 +4,8 @@ namespace App\Http\Controllers\user;
 
 use App\Permit;
 use Carbon\Carbon;
-use App\Model\Officials;
-use App\model\ActivityLog;
+use App\Model\Official;
+use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,12 +28,12 @@ class DiggingPermitController extends Controller
 
     public function store(Request $request)
     {
-        $year = Carbon::now()->year;  
+        $year = Carbon::now()->year;
         $digging_cnt = Permit::where('type', 'Digging permit')
                                 ->where('barangay_id',Auth::user()->official->barangay->id)
                                 ->count();
 
-        $digging_cnt =  $digging_cnt + 1;    
+        $digging_cnt =  $digging_cnt + 1;
         $digging_number = $year . '-'.Auth::user()->official->barangay->name.'-'. $digging_cnt;
 
         $details = [
@@ -66,7 +66,7 @@ class DiggingPermitController extends Controller
             'digging' => Permit::findOrFail($id)
         ]);
     }
-    
+
     public function clearance($id)
     {
         $digging = Permit::with('owner')->findOrFail($id);
@@ -80,7 +80,7 @@ class DiggingPermitController extends Controller
 
         return view('backend.user.permits.digging.clearance', [
             'digging' => $digging,
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
-        ]); 
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+        ]);
     }
 }
