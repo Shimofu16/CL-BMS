@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Barangay;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\Resident;
 use App\Model\Year;
 
@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         $brangay_count = Barangay::count();
 
-        $officials_count = Officials::count();
+        $officials_count = Official::count();
 
         $residents_with_subsidy_per_brgy = Barangay::has('residents')->withCount('residents')
             ->whereHas('residents', function ($query) {

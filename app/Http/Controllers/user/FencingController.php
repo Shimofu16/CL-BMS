@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Permit;
 use Carbon\Carbon;
 use App\Model\Fencing;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,12 +29,12 @@ class FencingController extends Controller
 
     public function store(Request $request)
     {
-        $year = Carbon::now()->year;  
+        $year = Carbon::now()->year;
         $fencing_cnt = Permit::where('type', 'Fencing permit')
                                 ->where('barangay_id', Auth::user()->official->barangay->id)
                                 ->count();
 
-        $fencing_cnt =  $fencing_cnt + 1;    
+        $fencing_cnt =  $fencing_cnt + 1;
         $fencing_number = $year.'-'.Auth::user()->official->barangay->name.'-'. $fencing_cnt;
 
         $details = [
@@ -71,7 +71,7 @@ class FencingController extends Controller
 
         return view('backend.user.permits.fencing.clearance', [
             'fencing' => Permit::findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
-        ]); 
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+        ]);
     }
 }

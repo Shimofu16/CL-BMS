@@ -8,9 +8,9 @@
         <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
     @if (Route::is('user.*'))
-    <div class="ms-5">
-       <h4 class="mb-0 text-violet"> Barangay {{ Str::ucfirst(auth()->user()->official->barangay->name) }}</h4>
-    </div>
+        <div class="ms-5">
+            <h4 class="mb-0 text-violet"> Barangay {{ Str::ucfirst(auth()->user()->official->barangay->name) }}</h4>
+        </div>
     @endif
 
 
@@ -89,7 +89,7 @@
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/images/avatar/avatar-1.png') }}" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2 text-violet">
-                            {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     </span>
                 </a><!-- End Profile Iamge Icon -->
 
@@ -99,7 +99,7 @@
                             {{ auth()->user()->name }}
                         </h6>
 
-                        <span>{{ (auth()->user()->role == "User")?  auth()->user()->official->position :auth()->user()->role  }}</span>
+                        <span>{{ auth()->user()->role == 'User' ? auth()->user()->official->position : auth()->user()->role }}</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -115,12 +115,12 @@
                         <hr class="dropdown-divider">
                     </li>
                 --}}
-                  {{--   <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                            <i class="bi bi-gear"></i>
-                            <span>Account Settings</span>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.index') }}">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>Profile</span>
                         </a>
-                    </li> --}}
+                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -128,7 +128,7 @@
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"
                             data-bs-target="#logout">
-                            <i class="bi bi-box-arrow-right"></i>
+                            <i class="fa-solid fa-power-off"></i>
                             <span>Sign Out</span>
                         </a>
                     </li>

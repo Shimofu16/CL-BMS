@@ -1,25 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Model\Official;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class ArchiveController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($folder)
+    public function index()
     {
-        if ($folder === "official") {
-            $archives = Official::query()->where('toArchive', 1)->get();
-            $view = 'backend.admin.archive.officials.index';
-        }
-        return view($view, compact('archives','folder'));
+        $user = auth()->user();
+        $extends = $user->isAdmin() ? 'backend.admin.sidebar' : 'backend.user.sidebar';
+        return view('backend.layouts.profile.index', compact('user','extends'));
     }
 
     /**
@@ -72,15 +69,24 @@ class ArchiveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($folder, $id)
+    public function update(Request $request)
     {
-        if ($folder === "official") {
-            $official = Official::query()->findOrFail($id);
-            $official->toArchive = 0;
-            $official->save();
-            return redirect()->route('admin.archive.index', $folder)->with('success', 'Data Successfully Restored!');
+        $request->validate([
+            'current_password' => ['required', 'string', 'min:8'],
+            'new_password' => ['required', 'string', 'min:8'],
+            'confirm_password' => ['required', 'string', 'min:8', 'same:new_password'],
+        ]);
+
+        $user = auth()->user();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->with('error', 'Current password does not match!');
         }
-        return redirect()->route('admin.archive.index', $folder)->with('error', 'Something went wrong! Please try again later');
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password changed successfully!');
+
     }
 
     /**

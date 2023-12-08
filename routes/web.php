@@ -14,11 +14,13 @@ use App\Http\Controllers\admin\OfficialsController;
 use App\Http\Controllers\user\DiggingPermitController;
 use App\Http\Controllers\admin\settings\YearController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\user\BuildingPermitController;
 use App\Http\Controllers\user\CertificateListController;
 use App\Http\Controllers\user\MeralcoClearanceController;
 use App\Http\Controllers\user\BusinessClearanceController;
 use App\Http\Controllers\user\FranchiseClearanceController;
+use App\Http\Controllers\user\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,12 +71,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
             Route::put('/update/{id}', [YearController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [YearController::class, 'delete'])->name('delete');
         });
-
     });
 
     Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::get('/{barangay_id?}', [UserController::class, 'index'])->name('index');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('show');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('delete');
@@ -111,7 +112,7 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
             Route::post('/create/resident/{resident_id}', [CertificateListController::class, 'create'])->name('create');
         });
 
-        Route::prefix('blotters')->name('blotters.')->middleware(['auth'])->group(function() {
+        Route::prefix('blotters')->name('blotters.')->middleware(['auth'])->group(function () {
             Route::get('/index', [BlottersController::class, 'index'])->name('index');
             Route::get('/create', [BlottersController::class, 'create'])->name('create');
             Route::post('/store', [BlottersController::class, 'store'])->name('store');
@@ -125,6 +126,16 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
             // Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
         });
     });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UsersController::class, 'index'])->name('index');
+        Route::post('/', [UsersController::class, 'store'])->name('store');
+        Route::post('/', [UsersController::class, 'store'])->name('store');
+    });
+});
+Route::prefix('profile')->name('profile.')->middleware(['auth'])->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::put('/', [ProfileController::class, 'update'])->name('update');
 });
 
 

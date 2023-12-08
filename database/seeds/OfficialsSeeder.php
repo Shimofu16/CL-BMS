@@ -2,7 +2,7 @@
 
 use App\Imports\ImportOfficials;
 use App\Model\Barangay;
-use App\Model\Officials;
+use App\Model\Official;
 use Illuminate\Database\Seeder;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -166,7 +166,7 @@ class OfficialsSeeder extends Seeder
             [148, 'ANALIZA', 'LARONA', 'MANABAT', 'Secretary', NULL, NULL, 1, 0, 17, '2023-09-09 21:32:30', '2023-09-09 21:32:30'],
         ];
         foreach ($officials as $official) {
-            Officials::create([
+            Official::create([
                 'first_name' => $official[1],
                 'middle_name' => $official[2],
                 'last_name' => $official[3],

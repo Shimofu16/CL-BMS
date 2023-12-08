@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\model\ActivityLog;
 use App\Model\Barangay;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\Resident;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class CertificateListController extends Controller
 
 
         // officials
-        $barangay_officials = Officials::query()->where('barangay_id', $this->barangay_id)->get();
+        $barangay_officials = Official::query()->where('barangay_id', $this->barangay_id)->get();
         // chairman
         $chairman = $barangay_officials->where('position', 'Captain')->first();
 
@@ -88,7 +88,7 @@ class CertificateListController extends Controller
     public function store(Request $request, $certificate, $id)
     {
         // officials
-        $officials = Officials::query()->where('barangay_id', $this->barangay_id)->get();
+        $officials = Official::query()->where('barangay_id', $this->barangay_id)->get();
         // chairman
         $chairman = $officials->where('position', 'Chairman')->first();
         // resident

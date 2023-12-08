@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Resident;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +15,13 @@ class BarangayResidencyController extends Controller
     {
         return view('brgy_certificate.residency_certification.create', [
             'resident' => Resident::findOrFail($id),
-        ]); 
+        ]);
     }
 
     public function show($id, Request $request){
         // officials
-        $latest_id= Officials::max('batch_id');
-        $b_officials= Officials::where('batch_id',$latest_id)->get();
+        $latest_id= Officialmax('batch_id');
+        $b_officials= Official::where('batch_id',$latest_id)->get();
 
         ActivityLog::create([
             'user' => Auth::user()->name,
@@ -32,6 +32,6 @@ class BarangayResidencyController extends Controller
         return view('brgy_certificate.residency_certification.show', [
             'resident' => Resident::findOrFail($id),
             'b_officials' => $b_officials,
-        ]); 
+        ]);
     }
 }

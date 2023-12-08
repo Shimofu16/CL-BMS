@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Model\Barangay;
 use Illuminate\Http\Request;
-use App\Model\Officials;
+use App\Model\Official;
 use App\Model\Year;
 
 class OfficialsController extends Controller
@@ -22,7 +22,7 @@ class OfficialsController extends Controller
     {
         $positions = ['Chairman', 'Co-Chairman', 'Councilor', 'Treasurer', 'Secretary'];
 
-        $officials = Officials::query()->where('toArchive', false);
+        $officials = Official::query()->where('toArchive', false);
 
         $year = Year::find($year_id) ?? $this->current_year;
 
@@ -56,7 +56,7 @@ class OfficialsController extends Controller
                 'barangay_id' => ['required', 'integer'],
             ]);
 
-            Officials::create([
+            Official::create([
                 'name' => $request->name,
                 'position' => $request->position,
                 'year_id' => $this->current_year->id,
@@ -71,7 +71,7 @@ class OfficialsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $official = Officials::findOrFail($id);
+            $official = Official::findOrFail($id);
             $official->update([
                 'name' => $request->name,
                 'position' => $request->position,
@@ -86,7 +86,7 @@ class OfficialsController extends Controller
     public function delete($id)
     {
         try {
-            $official = Officials::findOrFail($id);
+            $official = Official::findOrFail($id);
             $official->update([
                 'toArchive' => true
             ]);

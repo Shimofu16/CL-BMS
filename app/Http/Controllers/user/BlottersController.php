@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use Carbon\Carbon;
 use App\Model\Blotter;
 use App\Model\Resident;
-use App\Model\Officials;
+use App\Model\Official;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -149,8 +149,8 @@ class BlottersController extends Controller
 
     public function patawag($date, $id)
     {
-        // $latest_id = Officials::max('batch_id');
-        // $b_officials = Officials::where('batch_id', $latest_id)->get();
+        // $latest_id = Officialmax('batch_id');
+        // $b_officials = Official::where('batch_id', $latest_id)->get();
 
         // return view('blotters.patawag',compact('date','blotter','b_officials'));
         // idk why there's a date here so i will just comment it for now
@@ -158,7 +158,7 @@ class BlottersController extends Controller
         return view('backend.user.blotters.patawag', [
             'date' => $date,
             'blotter' => Blotter::with('residents')->findOrFail($id),
-            'b_officials' => Officials::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
+            'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]);
     }
 }
