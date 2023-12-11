@@ -43,130 +43,79 @@ Users @if (!$isAdmin)
                     </div>
 
                 </div>
+                <div class="card-body">
 
-                <!-- Table with stripped rows -->
-                <table class="table datatable">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            @if ($isAdmin)
-                            <th scope="col">Barangay</th>
-                            @endif
-                            @if (!$isAdmin)
-                            <th scope="col">Email</th>
-                            @endif
-                            <th scope="col">Role</th>
-                            @if ($isAdmin)
-                            <th scope="col">Activities</th>
-                            <th scope="col">Actions</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $index => $user)
-                        <tr>
-                            <td scope="row">{{ $index + 1 }}</td>
-                            <td>
-                                <div class="d-flex flex-column">
-                                    <h6 class="mb-0">{{ $user->name }}</h6>
-                                    @if ($isAdmin)
-                                    <span>{{ $user->email }}</span>
-                                    @endif
-                                </div>
-                            </td>
-                            @if ($isAdmin)
-                            <td>{{ $user->official->barangay->name }}</td>
-                            @endif
-                            @if (!$isAdmin)
-                            <td>{{ $user->email }}</td>
-                            @endif
-                            <td>{{ $user->official->position }}</td>
-                            @if ($isAdmin)
-                            <td>
-                                <a class="btn btn-outline-primary btn-sm" href="#">
-                                    <i class="fa-solid fa-eye"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <div class="d-flex">
-                                    <button type="button" class="btn btn-outline-primary btn-sm ms-1"
-                                        data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                @if ($isAdmin)
+                                <th scope="col">Barangay</th>
+                                @endif
+                                @if (!$isAdmin)
+                                <th scope="col">Email</th>
+                                @endif
+                                <th scope="col">Role</th>
+                                @if ($isAdmin)
+                                <th scope="col">Activities</th>
+                                <th scope="col">Actions</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $index => $user)
+                            <tr>
+                                <td scope="row">{{ $index + 1 }}</td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-0">{{ $user->name }}</h6>
+                                        @if ($isAdmin)
+                                        <span>{{ $user->email }}</span>
+                                        @endif
+                                    </div>
+                                </td>
+                                @if ($isAdmin)
+                                <td>{{ $user->official->barangay->name }}</td>
+                                @endif
+                                @if (!$isAdmin)
+                                <td>{{ $user->email }}</td>
+                                @endif
+                                <td>{{ $user->official->position }}</td>
+                                @if ($isAdmin)
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm"
+                                        href="{{ route('admin.users.activities',$user->id) }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-outline-primary btn-sm ms-1" data-bs-toggle="modal"
+                                            data-bs-target="#edit{{ $user->id }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </div>
 
-                                @include('backend.admin.users.modals._edit')
+                                    @include('backend.admin.users.modals._edit')
 
-                            </td>
-                            @endif
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <!-- End Table with stripped rows -->
+                                </td>
+                                @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+
+                </div>
+
 
             </div>
         </div>
-        <div class="card-body">
-
-            <!-- Table with stripped rows -->
-            <table class="table datatable">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Barangay</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Activities</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $index => $user)
-                    <tr>
-                        <td scope="row">{{ $index + 1 }}</td>
-                        <td>
-                            <div class="d-flex flex-column">
-                                <h6 class="mb-0">{{ $user->name }}</h6>
-                                <span>{{ $user->email }}</span>
-                            </div>
-                        </td>
-                        <td>{{ $user->official->barangay->name }}</td>
-                        <td>{{ $user->official->position }}</td>
-                        <td>
-                            <a class="btn btn-outline-primary btn-sm"
-                                href="{{ route('admin.users.activities',$user->id) }}">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-                                <button type="button" class="btn btn-outline-primary btn-sm ms-1" data-bs-toggle="modal"
-                                    data-bs-target="#edit{{ $user->id }}">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-danger btn-sm ms-1" data-bs-toggle="modal"
-                                    data-bs-target="#delete{{ $user->id }}">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-
-                            {{-- @include('backend.admin.barangay.modal._edit')
-                            @include('backend.admin.barangay.modal._delete') --}}
-
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <!-- End Table with stripped rows -->
-
-        </div>
     </div>
 
-    </div>
-    </div>
 </section>
 @endsection
 
