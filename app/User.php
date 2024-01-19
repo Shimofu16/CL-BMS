@@ -3,9 +3,10 @@
 namespace App;
 
 use App\Model\Official;
+use Illuminate\Support\Str;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -46,5 +47,9 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role == 'Admin';
+    }
+    public function hasRole($role)
+    {
+        return $this->role == Str::ucfirst($role);
     }
 }

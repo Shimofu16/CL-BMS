@@ -68,19 +68,6 @@
 
             </div>
         </div>
-        <div class="row mb-5">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between border-bottom-0">
-                        <h3 class="card-title">Activity Logs</h3>
-                    </div>
-                    <div class="card-body">
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </section>
 @endsection
 @section('scripts')

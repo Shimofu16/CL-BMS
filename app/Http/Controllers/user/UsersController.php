@@ -34,7 +34,7 @@ class UsersController extends Controller
             ->where('barangay_id', $barangay_id)
             ->get();
 
-            
+
 
         return view('backend.admin.users.index', compact('users', 'officials'));
     }
@@ -66,7 +66,7 @@ class UsersController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'confirm_password' => ['required', 'string', 'min:8', 'same:password'],
             ]);
-            $official = OfficialfindOrFail($request->official_id);
+            $official = Official::findOrFail($request->official_id);
             User::create([
                 'name' => $official->full_name,
                 'official_id' => $request->official_id,

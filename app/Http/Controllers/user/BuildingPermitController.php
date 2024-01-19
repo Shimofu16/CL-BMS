@@ -90,10 +90,10 @@ class BuildingPermitController extends Controller
             'scope' => 'Permits/Clearances',
             'action' => 'issuance',
             'description' => 'Issued Brgy Building Clearance',
-        ])->subject()->associate($buildilng)->save();
+        ])->subject()->associate($building)->save();
 
         return view('backend.user.permits.building.clearance', [
-            'building' => $buildilng,
+            'building' => $building,
             'b_officials' => Official::query()->where('barangay_id', Auth::user()->official->barangay->id)->get(),
         ]);
     }

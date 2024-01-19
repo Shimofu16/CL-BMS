@@ -1,18 +1,18 @@
 @extends('frontend.layouts.master')
 @section('title')
-     {{ (Route::is('admin.login.page')) ? 'Admin' : ''  }} Login
+    {{ Route::is('admin.login.page') ? 'Admin' : '' }} Login
 @endsection
 @section('content')
     @if (Route::is('admin.login.page'))
         <div class=" container vh-100 vw-100 d-flex justify-content-center align-items-center"
-            style="background-image: url({{ asset('assets/images/municipality-of-calauan.jpg') }}); background-size: cover; background-repeat: no-repeat;
+            style="background-image: url({{ asset($background->value) }}); background-size: cover; background-repeat: no-repeat;
     max-width:100%; background-position:center;">
             <div class="row">
                 <div class="card bg-glass border-0 text-center d-flex  my-auto p-3">
                     <div class="card-header bg-transparent border-bottom-0 pb-1 d-flex flex-column mb-1">
-                        <div class="row justify-content-center mb-2">
-                            <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="CL LOGO"
-                                style="height: 140px; width:150px;" style="bg-white">
+                        <div class="row justify-content-center mb-2 mx-auto">
+                            <img src="{{ asset($logo->value) }}" alt="CL LOGO" style="height: 150px;"
+                                class="bg-white rounded-circle p-0 shadow-lg">
                         </div>
                         <h4 class="text-dark font-weight-normal">Welcome back!</h4>
                         <p class="text-muted">Enter email and password to log in to your account.</p>
@@ -60,8 +60,8 @@
                             <!--begin::Signin-->
                             <div class="login-form login-signin">
                                 <div class="text-center mb-10 mb-lg-20">
-                                    <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="logo" width="100"
-                                        class="shadow rounded-circle mb-3 mt-2">
+                                    <img src="{{ asset($logo->value) }}" alt="CL LOGO" style="height: 150px;"
+                                        class="bg-white rounded-circle p-0 shadow-lg">
                                     <h4 class="text-dark font-weight-normal">Welcome back!</h4>
                                     <p class="text-muted">Enter email and password to log in to your account.</p>
                                 </div>
@@ -110,7 +110,7 @@
                     <!--end: Aside Container-->
                 </div>
                 <div class="col-lg-9 col-md-8 px-0 "
-                    style="background-image: url({{ asset('img/cl-townplaza.jpg') }}); background-size: cover; background-repeat: no-repeat;
+                    style="background-image: url({{ asset($barangay->image) }}); background-size: cover; background-repeat: no-repeat;
             max-width:100%;">
                     <div class="d-flex align-items-end justify-content-start vh-100">
                         <h3 class="text-center px-5 mb-5">

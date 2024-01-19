@@ -37,8 +37,8 @@ Issue Fencing Permit
                         <div class="body">
                             <div class="officials" style="width: 2.75in; border-left: 2px solid black;">
                                 <div class="official-wrapper">
-                                    <img id="logo-img" src="{{ asset('../img/brgy-bayog-logo.png') }}"
-                                        alt="brgy-bayog-logo">
+                                    <img id="logo-img" src="{{ asset('storage/'.Auth::user()->official->barangay->logo) }}"
+                                    alt="{{ Auth::user()->official->barangay->name }}">
                                     <p style="margin-bottom: 20px;"> <strong> Barangay {{
                                             Auth::user()->official->barangay->name }} </strong></p>
                                     @foreach ($b_officials as $b_official)

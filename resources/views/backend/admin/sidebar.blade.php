@@ -37,7 +37,13 @@
             </li>
 
             <li class="nav-heading">Settings</li>
-
+            <li class="nav-item ">
+                <a class="nav-link {{ Route::is('admin.settings.index') ? 'active' : '' }}"
+                    href="{{ route('admin.settings.index') }}">
+                    <i class="fa-solid fa-cogs"></i>
+                    <span>System Settings</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed {{ Route::is('admin.archieve.*') ? 'active' : '' }}"
                     data-bs-target="#archieves" data-bs-toggle="collapse" href="#">
@@ -69,6 +75,7 @@
                     <span>Users</span>
                 </a>
             </li>
+
     </aside>
 </ul>
 @endsection

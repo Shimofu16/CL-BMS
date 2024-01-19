@@ -2,7 +2,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="#" class="logo d-flex align-items-center">
-            <img src="{{ asset('assets/images/CL-LOGO.png') }}" alt="">
+            <img src="{{ asset($logo->value) }}" alt="" class="rounded-circle">
             <span class="d-none d-lg-block text-violet">{{ auth()->user()->role }} Dashboard</span>
         </a>
         <i class="fa-solid fa-bars toggle-sidebar-btn"></i>

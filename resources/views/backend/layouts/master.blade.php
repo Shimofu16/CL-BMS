@@ -12,7 +12,7 @@
     </title>
 
     <!-- Icon -->
-    <link rel="icon" href="{{ asset('assets/images/CL-LOGO.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset($logo->value) }}" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">

@@ -15,6 +15,7 @@ use App\Http\Controllers\user\DiggingPermitController;
 use App\Http\Controllers\admin\settings\YearController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\user\BuildingPermitController;
 use App\Http\Controllers\user\CertificateListController;
 use App\Http\Controllers\user\MeralcoClearanceController;
@@ -41,7 +42,7 @@ Route::post('/user/auth', [HomeController::class, 'authenticate'])->name('login.
 Route::post('/user/logout', [HomeController::class, 'logout'])->name('logout.auth')->middleware('auth');
 
 /* admin */
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/dashboard/{year_id?}', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -68,9 +69,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::prefix('year')->name('year.')->group(function () {
             Route::get('/', [YearController::class, 'index'])->name('index');
             Route::post('/store', [YearController::class, 'store'])->name('store');
-            Route::put('/update/{id}', [YearController::class, 'update'])->name('update');
             Route::delete('/delete/{id}', [YearController::class, 'delete'])->name('delete');
         });
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::post('/store', [SettingController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SettingController::class, 'update'])->name('update');
     });
 
     Route::prefix('users')->name('users.')->group(function () {
@@ -84,7 +87,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 /* user */
-Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
+Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\user\DashboardController::class, 'index'])->name('dashboard.index');
 
