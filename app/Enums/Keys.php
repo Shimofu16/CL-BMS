@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum Keys: string
 {
+    case CITY = 'city';
     case LOGO = 'logo';
     case NAME = 'name';
     case BACKGROUND = 'background';

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Setting;
+use App\Model\Barangay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Alert;
 
 class SettingController extends Controller
 {
@@ -14,8 +17,38 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $settings = Setting::all();
-        return view('backend.admin.settings.index', compact('settings'));
+        if (Setting::where('key', 'city')->firstOrFail()->value != null) {
+            $settings = Setting::all();
+            alert()->success('asdfasdf');
+            return view('backend.admin.settings.index', compact('settings'));
+        } else {
+            return view('backend.admin.settings.settings');
+        }
+    }
+
+    /**
+     * Set city, then fill barangay table with the barangays of that city
+     */
+    public function setCity(Request $request)
+    {
+        // $response = Http::get("https://psgc.gitlab.io/api/provinces/");
+        $province = json_decode(Http::get("https://psgc.gitlab.io/api/provinces/$request->province"))->name;
+        $city = json_decode(Http::get("https://psgc.gitlab.io/api/municipalities/$request->city"))->name;
+        $cityName = "$city, $province";
+
+        $barangays = json_decode(Http::get("https://psgc.gitlab.io/api/municipalities/$request->city/barangays"));
+
+        foreach($barangays as $barangay) {
+            Barangay::create([
+                'name' => $barangay->name
+            ]);
+        }
+
+        Setting::where('key', 'city')->firstOrFail()->update([
+            'value' => $cityName
+        ]);
+
+        return redirect()->route('admin.dashboard.index')->withSuccessMessage('Successful setting of municipality. Barangays added successfully.');
     }
 
     /**

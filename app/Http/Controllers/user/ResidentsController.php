@@ -22,9 +22,11 @@ class ResidentsController extends Controller
     public function __construct(Request $request)
     {
         // Initialize a default value for barangay_id in case it's not in the session
-        $this->barangay_id = auth()->user()->official->barangay->id;
-        $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
-        $this->path = 'uploads/residents/';
+        if (!\App::runningInConsole()) {
+            $this->barangay_id = auth()->user()->official->barangay->id;
+            $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
+            $this->path = 'uploads/residents/';
+        }
     }
     /**
      * Display a listing of the resource.

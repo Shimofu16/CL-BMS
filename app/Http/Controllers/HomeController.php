@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Model\Barangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -16,19 +16,23 @@ class SettingSeeder extends Seeder
     {
         $faker = Factory::create();
         $settings = [
-           [
+            [
+                'key' => 'city',
+            ],
+            [
             'key' => 'name',
             'value' => 'Centralized Web-based Information System'
-           ],
-           [
+            ],
+            [
             'key' => 'logo',
             'value' => $faker->imageUrl(500,500,null,true,null,true)
-        ],
-        [
+            ],
+            [
             'key' => 'background',
             'value' => $faker->imageUrl(640,480,null,true,null,true)
-           ],
+            ],
         ];
+
         foreach ($settings as $key => $setting) {
             Setting::create($setting);
         }
