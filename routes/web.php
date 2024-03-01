@@ -46,8 +46,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     Route::get('/dashboard/{year_id?}', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::prefix('barangay/official')->name('official.')->group(function () {
-        Route::get('/{year_id?}/{barangay_id?}', [OfficialsController::class, 'index'])->name('index');
+    Route::prefix('barangay/officials')->name('official.')->group(function () {
+        Route::get('/', [OfficialsController::class, 'index'])->name('index');
         Route::post('store', [OfficialsController::class, 'store'])->name('store');
         Route::put('update/{id}', [OfficialsController::class, 'update'])->name('update');
         Route::delete('delete/{id}', [OfficialsController::class, 'delete'])->name('delete');
@@ -66,14 +66,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     });
 
     Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::post('/store', [SettingController::class, 'store'])->name('store');
+        Route::post('/setCity', [SettingController::class, 'setCity'])->name('city.set');
+        Route::put('/update/{id}', [SettingController::class, 'update'])->name('update');
+
         Route::prefix('year')->name('year.')->group(function () {
             Route::get('/', [YearController::class, 'index'])->name('index');
+            Route::put('/update/{id}', [YearController::class, 'update'])->name('update');
             Route::post('/store', [YearController::class, 'store'])->name('store');
             Route::delete('/delete/{id}', [YearController::class, 'delete'])->name('delete');
         });
-        Route::get('/', [SettingController::class, 'index'])->name('index');
-        Route::post('/store', [SettingController::class, 'store'])->name('store');
-        Route::put('/update/{id}', [SettingController::class, 'update'])->name('update');
     });
 
     Route::prefix('users')->name('users.')->group(function () {

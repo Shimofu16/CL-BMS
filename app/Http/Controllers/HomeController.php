@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Model\Barangay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
 {
@@ -51,6 +52,12 @@ class HomeController extends Controller
             // ]);
         }
     }
+    private function isPreviousUrl($url)
+    {
+        $previous_url = request()->root() . str_replace(url('/'), '', URL::previous());
+        $url = request()->root() . $url;
+        return $previous_url == $url;
+    }
     public function authenticate(Request $request)
     {
         $request->validate([
@@ -62,7 +69,9 @@ class HomeController extends Controller
             // if (Auth::user()->force_change_password) {
             //     return redirect()->intended(route(Auth::user()->role->name.'.change-password.index'));
             // }
-            if (Auth::user()->role === 'Admin') {
+            $previous_url = URL::previous();
+
+            if (Auth::user()->role === 'Admin' &&  $this->isPreviousUrl('/admin/login')) {
                 $this->generateSession(false);
                 return redirect()->intended(route('admin.dashboard.index'));
             }
@@ -71,8 +80,8 @@ class HomeController extends Controller
                 $this->generateSession(false);
                 return redirect()->intended(route('user.dashboard.index'));
             }
-            $this->generateSession(true);
         }
+        $this->generateSession(true);
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

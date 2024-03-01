@@ -19,11 +19,10 @@ class SettingController extends Controller
     {
         if (Setting::where('key', 'city')->firstOrFail()->value != null) {
             $settings = Setting::all();
-            alert()->success('asdfasdf');
+
             return view('backend.admin.settings.index', compact('settings'));
-        } else {
-            return view('backend.admin.settings.settings');
         }
+        return view('backend.admin.settings.settings');
     }
 
     /**
@@ -47,7 +46,7 @@ class SettingController extends Controller
         Setting::where('key', 'city')->firstOrFail()->update([
             'value' => $cityName
         ]);
-
+        alert()->success('Successful setting of municipality. Barangays added successfully.');
         return redirect()->route('admin.dashboard.index')->withSuccessMessage('Successful setting of municipality. Barangays added successfully.');
     }
 
@@ -113,6 +112,7 @@ class SettingController extends Controller
                 $setting->update([
                     'value' => $request->value,
                 ]);
+                alert()->success('Successfully Updated Settings.');
                 return back()->with('success', 'Successfully Updated Settings');
             }
             $request->validate([
@@ -126,6 +126,7 @@ class SettingController extends Controller
             $setting->update([
                 'value' => $file,
             ]);
+            alert()->success('Successfully Updated Settings.');
             return back()->with('success', 'Successfully Updated Settings');
         } catch (\Throwable $th) {
             dd($th->getMessage());

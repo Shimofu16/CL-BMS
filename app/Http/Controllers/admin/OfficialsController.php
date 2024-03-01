@@ -15,11 +15,14 @@ class OfficialsController extends Controller
     public function __construct()
     {
         // find the current year
-        $this->current_year = Year::where('status', true)->firstOrFail();
+        $this->current_year = Year::where('status', true)->first();
     }
 
     public function index($year_id = null, $barangay_id = null)
     {
+        if ( empty($this->current_year)) {
+            return redirect()->route('admin.settings.year.index')->with('info', 'Add year first.');
+        }
         $positions = ['Chairman', 'Co-Chairman', 'Councilor', 'Treasurer', 'Secretary'];
 
         $officials = Official::query()->where('toArchive', false);
@@ -51,19 +54,24 @@ class OfficialsController extends Controller
     {
         try {
             $request->validate([
-                'name' => ['required', 'string'],
+                'first_name' => ['required', 'string'],
+                'middle_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
                 'position' => ['required', 'string'],
                 'barangay_id' => ['required', 'integer'],
             ]);
 
             Official::create([
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
                 'position' => $request->position,
                 'year_id' => $this->current_year->id,
                 'barangay_id' => $request->barangay_id,
             ]);
             return redirect()->back()->with('success', 'Barangay Official Successfully Added');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->back()->with('error', $th->getMessage());
         }
     }

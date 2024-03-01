@@ -41,7 +41,6 @@ Users @if (!$isAdmin)
                         </div>
                         @endif
                     </div>
-
                 </div>
                 <div class="card-body">
 
