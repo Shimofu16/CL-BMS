@@ -35,7 +35,7 @@ class CreateResidentsTable extends Migration
             $table->string('image')->nullable();
 
             $table->unsignedBigInteger('barangay_id');
-            $table->unsignedBigInteger('purok_id');
+            $table->unsignedBigInteger('purok_id')->nullable();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->foreign('purok_id')->references('id')->on('puroks')->onDelete('cascade');
             $table->timestamps();

@@ -35,7 +35,7 @@ class Resident extends Model
 
     public function getAddressAttribute()
     {
-        return $this->house_number . ' ' . $this->purok->name .  ' ' . $this->street . ', ' . $this->barangay->name . ', ' . 'Calauan, Laguna';
+        return $this->house_number . ' ' . $this->purok?->name .  ' ' . $this->street . ', ' . $this->barangay->name . ', ' . 'Calauan, Laguna';
     }
     public function hasUnsettledBlotter()
     {

@@ -10,22 +10,22 @@
     text-transform: uppercase;
 }
 .bg-violet{
-    background-color: #A81ECB !important;
+    background-color: #1e2c3b !important;
     color: #fff;
 }
 
 /* violet Button */
 .btn-violet {
-    background-color: #A81ECB !important;
+    background-color: #1e2c3b !important;
     color: #fff;
-    border-color: #A81ECB;
+    border-color: #1e2c3b;
     border-style: solid;
 }
 
 /* violet Button hover effect */
 .btn-violet:hover {
-    background-color: #BB2BE0 !important;
-    border-color: #BB2BE0;
+    background-color: #121a29 !important;
+    border-color: #121a29;
     color: #fff;
 }
 
@@ -43,38 +43,38 @@
 
 /* violet Text */
 .text-violet {
-    color: #A81ECB !important;
+    color: #1e2c3b !important;
 }
 
 /* violet Text hover effect */
 .text-violet:hover {
-    color: #BB2BE0 !important;
+    color: #121a29 !important;
 }
 
 /* violet  btn-Outline */
 .btn-outline-violet {
     background: transparent !important;
-    color: #A81ECB;
-    border-color: #A81ECB;
+    color: #1e2c3b;
+    border-color: #1e2c3b;
 }
 
 /* violet  btn-Outline hover effect */
 .btn-outline-violet:hover {
-    background-color: #A81ECB !important;
+    background-color: #1e2c3b !important;
     color: #fff !important;
-    border-color: #A81ECB;
+    border-color: #1e2c3b;
 }
 
 /* violet  btn-Outline focus effect */
 .btn-outline-violet:focus {
-    outline-color: #A81ECB;
+    outline-color: #1e2c3b;
 }
 
 /* violet  btn-Outline active effect */
 .btn-outline-violet:active {
-    background-color: #A81ECB !important;
+    background-color: #1e2c3b !important;
     color: #fff;
-    border-color: #A81ECB;
+    border-color: #1e2c3b;
 }
 
 .img-bg {
@@ -104,7 +104,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .nav-item .nav-content.collapse{
     position: relative;
-    background:#A81ECB;
+    background:#1e2c3b;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
@@ -112,14 +112,14 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 
 .sidebar-nav .nav-link i,
 .sidebar-nav .nav-link span{
-    color: #A81ECB !important;
+    color: #1e2c3b !important;
 
 }
 .sidebar-nav .nav-link.active,
 .sidebar-nav .nav-link:focus,
 .sidebar-nav .nav-link:hover{
     color: #f6f9ff !important;
-    background: #A81ECB !important;
+    background: #1e2c3b !important;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 .sidebar-nav .nav-link.active i,
@@ -146,7 +146,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     background: #f6f9ff !important;
 }
 .nav-content.collapse li:hover a, .nav-content.collapse li.collapse-active a{
-    color: #A81ECB !important;
+    color: #1e2c3b !important;
 }
 .nav-content.collapse li:hover,.nav-content.collapse li.collapse-active{
     background-color: #fff !important;

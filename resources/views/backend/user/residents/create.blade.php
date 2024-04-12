@@ -17,19 +17,19 @@ Residents
                 <form action="{{ route('user.barangay.resident.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                        <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white">Resident Picture</h4>
                         </div>
                         <div class="row">
                             <div class="d-flex flex-column align-items-center justify-content-center">
                                 <div id="my_camera"></div>
                                 <div id="results"></div>
-                                <div class="btn btn-sm btn-primary mt-3" onClick="take_snapshot()">Capture</div>
+                                <div class="btn btn-sm btn-violet mt-3" onClick="take_snapshot()">Capture</div>
                             </div>
                             <input type="hidden" name="image" class="image-tag">
                         </div>
 
-                        <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                        <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white">Personal Information</h4>
                         </div>
 
@@ -141,7 +141,7 @@ Residents
 
 
 
-                        <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                        <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white"> Address</h4>
                         </div>
 
@@ -184,7 +184,7 @@ Residents
                             </div>
                         </div>
 
-                        <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                        <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white"> Other Information</h4>
                         </div>
 
@@ -206,7 +206,8 @@ Residents
                                     </option>
                                     <option value="None" {{ old('membership_prog')==='None' ? 'selected' : '' }}>
                                         None</option>
-                                    <option value="Solo Parent" {{ old('membership_prog')==='Solo Parent' ? 'selected' : '' }}>
+                                    <option value="Solo Parent" {{ old('membership_prog')==='Solo Parent' ? 'selected'
+                                        : '' }}>
                                         Solo Parent</option>
                                     <option value="4Ps" {{ old('membership_prog')==='4Ps' ? 'selected' : '' }}>
                                         4Ps</option>
@@ -216,7 +217,7 @@ Residents
                             </div>
                         </div>
 
-                        <div class="card-header rounded mt-5 mb-3" style="background: #017cfd">
+                        <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white">Family members</h4>
                         </div>
 

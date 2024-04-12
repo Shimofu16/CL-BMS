@@ -113,7 +113,7 @@ class ResidentsController extends Controller
             'type_of_house' => ['required'],
             'pwd' => ['required'],
             'membership_prog' => ['required'],
-            'purok_id' => ['required'],
+            'purok_id' => ['nullable'],
         ]);
 
         $img = $request->get('image');
