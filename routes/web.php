@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\OfficialsController;
 use App\Http\Controllers\user\DiggingPermitController;
 use App\Http\Controllers\admin\settings\YearController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\user\BuildingPermitController;
@@ -22,6 +23,9 @@ use App\Http\Controllers\user\MeralcoClearanceController;
 use App\Http\Controllers\user\BusinessClearanceController;
 use App\Http\Controllers\user\FranchiseClearanceController;
 use App\Http\Controllers\user\UsersController;
+use App\Mail\VerificationMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,12 +38,27 @@ use App\Http\Controllers\user\UsersController;
 |
 */
 /* Home */
+// Auth::routes(['verify' => true]);
 
+Route::get('/send/email', function () {
+    $data = [
+        'name' => 'Roy Joseph',
+        'password' => 'password',
+        'url' => 'asdasd'
+    ];
+    Mail::to('royjosephlatayan16@gmail.com')->send(new VerificationMail($data));
+    return 'email sent.';
+});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/barangay/{barangay_id}/login', [HomeController::class, 'login'])->name('login.page');
 Route::get('/admin/login', [HomeController::class, 'admin'])->name('admin.login.page');
 Route::post('/user/auth', [HomeController::class, 'authenticate'])->name('login.auth');
 Route::post('/user/logout', [HomeController::class, 'logout'])->name('logout.auth')->middleware('auth');
+
+Route::get('/verify-email', [VerificationController::class, 'show'])->name('verification.show');
+Route::post('/verify-email', [VerificationController::class, 'verify'])->name('verification.verify');
+
+Route::post('/resend-verification-email', [VerificationController::class, 'resend'])->name('verification.resend');
 
 /* admin */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
