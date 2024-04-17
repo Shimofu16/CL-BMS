@@ -8,6 +8,7 @@ use App\Model\Resident;
 use App\Model\Official;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\ActivityLog;
 use Illuminate\Support\Facades\Auth;
 
 class BlottersController extends Controller
@@ -134,7 +135,7 @@ class BlottersController extends Controller
                 'action' => 'cancel',
                 'description' => 'Cancelled blotter case',
             ])->subject()->associate($blotter)->save();
-            
+
             $blotter->cancelled_at = now();
             $blotter->save();
             return redirect()->route('user.barangay.blotters.show', $id)->withStatus('Case has been cancelled!');

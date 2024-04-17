@@ -29,7 +29,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Logo</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Porok</th>
+                                    <th scope="col">Purok</th>
                                     <th scope="col">Residents</th>
                                     <th scope="col">Actions</th>
                                 </tr>

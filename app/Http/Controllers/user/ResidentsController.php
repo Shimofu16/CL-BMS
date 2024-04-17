@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ResidentsController extends Controller
 {
@@ -115,78 +116,83 @@ class ResidentsController extends Controller
             'membership_prog' => ['required'],
             'purok_id' => ['nullable'],
         ]);
+        try {
+            $img = $request->get('image');
+            $image_parts = explode(";base64,", $img);
+            $image_base64 = base64_decode(end($image_parts));
+            $fileName = uniqid() . '.png';
 
-        $img = $request->get('image');
-        $image_parts = explode(";base64,", $img);
-        $image_base64 = base64_decode(end($image_parts));
-        $fileName = uniqid() . '.png';
+            // Save the image using Laravel's Storage facade
+            $filePath = $this->path . $fileName;
+            Storage::disk('public')->put($filePath, $image_base64);
 
-        // Save the image using Laravel's Storage facade
-        $filePath = $this->path . $fileName;
-        Storage::disk('public')->put($filePath, $image_base64);
+            $year = Carbon::now()->year;
+            $resident_cnt = $this->residents->count() + 1;
+            $resident_number = "Brgy-{$this->barangay_id}-{$year}-{$resident_cnt}";
 
-        $year = Carbon::now()->year;
-        $resident_cnt = $this->residents->count() + 1;
-        $resident_number = "Brgy-{$this->barangay_id}-{$year}-{$resident_cnt}";
+            $resident = Resident::create([
+                'res_num' => $resident_number,
+                'image' => $fileName,
+                'last_name' => $request->last_name,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'suffix_name' => $request->suffix_name,
+                'gender' => $request->gender,
+                'birthday' => $request->birthday,
+                'birthplace' => $request->birthplace,
+                'civil_status' => $request->civil_status,
+                'house_number' => $request->house_number,
 
-        $resident = Resident::create([
-            'res_num' => $resident_number,
-            'image' => $fileName,
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'middle_name' => $request->middle_name,
-            'suffix_name' => $request->suffix_name,
-            'gender' => $request->gender,
-            'birthday' => $request->birthday,
-            'birthplace' => $request->birthplace,
-            'civil_status' => $request->civil_status,
-            'house_number' => $request->house_number,
+                'street' => $request->street,
+                'occupation' => $request->occupation,
+                'student' => $request->student,
+                'type_of_house' => $request->type_of_house,
+                'pwd' => $request->pwd,
+                'membership_prog' => $request->membership_prog,
+                'barangay_id' => $this->barangay_id,
+                'purok_id' => $request->purok_id,
+            ]);
 
-            'street' => $request->street,
-            'occupation' => $request->occupation,
-            'student' => $request->student,
-            'type_of_house' => $request->type_of_house,
-            'pwd' => $request->pwd,
-            'membership_prog' => $request->membership_prog,
-            'barangay_id' => $this->barangay_id,
-            'purok_id' => $request->purok_id,
-        ]);
+            if ($request->member) {
+                $memberCount = 1;
+                foreach ($request->member as $member) {
+                    FamilyMember::create([
+                        'head_id' => $resident->id,
+                        'resident_number' => $resident->res_num . '-' . chr(ord('A') + $memberCount - 1),
+                        'name' => $member['name'],
+                        'relationship' => $member['relationship'],
+                        'birthdate' => $member['birthday']
+                    ]);
 
-        if ($request->member) {
-            $memberCount = 1;
-            foreach ($request->member as $member) {
-                FamilyMember::create([
-                    'head_id' => $resident->id,
-                    'resident_number' => $resident->res_num.'-'.chr(ord('A') + $memberCount - 1),
-                    'name' => $member['name'],
-                    'relationship' => $member['relationship'],
-                    'birthdate' => $member['birthday']
-                ]);
-
-                $memberCount += 1;
+                    $memberCount += 1;
+                }
             }
+
+            ActivityLog::create([
+                'user_id' => Auth::user()->id,
+                'action' => 'create',
+                'description' => "Added resident",
+                'scope' => 'Resident',
+            ])->subject()->associate($resident)->save();
+
+            // $request->validate([
+            //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //   ]);
+
+            // if ($request->file('image')) {
+            //     $imagePath = $request->file('image');
+            //     $imageName = $imagePath->getClientOriginalName();
+            //     $path = $request->file('image')->storeAs('residence', $imageName, 'public');
+            //   }
+            //   $residence->image = $imageName;
+            //   $residence->path = '/storage/'.$path;
+
+            Alert::success('Successfully Created', 'Resident created successfully');
+            return redirect()->route('user.barangay.resident.index');
+        } catch (\Throwable $th) {
+            Alert::error('Error', $th->getMessage());
+            return back()->with('error', $th->getMessage());
         }
-
-        ActivityLog::create([
-            'user_id' => Auth::user()->id,
-            'action' => 'create',
-            'description' => "Added resident",
-            'scope' => 'Resident',
-        ])->subject()->associate($resident)->save();
-
-        // $request->validate([
-        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //   ]);
-
-        // if ($request->file('image')) {
-        //     $imagePath = $request->file('image');
-        //     $imageName = $imagePath->getClientOriginalName();
-        //     $path = $request->file('image')->storeAs('residence', $imageName, 'public');
-        //   }
-        //   $residence->image = $imageName;
-        //   $residence->path = '/storage/'.$path;
-
-        return redirect()->route('user.barangay.resident.index')->with('success', 'Residence added successfully');
     }
 
     /**
@@ -274,12 +280,12 @@ class ResidentsController extends Controller
                         ]);
                         $ids[] = $member['id'];
                     } else {
-                        $last = $resident->members[$resident->members->count()-1];
+                        $last = $resident->members[$resident->members->count() - 1];
                         $ext = chr(ord(mb_substr($last->resident_number, -1)) + 1);
 
                         $new = FamilyMember::create([
                             'head_id' => $resident->id,
-                            'resident_number' => $resident->res_num.'-'.$ext,
+                            'resident_number' => $resident->res_num . '-' . $ext,
                             'name' => $member['name'],
                             'relationship' => $member['relationship'],
                             'birthdate' => $member['birthday'],

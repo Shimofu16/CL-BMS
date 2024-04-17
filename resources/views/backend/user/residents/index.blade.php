@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Resident #</th>
-                                    <th scope="col">Picture</th>
+
                                     <th scope="col">Name</th>
                                     <th scope="col">Birthday</th>
                                     <th scope="col">Age</th>
@@ -30,11 +30,6 @@
                                 @foreach ($residents as $index => $resident)
                                     <tr>
                                         <th scope="row">{{ $resident->res_num }}</th>
-                                        <th>
-                                            <a href="#"><img loading="lazy"
-                                                    src="{{ asset('storage/uploads/residents/' . $resident->image) }}"
-                                                    alt="{{ $resident->full_name }}" style="height: 80px; width: 80px;"></a>
-                                        </th>
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <h5 class="mb-0">{{ $resident->full_name }}</h5>

@@ -23,8 +23,6 @@
                                 <td>{{ date('F d, Y', strtotime($member->birthdate)) }}</td>
                                 <td>{{ $member->birthdate->age }}</td>
                                 <td>{{ $member->relationship }}</td>
-
-
                             </tr>
                         @endforeach
                     </tbody>
