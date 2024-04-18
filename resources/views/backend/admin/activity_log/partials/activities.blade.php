@@ -1,4 +1,4 @@
-@forelse ($activities as $activity)
+{{-- @forelse ($activities as $activity)
 
 @if ($activity->scope == 'Resident')
 <div class="card p-3 mb-2 lh-sm rounded-3">
@@ -45,6 +45,35 @@
 
 @empty
 No data
-@endforelse
+@endforelse --}}
 
-{{ $activities->links() }}
+<div class="container card p-4">
+    <table id="activities" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Barangay</th>
+                <th scope="col">User</th>
+                <th scope="col">Activity</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($activities as $index => $activity)
+            <tr>
+                <td>{{ $activity->user->official->barangay->name }}</td>
+                <td>{{ $activity->user->name }}</td>
+                <td>{{ $activity->description }}</td>
+                <td>{{ $activity->created_at->format('F j, Y h:i A') }}</td>
+            </tr>
+
+            @empty
+            <tr>
+                <td colspan="4">No data</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+        {{ $activities->links() }}
+    </div>
+</div>

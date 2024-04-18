@@ -30,6 +30,25 @@ Activity Log
 </div>
 @endsection
 
+@section('styles')
+<style>
+    .pagination>li>a,
+    .pagination>li>span {
+        color: #1e2c3b;
+    }
+
+    .pagination>.active>a,
+    .pagination>.active>a:focus,
+    .pagination>.active>a:hover,
+    .pagination>.active>span,
+    .pagination>.active>span:focus,
+    .pagination>.active>span:hover {
+        background-color: #1e2c3b;
+        border-color: #1e2c3b;
+    }
+</style>
+@endsection
+
 @section('scripts')
 <script>
     document.getElementById('type').addEventListener('change', function(e) {
