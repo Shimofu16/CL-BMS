@@ -42,7 +42,7 @@ class CertificateListController extends Controller
         // receiver id
         $receiver_id = $request->receiver_id;
         // resident
-        $resident =  Resident::with('members')->findOrFail($resident_id);
+        $resident = Resident::with('members')->findOrFail($resident_id);
         // receiver
         $isHeadOfTheFamily = $receiver_id == "father";
         $resident = $isHeadOfTheFamily ? $resident : $resident->members()->where('id', $receiver_id)->first();
@@ -51,7 +51,7 @@ class CertificateListController extends Controller
         // officials
         $barangay_officials = Official::query()->where('barangay_id', $this->barangay_id)->get();
         // chairman
-        $chairman = $barangay_officials->where('position', 'Captain')->first();
+        $chairman = $barangay_officials->where('position', 'Chairman')->first();
 
 
         // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"

@@ -272,7 +272,7 @@ class ResidentsController extends Controller
                 $ids = [];
                 // dd($request->member, Arr::exists($request->member[2], 'id'));
                 foreach ($request->member as $member) {
-                    if ($member['id']) {
+                    if ($member['id'] != null) {
                         FamilyMember::findOrFail($member['id'])->update([
                             'name' => $member['name'],
                             'relationship' => $member['relationship'],
@@ -280,8 +280,12 @@ class ResidentsController extends Controller
                         ]);
                         $ids[] = $member['id'];
                     } else {
-                        $last = $resident->members[$resident->members->count() - 1];
-                        $ext = chr(ord(mb_substr($last->resident_number, -1)) + 1);
+                        if ($resident->members->count()) {
+                            $last = $resident->members[$resident->members->count() - 1];
+                            $ext = chr(ord(mb_substr($last->resident_number, -1)) + 1);
+                        } else {
+                            $ext = 'A';
+                        }
 
                         $new = FamilyMember::create([
                             'head_id' => $resident->id,
