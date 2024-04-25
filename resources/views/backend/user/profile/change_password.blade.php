@@ -23,8 +23,8 @@
                     {{csrf_field()}}
                 <div class="row">
                     <div class="form-group col-sm-12">
-                        <label>Current Password:</label><span
-                                class="required confirm-pwd"></span><span class="required">*</span>
+                        <label class="form-label fw-bold has-asterisk">Current Password:</label><span
+                                class="required confirm-pwd">
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfCurrentPassword" type="password"
                                    name="password_current" required>
@@ -36,8 +36,8 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label>New Password:</label><span
-                                class="required confirm-pwd"></span><span class="required">*</span>
+                        <label class="form-label fw-bold has-asterisk">New Password:</label><span
+                                class="required confirm-pwd"></span>
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfNewPassword" type="password"
                                    name="password" required>
@@ -49,8 +49,8 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label>Confirm Password:</label><span
-                                class="required confirm-pwd"></span><span class="required">*</span>
+                        <label class="form-label fw-bold has-asterisk">Confirm Password:</label><span
+                                class="required confirm-pwd"></span>
                         <div class="input-group">
                             <input class="form-control input-group__addon" id="pfNewConfirmPassword" type="password"
                                    name="password_confirmation" required>

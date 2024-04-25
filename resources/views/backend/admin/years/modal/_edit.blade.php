@@ -9,12 +9,12 @@
                 @method('PUT')
                 <div class="modal-body row g-3">
                     <div class="col-12">
-                        <label for="year" class="form-label fw-bold">Year</label>
-                        <input type="text" class="form-control" id="year" name="year" value="{{ $year->year }}">
+                        <label for="year" class="form-label fw-bold has-asterisk">Year</label>
+                        <input type="text" class="form-control" id="year" name="year" value="{{ $year->year }}" required>
                     </div>
                     <div class="col-12">
-                        <label for="status" class="form-label fw-bold">Status</label>
-                        <select class="form-select" id="status" name="status">
+                        <label for="status" class="form-label fw-bold has-asterisk">Status</label>
+                        <select required class="form-select" id="status" name="status">
                             <option selected="" value="">----- Select Status -----</option>
                             <option value="1" {{ ($year->status == 1) ? 'selected' : '' }}>Active</option>
                             <option value="0" {{ ($year->status == 0) ? 'selected' : '' }}>Inactive</option>

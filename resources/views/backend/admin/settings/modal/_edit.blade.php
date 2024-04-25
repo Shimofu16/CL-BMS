@@ -9,14 +9,14 @@
                 @method('PUT')
                 <div class="modal-body row g-3">
                     <div class="col-12">
-                        <label for="key" class="form-label fw-bold">Key</label>
+                        <label for="key" class="form-label fw-bold has-asterisk">Key</label>
                         <input type="text" class="form-control" id="sample" name="sample"
                             value="{{ $setting->key }}" disabled>
                         <input type="text" class="form-control" id="key" name="key"
                             value="{{ $setting->key }}" hidden>
                     </div>
                     <div class="col-12">
-                        <label for="value" class="form-label fw-bold">Value</label>
+                        <label for="value" class="form-label fw-bold has-asterisk">Value</label>
                         @php
                             $type = 'text';
                         @endphp

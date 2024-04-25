@@ -50,6 +50,14 @@ Route::get('/send/email', function () {
     return 'email sent.';
 });
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/municipality', [HomeController::class, 'municipality'])->name('home.municipality');
+Route::get('/municipal/historical-background', [HomeController::class, 'historicalBackground'])->name('municipality.historical_background');
+Route::get('/municipal/profile', [HomeController::class, 'profile'])->name('municipality.profile');
+Route::get('/municipal/officials', [HomeController::class, 'officials'])->name('municipality.officials');
+Route::get('/municipal/offices', [HomeController::class, 'offices'])->name('municipality.offices');
+Route::get('/municipal/barangay-directory', [HomeController::class, 'barangayDirectory'])->name('municipality.directory');
+Route::get('/barangay/{barangay_id}/barangay', [HomeController::class, 'barangay'])->name('home.barangay');
+Route::get('/barangay/{barangay_id}/about', [HomeController::class, 'about'])->name('barangay.about');
 Route::get('/barangay/{barangay_id}/login', [HomeController::class, 'login'])->name('login.page');
 Route::get('/admin/login', [HomeController::class, 'admin'])->name('admin.login.page');
 Route::post('/user/auth', [HomeController::class, 'authenticate'])->name('login.auth');

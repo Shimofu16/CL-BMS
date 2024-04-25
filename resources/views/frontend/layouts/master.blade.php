@@ -13,18 +13,21 @@
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('home/css/barangay.css') }}">
 </head>
 
 <body>
     <div id="app">
         @yield('content')
     </div>
-        <!-- Vendor JS Files -->
-        <script src="{{ asset('assets/packages/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('assets/packages/jQuery-3.6.0/jquery-3.6.0.min.js') }}"></script>
-
-        {{-- sweetalert --}}
-        {{-- @include('sweetalert::alert') --}}
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/packages/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/packages/jQuery-3.6.0/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('home/js/app.js') }}"></script>
+    <script src="{{ asset('home/js/jquery-3.6.0.min.js') }}"></script>
+    {{-- sweetalert --}}
+    {{-- @include('sweetalert::alert') --}}
 </body>
 
 </html>

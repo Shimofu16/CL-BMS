@@ -29,10 +29,12 @@ class AppServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('settings')) {
             $logo = Setting::where('key', 'logo')->first();
+            $city = Setting::where('key', 'city')->first();
             $name = Setting::where('key', 'name')->first();
             $background = Setting::where('key', 'background')->first();
             View::share([
                 'logo' => $logo,
+                'city' => $city,
                 'name' => $name,
                 'background' => $background
             ]);

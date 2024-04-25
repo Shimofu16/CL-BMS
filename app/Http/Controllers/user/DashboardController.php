@@ -43,8 +43,6 @@ class DashboardController extends Controller
             $query->where('barangay_id', $barangayId);
         })->get();
 
-
-
         $blotters = Blotter::latest()->take(5)->get();
 
         return view('backend.user.dashboard.index', compact(

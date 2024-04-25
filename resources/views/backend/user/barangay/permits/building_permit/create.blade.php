@@ -33,8 +33,8 @@
                                                     required>
                                                 </div>
                                             </div>
-                                        </div>        
-                                        
+                                        </div>
+
                                         <div class="col-sm-12 col-lg-6">
                                             <div class="form-group">
                                                 <label>Buiding Type</label>
@@ -49,8 +49,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                  
+
+
 
                                         <div class="col-sm-12 col-lg-6">
                                             <div class="form-group">

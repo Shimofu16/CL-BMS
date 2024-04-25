@@ -14,12 +14,12 @@
                     {{csrf_field()}}
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            <label>Name:</label><span class="required">*</span>
+                            <label class="form-label fw-bold has-asterisk">Name:</label>
                             <input type="text" name="name" id="pfName" class="form-control" required autofocus tabindex="1">
                         </div>
                         <div class="form-group col-sm-6 d-flex">
                             <div class="col-sm-4 col-md-6 pl-0 form-group">
-                                <label>Profile Image:</label>
+                                <label class="form-label fw-bold has-asterisk">Profile Image:</label>
                                 <br>
                                 <label
                                         class="image__file-upload btn btn-primary text-white"
@@ -35,7 +35,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            <label>Email:</label><span class="required">*</span>
+                            <label class="form-label fw-bold has-asterisk">Email:</label><span class="required">*</span>
                             <input type="text" name="email" id="pfEmail" class="form-control" required tabindex="3">
                         </div>
                     </div>

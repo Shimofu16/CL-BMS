@@ -32,14 +32,14 @@
                                                         <select name = "business_owner" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" style="width: 560px">
                                                             <option selected disabled></option>
                                                             @foreach ($residence as $resident)
-                                                            <option value = {{$resident->id}}> {{$resident->last_name}} {{$resident->first_name}} </option>     
-                                                            @endforeach                                 
-                                                        </select>                            
-                                                    </div>  
+                                                            <option value = {{$resident->id}}> {{$resident->last_name}} {{$resident->first_name}} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>        
-                                        
+                                        </div>
+
                                         <div class="col-sm-12 col-lg-6">
                                             <div class="form-group">
                                                 <label>Business Owner (Not Resident)</label>
@@ -53,7 +53,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-sm-12 col-lg-6">
                                             <div class="form-group">
                                                 <label>Business Name</label>

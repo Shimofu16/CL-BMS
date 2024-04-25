@@ -20,8 +20,55 @@ class HomeController extends Controller
     public function index()
     {
         $barangays = Barangay::all();
-        return view('frontend.home.index', compact('barangays'));
+        return view('index', compact('barangays'));
     }
+
+    public function municipality()
+    {
+        $barangays = Barangay::all();
+        return view('frontend.municipality.index', compact('barangays'));
+    }
+
+    public function historicalBackground()
+    {
+        $barangays = Barangay::all();
+        return view('frontend.municipality.historical_background', compact('barangays'));
+    }
+
+    public function profile()
+    {
+        $barangays = Barangay::all();
+        $total = $barangays->count();
+        $column1 = ceil($total / 3);
+        $column2 = ceil(($total - $column1) / 2);
+        return view('frontend.municipality.profile', compact('barangays', 'column1', 'column2'));
+    }
+
+    public function officials()
+    {
+        $barangays = Barangay::all();
+        return view('frontend.municipality.officials', compact('barangays'));
+    }
+
+    public function offices()
+    {
+        $barangays = Barangay::all();
+        return view('frontend.municipality.offices', compact('barangays'));
+    }
+
+    public function barangayDirectory()
+    {
+        $barangays = Barangay::all();
+        return view('frontend.municipality.barangay-directory', compact('barangays'));
+    }
+
+    public function barangay($barangay_id)
+    {
+        $barangay = Barangay::find($barangay_id);
+        $officials = $barangay->officials;
+        return view('frontend.barangays.index', compact('barangay', 'officials'));
+    }
+
     public function login($barangay_id)
     {
         $barangay = Barangay::find($barangay_id);

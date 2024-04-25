@@ -8,11 +8,11 @@
                 @csrf
                 <div class="modal-body row g-3">
                     <div class="col-12">
-                        <label for="name" class="form-label fw-bold">Name</label>
+                        <label for="name" class="form-label fw-bold has-asterisk">Name</label>
                         <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="col-12">
-                        <label for="position" class="form-label fw-bold">Position</label>
+                        <label for="position" class="form-label fw-bold has-asterisk">Position</label>
                         <select  class="form-select" id="position" name="position">
                             <option selected value="">----- Select Position -----</option>
                             @foreach ($positions as $position)
@@ -21,7 +21,7 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <label for="barangay" class="form-label fw-bold">Barangay</label>
+                        <label for="barangay" class="form-label fw-bold has-asterisk">Barangay</label>
                         <select  class="form-select" id="barangay" name="barangay_id">
                             <option selected value="">----- Select Barangay -----</option>
                             @foreach ($barangays as $barangay)

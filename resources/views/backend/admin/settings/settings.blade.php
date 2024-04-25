@@ -19,21 +19,21 @@ Settings
                         @csrf
                         <div class="row">
                             <div class="col">
-                                <label for="region" class="form-label fw-bold">Region</label>
+                                <label for="region" class="form-label fw-bold has-asterisk">Region</label>
                                 <select class="form-select" id="region" name="region"
                                     aria-label="Default select example">
                                     <option value="" selected hidden disabled>Region</option>
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="province" class="form-label fw-bold">Province</label>
+                                <label for="province" class="form-label fw-bold has-asterisk">Province</label>
                                 <select class="form-select" id="province" name="province"
                                     aria-label="Default select example" disabled>
                                     <option value="" selected hidden disabled>Province</option>
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="city" class="form-label fw-bold">City/Municipality</label>
+                                <label for="city" class="form-label fw-bold has-asterisk">City/Municipality</label>
                                 <select class="form-select" id="city" name="city" aria-label="Default select example"
                                     disabled>
                                     <option value="" selected hidden disabled>City/Municipality</option>
