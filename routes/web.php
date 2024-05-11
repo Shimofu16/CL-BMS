@@ -17,6 +17,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\user\BarangayOfficialController;
 use App\Http\Controllers\user\BuildingPermitController;
 use App\Http\Controllers\user\CertificateListController;
 use App\Http\Controllers\user\MeralcoClearanceController;
@@ -158,6 +159,13 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
             Route::get('/patawag-form/{date}/{id}', [BlottersController::class, 'patawag'])->name('patawag');
 
             // Route::delete('/delete/{id}', [App\Http\Controllers\ResidentsController::class, 'destroy'])->name('residence.delete');
+        });
+
+        Route::prefix('/officials')->name('official.')->group(function () {
+            Route::get('/', [BarangayOfficialController::class, 'index'])->name('index');
+            Route::post('store', [BarangayOfficialController::class, 'store'])->name('store');
+            Route::put('update/{id}', [BarangayOfficialController::class, 'update'])->name('update');
+            Route::delete('delete/{id}', [BarangayOfficialController::class, 'destroy'])->name('delete');
         });
     });
 

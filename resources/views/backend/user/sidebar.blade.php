@@ -76,6 +76,15 @@
                 </ul>
 
             </li>
+            @if (Auth::user()->hasPosition('Chairman') || Auth::user()->hasPosition('Secretary'))
+            <li class="nav-item ">
+                <a class="nav-link {{ Route::is('user.barangay.official.index') ? 'active' : '' }}"
+                    href="{{ route('user.barangay.official.index') }}">
+                    <i class="fa-solid fa-people-line"></i>
+                    <span>Barangay Officials</span>
+                </a>
+            </li>
+            @endif
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('user.users.index') ? 'active' : '' }}"
                     href="{{ route('user.users.index') }}">

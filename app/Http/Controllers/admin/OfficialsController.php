@@ -81,9 +81,10 @@ class OfficialsController extends Controller
         try {
             $official = Official::findOrFail($id);
             $official->update([
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'last_name' => $request->last_name,
                 'position' => $request->position,
-                'barangay_id' => $request->barangay_id,
             ]);
             return redirect()->back()->with('success', 'Barangay Official Successfully Updated');
         } catch (\Throwable $th) {

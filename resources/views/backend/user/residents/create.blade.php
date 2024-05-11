@@ -105,22 +105,25 @@ Residents
                                     <option value="Married" {{ old('civil_status')==='Married' ? 'selected' : '' }}>
                                         Married
                                     </option>
-                                    <option value="Annulled" {{ old('civil_status')==='Annulled' ? 'selected' : '' }}>
-                                        Annulled
-                                    </option>
                                     <option value="Widowed" {{ old('civil_status')==='Widowed' ? 'selected' : '' }}>
                                         Widowed
                                     </option>
-                                    <option value="Separated" {{ old('civil_status')==='Separated' ? 'selected' : '' }}>
-                                        Separated
+                                    <option value="Divorced/Separated" {{ old('civil_status')==='Divorced/Separated' ? 'selected' : '' }}>
+                                        Divorced/Separated
+                                    </option>
+                                    <option value="Common-law/Live-in" {{ old('civil_status')==='Common-law/Live-in' ? 'selected' : '' }}>
+                                        Common-law/Live-in
+                                    </option>
+                                    <option value="Unknown" {{ old('civil_status')==='Unknown' ? 'selected' : '' }}>
+                                        Unknown
                                     </option>
                                 </select>
                             </div>
 
                             <div class="col-sm-12 col-lg-6">
-                                <label class="form-label" for="student">Student</label>
+                                <label class="form-label" for="student">Educational Attainment</label>
                                 <select class="form-select" name="student" id="student">
-                                    <option selected="true" disabled="disabled">----- Select Student -----</option>
+                                    <option selected="true" disabled="disabled">----- Select here -----</option>
                                     <option value="N/A" {{ old('student')==='N/A' ? 'selected' : '' }}> N/A
                                     </option>
                                     <option value="Elementary" {{ old('student')==='Elementary' ? 'selected' : '' }}>

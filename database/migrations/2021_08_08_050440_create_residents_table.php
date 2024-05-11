@@ -28,7 +28,7 @@ class CreateResidentsTable extends Migration
 
             $table->string('street')->nullable();
             $table->string('occupation');
-            $table->string('student');
+            $table->string('student');//educational attainment
             $table->string('type_of_house');
             $table->string('pwd');
             $table->string('membership_prog');

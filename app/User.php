@@ -50,6 +50,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function hasRole($role)
     {
-        return $this->role == Str::ucfirst($role);
+        return Str::lower($this->role)  == Str::lower($role);
+    }
+    public function hasPosition($position)
+    {
+        return Str::lower($this->official->position) == Str::lower($position);
     }
 }
