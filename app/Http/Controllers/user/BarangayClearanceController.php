@@ -30,16 +30,16 @@ class BarangayClearanceController extends Controller
 
     public function show($id, Request $request)
     {
-         // officials
-        $latest_id= Officialmax('batch_id');
-        $b_officials= Official::where('batch_id',$latest_id)->get();
+        // officials
+        $latest_id = Officialmax('batch_id');
+        $b_officials = Official::where('batch_id', $latest_id)->get();
 
         $clearance_cnt = ActivityLog::where('subject', '=', 'Brgy Clearance')
-                                        ->whereBetween('created_at', [
-                                            Carbon::now()->startOfYear(),
-                                            Carbon::now()->endOfYear(),
-                                        ])
-                                        ->count();
+            ->whereBetween('created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ])
+            ->count();
 
         $clearance_cnt = $clearance_cnt + 1;
 

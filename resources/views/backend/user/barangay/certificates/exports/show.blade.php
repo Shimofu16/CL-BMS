@@ -65,12 +65,12 @@
                                             <div class="officials" style="width: 8.75in; border-left: 2px solid black;">
                                                 <div class="official-wrapper">
                                                     <img id="logo-img" src="{{ asset('storage/' . $barangay->logo) }}"
-                                                        alt="brgy-bayog-logo">
+                                                        alt="brgy-logo">
                                                     <p style="margin-bottom: 20px;"> <strong> {{ $barangay->name }}
                                                         </strong>
                                                     </p>
                                                     @foreach ($barangay_officials as $barangay_official)
-                                                        @if ($barangay_official->position == 'Captain')
+                                                        @if ($barangay_official->position == 'Chairman')
                                                             <p>
                                                                 <strong>Hon.
                                                                     {{ $barangay_official->full_name }}</strong><br>

@@ -10,6 +10,7 @@ use App\Model\FamilyMember;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
+use App\Overlap;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -70,9 +71,9 @@ class ResidentsController extends Controller
                 'type' => 'settlement',
             ]
         ];
-
+        $overlaps = Overlap::pluck('new_id')->toArray();
         return view('backend.user.residents.index', [
-            'residents' => $this->residents->get(),
+            'residents' => $this->residents->whereNotIn('res_num', $overlaps)->get(),
             'certificates' => $certificates,
         ]);
     }
@@ -98,23 +99,23 @@ class ResidentsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => ['required'],
-            'last_name' => ['required'],
-            'first_name' => ['required'],
-            'middle_name' => ['nullable'],
-            'suffix_name' => ['nullable'],
-            'gender' => ['required'],
-            'birthday' => ['required', 'date', 'before:-18 years', 'before_or_equal:today'],
-            'birthplace' => ['nullable'],
-            'civil_status' => ['required'],
-            'house_number' => ['nullable'],
-            'street' => ['required'],
-            'occupation' => ['required'],
-            'student' => ['required'],
-            'type_of_house' => ['required'],
-            'pwd' => ['required'],
-            'membership_prog' => ['required'],
-            'purok_id' => ['nullable'],
+            'image' => 'required',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'nullable',
+            'suffix_name' => 'nullable',
+            'gender' => 'required',
+            'birthday' => 'required|date|before:-18 years|before_or_equal:today',
+            'birthplace' => 'nullable',
+            'civil_status' => 'required',
+            'house_number' => 'nullable',
+            'street' => 'required',
+            'occupation' => 'required',
+            'student' => 'required',
+            'type_of_house' => 'required',
+            'pwd' => 'required',
+            'membership_prog' => 'required',
+            'purok_id' => 'nullable',
         ]);
         try {
             $img = $request->get('image');
@@ -130,45 +131,48 @@ class ResidentsController extends Controller
             $resident_cnt = $this->residents->count() + 1;
             $resident_number = "Brgy-{$this->barangay_id}-{$year}-{$resident_cnt}";
 
-            $resident = Resident::create([
-                'res_num' => $resident_number,
-                'image' => $fileName,
-                'last_name' => $request->last_name,
-                'first_name' => $request->first_name,
-                'middle_name' => $request->middle_name,
-                'suffix_name' => $request->suffix_name,
-                'gender' => $request->gender,
-                'birthday' => $request->birthday,
-                'birthplace' => $request->birthplace,
-                'civil_status' => $request->civil_status,
-                'house_number' => $request->house_number,
 
-                'street' => $request->street,
-                'occupation' => $request->occupation,
-                'student' => $request->student,
-                'type_of_house' => $request->type_of_house,
-                'pwd' => $request->pwd,
-                'membership_prog' => $request->membership_prog,
-                'barangay_id' => $this->barangay_id,
-                'purok_id' => $request->purok_id,
-            ]);
 
-            $hit = Resident::where('first_name', 'like', "%$resident->first_name%")
-                        ->where('last_name', 'like', "%$resident->last_name%")
-                        ->where('birthday', Carbon::parse($request->birthday))
-                        ->first();
+            $hit = Resident::where('first_name', 'like', "%$request->first_name%")
+                ->where('last_name', 'like', "%$request->last_name%")
+                ->whereDate('birthday', Carbon::parse($request->birthday))
+                ->first();
 
             if (!$hit) {
-                $hit = FamilyMember::where('birthdate', Carbon::parse($resident->birthdate))
-                                    ->where('name', 'like', "%$resident->first_name $resident->last_name%")
-                                    ->orWhere('name', 'like', "%$resident->last_name $resident->first_name%")
-                                    ->first();
+                $hit = FamilyMember::whereDate('birthdate', Carbon::parse($request->birthday))
+                    ->where('name', 'like', "%$request->first_name $request->last_name%")
+                    ->orWhere('name', 'like', "%$request->last_name $request->first_name%")
+                    ->first();
             }
+
+            // dd($hit);
 
             if ($hit) {
                 $overlap = Overlap::create([
-                    'existing_id' => $hit->res_num ?? $hit->resident_number,
-                    'new_id' => $resident->res_num
+                    'existing_id' => $hit->res_num ?? $hit->request_number,
+                    'new_id' => $request->res_num
+                ]);
+            }else{
+                $resident = Resident::create([
+                    'res_num' => $resident_number,
+                    'image' => $fileName,
+                    'last_name' => $request->last_name,
+                    'first_name' => $request->first_name,
+                    'middle_name' => $request->middle_name,
+                    'suffix_name' => $request->suffix_name,
+                    'gender' => $request->gender,
+                    'birthday' => $request->birthday,
+                    'birthplace' => $request->birthplace,
+                    'civil_status' => $request->civil_status,
+                    'house_number' => $request->house_number,
+                    'street' => $request->street,
+                    'occupation' => $request->occupation,
+                    'student' => $request->student,
+                    'type_of_house' => $request->type_of_house,
+                    'pwd' => $request->pwd,
+                    'membership_prog' => $request->membership_prog,
+                    'barangay_id' => $this->barangay_id,
+                    'purok_id' => $request->purok_id,
                 ]);
             }
 

@@ -8,6 +8,7 @@ use App\Model\Blotter;
 use App\Model\Barangay;
 use App\Model\Business;
 use App\Model\FamilyMember;
+use App\Overlap;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,7 @@ class Resident extends Model
 
     protected $appends = [
         'full_name',
+        'address',
         'address',
     ];
 
@@ -72,4 +74,5 @@ class Resident extends Model
     {
         return $this->belongsToMany(Blotter::class);
     }
+
 }

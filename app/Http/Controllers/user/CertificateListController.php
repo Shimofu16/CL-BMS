@@ -49,7 +49,11 @@ class CertificateListController extends Controller
 
 
         // officials
-        $barangay_officials = Official::query()->where('barangay_id', $this->barangay_id)->get();
+        $barangay_officials = Official::query()
+        ->where('barangay_id', $this->barangay_id)
+        ->where('toArchive', 0)
+        ->get();
+
         // chairman
         $chairman = $barangay_officials->where('position', 'Chairman')->first();
 
