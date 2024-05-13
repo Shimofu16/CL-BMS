@@ -36,23 +36,21 @@ class CertificateListController extends Controller
             'purpose' => 'required',
         ]);
 
-        $isHeadOfTheFamily = false;
+        $isHeadOfTheFamily = $request->receiver_id == "father";
         // certificate
         $certificate_type = $request->certificate;
-        // receiver id
-        $receiver_id = $request->receiver_id;
+
         // resident
         $resident = Resident::with('members')->findOrFail($resident_id);
-        // receiver
-        $isHeadOfTheFamily = $receiver_id == "father";
-        $resident = $isHeadOfTheFamily ? $resident : $resident->members()->where('id', $receiver_id)->first();
-
+        if (!$isHeadOfTheFamily) {
+            $resident = $resident->members()->where('id', $request->receiver_id)->first();
+        }
 
         // officials
         $barangay_officials = Official::query()
-        ->where('barangay_id', $this->barangay_id)
-        ->where('toArchive', 0)
-        ->get();
+            ->where('barangay_id', $this->barangay_id)
+            ->where('toArchive', 0)
+            ->get();
 
         // chairman
         $chairman = $barangay_officials->where('position', 'Chairman')->first();
