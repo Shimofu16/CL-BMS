@@ -153,6 +153,25 @@ class ResidentsController extends Controller
                 'purok_id' => $request->purok_id,
             ]);
 
+            $hit = Resident::where('first_name', 'like', "%$resident->first_name%")
+                        ->where('last_name', 'like', "%$resident->last_name%")
+                        ->where('birthday', Carbon::parse($request->birthday))
+                        ->first();
+
+            if (!$hit) {
+                $hit = FamilyMember::where('birthdate', Carbon::parse($resident->birthdate))
+                                    ->where('name', 'like', "%$resident->first_name $resident->last_name%")
+                                    ->orWhere('name', 'like', "%$resident->last_name $resident->first_name%")
+                                    ->first();
+            }
+
+            if ($hit) {
+                $overlap = Overlap::create([
+                    'existing_id' => $hit->res_num ?? $hit->resident_number,
+                    'new_id' => $resident->res_num
+                ]);
+            }
+
             if ($request->member) {
                 $memberCount = 1;
                 foreach ($request->member as $member) {

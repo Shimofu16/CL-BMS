@@ -29,6 +29,6 @@ class FamilyMember extends Model
 
     public function head()
     {
-        return $this->belongsTo(Resident::class, 'id', 'head_id');
+        return $this->belongsTo(Resident::class, 'head_id', 'id');
     }
 }
