@@ -128,7 +128,7 @@
                                                                     and to the best of my actual knowledge, reliable information and
                                                                     honest
                                                                     belief that <strong>{{ $resident->full_name }}, </strong>
-                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age ; }} years old,</strong>
+                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age }} years old,</strong>
                                                                     <strong> {{ $resident->civil_status }} </strong> residing and
                                                                     with
                                                                     postal
@@ -207,7 +207,7 @@
                                                                 <p id="content">
                                                                     Ito ay pagpapatunay na si
                                                                     <strong>{{ $resident->full_name }}</strong>,
-                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age ; }}</strong>
+                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age }}</strong>
                                                                     taong gulang ipinanganak noong
                                                                     <strong>{{ date('M d, Y', strtotime($resident->birthday)) }}</strong>
                                                                     sa
@@ -236,7 +236,7 @@
                                                             @case('indigency')
                                                                 <p id="content">
                                                                     Ito ay nagpapatunay na si <strong>{{ $resident->full_name }},
-                                                                        {{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age ; }}
+                                                                        {{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age }}
                                                                         taong gulang </strong> ipinanganak noong
                                                                     <strong>{{ date('F d, Y', strtotime($resident->birthday)) }}
                                                                     </strong> sa
@@ -331,7 +331,7 @@
                                                                 <p id="content">
                                                                     Ito ay nagpapatunay na si
                                                                     <strong>{{ $resident->full_name }}</strong> ,
-                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age ; }}
+                                                                    <strong>{{ ($isHeadOfTheFamily) ? $resident->birthday->age : $resident->birthdate->age }}
                                                                     </strong> taong gulang ipinanganak noong
                                                                     <strong>{{ date('M d, Y', strtotime($resident->birthday)) }}</strong>
                                                                     sa {{ $resident->birthplace }} at naninirahan sa <strong>
