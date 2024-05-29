@@ -20,6 +20,7 @@ class CreateFamilyMembersTable extends Migration
             $table->string('name');
             $table->date('birthdate');
             $table->string('relationship');
+            $table->boolean('pwd')->default(false);
             $table->timestamps();
         });
     }

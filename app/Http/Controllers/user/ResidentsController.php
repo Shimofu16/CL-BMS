@@ -98,6 +98,7 @@ class ResidentsController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'image' => 'required',
             'last_name' => 'required',
@@ -160,10 +161,18 @@ class ResidentsController extends Controller
                     'first_name' => $request->first_name,
                     'middle_name' => $request->middle_name,
                     'suffix_name' => $request->suffix_name,
+
                     'gender' => $request->gender,
                     'birthday' => $request->birthday,
                     'birthplace' => $request->birthplace,
                     'civil_status' => $request->civil_status,
+
+                    'spouse_fname' => $request->spouse_fname,
+                    'spouse_lname' => $request->spouse_lname,
+                    'spouse_mname' => $request->spouse_mname,
+                    'spouse_sname' => $request->spouse_sname,
+                    'spouse_occupation' => $request->spouse_occupation,
+
                     'house_number' => $request->house_number,
                     'street' => $request->street,
                     'occupation' => $request->occupation,
@@ -184,7 +193,8 @@ class ResidentsController extends Controller
                         'resident_number' => $resident->res_num . '-' . chr(ord('A') + $memberCount - 1),
                         'name' => $member['name'],
                         'relationship' => $member['relationship'],
-                        'birthdate' => $member['birthday']
+                        'birthdate' => $member['birthday'],
+                        'pwd' => $member['pwd'] == 'on' ? true : false
                     ]);
 
                     $memberCount += 1;
@@ -272,16 +282,24 @@ class ResidentsController extends Controller
 
             $resident->update([
                 'image' => $fileName,
+
                 'last_name' => $request->last_name,
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
                 'suffix_name' => $request->suffix_name,
+
                 'gender' => $request->gender,
                 'birthday' => $request->birthday,
                 'birthplace' => $request->birthplace,
                 'civil_status' => $request->civil_status,
-                'house_number' => $request->house_number,
 
+                'spouse_fname' => $request->spouse_fname,
+                'spouse_lname' => $request->spouse_lname,
+                'spouse_mname' => $request->spouse_mname,
+                'spouse_sname' => $request->spouse_sname,
+                'spouse_occupation' => $request->spouse_occupation,
+
+                'house_number' => $request->house_number,
                 'street' => $request->street,
                 'occupation' => $request->occupation,
                 'student' => $request->student,
@@ -316,6 +334,7 @@ class ResidentsController extends Controller
                             'name' => $member['name'],
                             'relationship' => $member['relationship'],
                             'birthdate' => $member['birthday'],
+                            'pwd' => $member['pwd'] == 'on' ? true : false
                         ]);
                         $ids[] = $new->id;
                     }

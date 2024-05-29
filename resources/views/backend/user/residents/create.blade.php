@@ -60,45 +60,54 @@ Residents
                             </div>
                         </div>
 
-
-
                         <div class="row mb-3">
-                            <div class="col-sm-3">
+                            <div class="col-sm-12 col-lg-3">
                                 <label class="form-label" for="gender">Sex</label>
                                 <select class="form-select" name="gender" id="gender">
-                                    <option selected="true" disabled="disabled">----- Select Sex -----</option>
+                                    <option selected hidden disabled value="">----- Select Sex -----</option>
 
-                                    <option value="Male" {{ old('gender')==='Male' ? 'selected' : '' }}>Male
+                                    <option value="Male" {{ old('gender')==='Male' ? 'selected' : '' }}>
+                                        Male
                                     </option>
                                     <option value="Female" {{ old('gender')==='Female' ? 'selected' : '' }}>
-                                        Female</option>
-
-                                    {{-- <option value="Female">Female</option> --}}
+                                        Female
+                                    </option>
                                 </select>
                             </div>
-                            <div class="col-sm-3">
+
+                            <div class="col-sm-12 col-lg-3">
                                 <label class="form-label" for="birthday">Birthday</label>
                                 <input type="date" name="birthday" id="birthday" class="form-control" required
                                     value="{{ old('birthday') }}">
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-4 col-lg-6">
+
+                            <div class="col-sm-12 col-lg-3">
                                 <label class="form-label" for="birthplace">Birth Place</label>
                                 <input type="text" name="birthplace" id="birthplace" class="form-control" required
                                     value="{{ old('birthplace') }}">
                             </div>
-                            <div class="col-sm-12 col-lg-6">
+
+                            <div class="col-sm-12 col-lg-3">
+                                <label class="form-label" for="">PWD</label>
+                                <select class="form-select" name="pwd">
+                                    <option selected hidden disabled value="">----- Select if PWD -----</option>
+                                    <option value="Yes" {{ old('pwd')==='Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ old('pwd')==='No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-4">
                                 <label class="form-label" for="occupation">Occupation</label>
                                 <input type="text" name="occupation" id="occupation" class="form-control" required
                                     value="{{ old('occupation') }}">
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-12 col-lg-6">
+                            <div class="col-sm-4">
                                 <label class="form-label" for="civil_status">Civil Status</label>
                                 <select class="form-select" name="civil_status" id="civil_status">
-                                    <option selected="true" disabled="disabled">----- Select Civil Status -----</option>
+                                    <option selected hidden disabled value="">----- Select Civil Status -----</option>
                                     <option value="Single" {{ old('civil_status')==='Single' ? 'selected' : '' }}>
                                         Single
                                     </option>
@@ -108,10 +117,12 @@ Residents
                                     <option value="Widowed" {{ old('civil_status')==='Widowed' ? 'selected' : '' }}>
                                         Widowed
                                     </option>
-                                    <option value="Divorced/Separated" {{ old('civil_status')==='Divorced/Separated' ? 'selected' : '' }}>
+                                    <option value="Divorced/Separated" {{ old('civil_status')==='Divorced/Separated'
+                                        ? 'selected' : '' }}>
                                         Divorced/Separated
                                     </option>
-                                    <option value="Common-law/Live-in" {{ old('civil_status')==='Common-law/Live-in' ? 'selected' : '' }}>
+                                    <option value="Common-law/Live-in" {{ old('civil_status')==='Common-law/Live-in'
+                                        ? 'selected' : '' }}>
                                         Common-law/Live-in
                                     </option>
                                     <option value="Unknown" {{ old('civil_status')==='Unknown' ? 'selected' : '' }}>
@@ -120,10 +131,10 @@ Residents
                                 </select>
                             </div>
 
-                            <div class="col-sm-12 col-lg-6">
+                            <div class="col-sm-4">
                                 <label class="form-label" for="student">Educational Attainment</label>
                                 <select class="form-select" name="student" id="student">
-                                    <option selected="true" disabled="disabled">----- Select here -----</option>
+                                    <option selected hidden disabled>----- Select here -----</option>
                                     <option value="N/A" {{ old('student')==='N/A' ? 'selected' : '' }}> N/A
                                     </option>
                                     <option value="Elementary" {{ old('student')==='Elementary' ? 'selected' : '' }}>
@@ -141,23 +152,64 @@ Residents
                             </div>
                         </div>
 
+                        <div id="spouse_fields" style="display: none;">
+                            <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
+                                <h4 class="mb-0 text-white"> Spouse</h4>
+                            </div>
 
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-3">
+                                    <label class="form-label" for="spouse_lname">Last name</label>
+                                    <input type="text" name="spouse_lname" id="spouse_lname" class="form-control"
+                                        value="{{ old('spouse_lname') }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-3">
+                                    <label class="form-label" for="spouse_fname">First name</label>
+                                    <input type="text" name="spouse_fname" id="spouse_fname" class="form-control"
+                                        value="{{ old('spouse_fname') }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-3">
+                                    <label class="form-label" for="spouse_mname">Middle name</label>
+                                    <input type="text" name="spouse_mname" id="spouse_mname" class="form-control"
+                                        value="{{ old('spouse_mname') }}">
+                                </div>
+                                <div class="col-sm-12 col-lg-3">
+                                    <label class="form-label" for="spouse_sname">Suffix name</label>
+                                    <input type="text" name="spouse_sname" id="spouse_sname" class="form-control"
+                                        value="{{ old('spouse_sname') }}">
+                                </div>
+                            </div>
 
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-lg-3">
+                                    <label class="form-label" for="spouse_occupation">Occupation</label>
+                                    <input type="text" name="spouse_occupation" id="spouse_occupation"
+                                        class="form-control" value="{{ old('spouse_occupation') }}">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white"> Address</h4>
                         </div>
 
                         <div class="row mb-3">
-                            <div class="col-sm-12 col-lg-6">
+                            <div class="col-sm-12 col-lg-4">
                                 <label class="form-label" for="house_number">House Number</label>
                                 <input type="text" name="house_number" id="house_number" class="form-control"
                                     value="{{ old('house_number') }}">
                             </div>
-                            <div class="col-sm-12 col-lg-6">
+
+                            <div class="col-sm-12 col-lg-4">
+                                <label class="form-label" for="street">Street</label>
+                                <input type="text" name="street" id="street" class="form-control" required
+                                    value="{{ old('street') }}">
+                            </div>
+
+                            <div class="col-sm-12 col-lg-4">
                                 <label class="form-label" for="purok_id">Purok</label>
                                 <select class="form-select" name="purok_id" id="purok_id">
-                                    <option selected="true" disabled="disabled">----- Select Purok -----</option>
+                                    <option selected hidden disabled value="">----- Select Purok -----</option>
                                     @foreach ($puroks as $item)
                                     <option value="{{ $item->id }}" {{ old('purok')===$item->id ? 'selected' : '' }}>{{
                                         $item->name }}
@@ -166,25 +218,9 @@ Residents
                                 </select>
                             </div>
                         </div>
+
                         <div class="row mb-3">
-                            <div class="col-sm-12 col-lg-6">
-                                <label class="form-label" for="street">Street</label>
-                                <input type="text" name="street" id="street" class="form-control" required
-                                    value="{{ old('street') }}">
-                            </div>
-                            <div class="col-sm-12 col-lg-6">
-                                <label class="form-label" for="">Type of house</label>
-                                <select class="form-select" name="type_of_house">
-                                    <option selected="true" disabled="disabled">----- Select Type of house -----
-                                    </option>
-                                    <option value="Owned" {{ old('type_of_house')==='Owned' ? 'selected' : '' }}>
-                                        Owned
-                                    </option>
-                                    <option value="Rental" {{ old('type_of_house')==='Rental' ? 'selected' : '' }}>
-                                        Rental
-                                    </option>
-                                </select>
-                            </div>
+
                         </div>
 
                         <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
@@ -194,18 +230,9 @@ Residents
 
                         <div class="row mb-3">
                             <div class="col-sm-12 col-lg-6">
-                                <label class="form-label" for="">PWD</label>
-                                <select class="form-select" name="pwd">
-                                    <option selected="true" disabled="disabled">----- Select if PWD -----</option>
-                                    <option value="Yes" {{ old('pwd')==='Yes' ? 'selected' : '' }}>Yes
-                                    </option>
-                                    <option value="No" {{ old('pwd')==='No' ? 'selected' : '' }}>No</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-lg-6">
                                 <label class="form-label" for="">Subsidy Program</label>
                                 <select class="form-select" name="membership_prog">
-                                    <option selected="true" disabled="disabled">----- Select Subsidy Program -----
+                                    <option selected hidden disabled value="">----- Select Subsidy Program -----
                                     </option>
                                     <option value="None" {{ old('membership_prog')==='None' ? 'selected' : '' }}>
                                         None</option>
@@ -218,13 +245,27 @@ Residents
                                         TUPAD</option>
                                 </select>
                             </div>
+
+                            <div class="col-sm-12 col-lg-6">
+                                <label class="form-label" for="">Type of house</label>
+                                <select class="form-select" name="type_of_house">
+                                    <option selected hidden disabled value="">----- Select Type of house -----
+                                    </option>
+                                    <option value="Owned" {{ old('type_of_house')==='Owned' ? 'selected' : '' }}>
+                                        Owned
+                                    </option>
+                                    <option value="Rental" {{ old('type_of_house')==='Rental' ? 'selected' : '' }}>
+                                        Rental
+                                    </option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
-                            <h4 class="mb-0 text-white">Family members</h4>
+                            <h4 class="mb-0 text-white">Dependents</h4>
                         </div>
 
-                        <button type="button" class="btn btn-primary add" id="addMember">Add family member</button>
+                        <button type="button" class="btn btn-primary add" id="addMember">Add dependent</button>
 
                         <div id="family_members" class="mt-3">
                             {{-- New members go here --}}
@@ -268,24 +309,36 @@ Residents
         });
     }
 
+    document.getElementById('civil_status').addEventListener('change', (e) => {
+        if (e.target.value === 'Married') {
+            document.getElementById('spouse_fields').style.display = 'block'
+        } else {
+            document.getElementById('spouse_fields').style.display = 'none'
+        }
+    })
+
     $(document).ready(function(){
         var memberCount = document.querySelectorAll('.member').length
 
         $(this).on('click', '.add', function(){
             var html = `
             <div class="row align-items-center member">
-                <div class="row col-11 mb-3">
+                <div class="row col-11 mb-3 align-items-center">
                     <div class="col-sm-12 col-lg-4">
                         <label class="form-label" for="m.${memberCount}.name">Full name</label>
                         <input type="text" name="member[${memberCount}][name]" id="m.${memberCount}.name" class="form-control">
                     </div>
-                    <div class="col-sm-12 col-lg-4">
+                    <div class="col-sm-12 col-lg-3">
                         <label class="form-label" for="m.${memberCount}.birthday">Birthday</label>
                         <input type="date" name="member[${memberCount}][birthday]" id="m.${memberCount}.birthday" class="form-control">
                     </div>
                     <div class="col-sm-12 col-lg-4">
                         <label class="form-label" for="m.${memberCount}.relationship">Relationship</label>
                         <input type="text" name="member[${memberCount}][relationship]" id="m.${memberCount}.relationship" class="form-control">
+                    </div>
+                    <div class="col-sm-12 col-lg-1">
+                        <input type="checkbox" name="member[${memberCount}][pwd]" id="m.${memberCount}.pwd" class="form-check-input">
+                        <label class="form-check-label" for="m.${memberCount}.pwd">PWD</label>
                     </div>
                 </div>
                 <div class="row col-1">

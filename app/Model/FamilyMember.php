@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FamilyMember extends Model
 {
-    protected $fillable = ['head_id', 'resident_number', 'name', 'birthdate', 'relationship'];
+    protected $fillable = ['head_id', 'resident_number', 'name', 'birthdate', 'relationship', 'pwd'];
 
     protected $appends = [
         'full_name',

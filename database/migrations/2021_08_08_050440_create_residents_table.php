@@ -20,18 +20,33 @@ class CreateResidentsTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('suffix_name')->nullable();
+
             $table->string('gender');
             $table->date('birthday');
             $table->string('birthplace')->nullable();
             $table->string('civil_status');
-            $table->string('house_number')->nullable();
+            $table->string('pwd');
 
+            $table->string('house_number')->nullable();
             $table->string('street')->nullable();
+
             $table->string('occupation');
             $table->string('student');//educational attainment
+
+            $table->string('spouse_fname')->nullable();
+            $table->string('spouse_mname')->nullable();
+            $table->string('spouse_lname')->nullable();
+            $table->string('spouse_sname')->nullable();
+            $table->string('spouse_occupation')->nullable();
+            
             $table->string('type_of_house');
-            $table->string('pwd');
             $table->string('membership_prog');
+            // next time mga to hahahaha
+            // $table->string('residency_length');
+            // $table->boolean('indigent')->default(false);
+            // $table->boolean('water')->default(true);
+            // $table->boolean('electricity')->default(true);
+
             $table->string('image')->nullable();
 
             $table->unsignedBigInteger('barangay_id');
