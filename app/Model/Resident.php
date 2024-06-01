@@ -23,7 +23,6 @@ class Resident extends Model
     protected $appends = [
         'full_name',
         'address',
-        'address',
     ];
 
     public function getFullNameAttribute()

@@ -17,6 +17,16 @@ Residents
                 <form action="{{ route('user.barangay.resident.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="row mb-3">
+                            {{-- @dd(session('error')) --}}
+                            @if (session()->has('error'))
+                                <div class="col-12">
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                         <div class="card-header rounded mt-5 mb-3" style="background: #1e2c3b">
                             <h4 class="mb-0 text-white">Resident Picture</h4>
                         </div>

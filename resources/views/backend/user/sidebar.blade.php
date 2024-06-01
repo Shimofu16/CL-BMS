@@ -16,11 +16,28 @@
             </li>
             <li class="nav-heading">Menu</li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('user.barangay.resident.*') ? 'active' : '' }}"
-                    href="{{ route('user.barangay.resident.index') }}">
+                <a class="nav-link collapsed {{ Route::is('user.barangay.resident.*') ? 'active' : '' }}"
+                    data-bs-target="#residents" data-bs-toggle="collapse" href="#">
                     <i class="fa-solid fa-people-roof"></i>
                     <span>Residents</span>
+                    <i class="fa-solid fa-chevron-down ms-auto"></i>
                 </a>
+                <ul id="residents" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
+                    <li class="{{ Route::is('user.barangay.resident.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('user.barangay.resident.index') }}">
+                            <i class="fa-regular fa-circle"></i>
+                            <span>Residents List</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('user.barangay.resident.duplicates') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('user.barangay.resident.duplicates') }}">
+                            <i class="fa-regular fa-circle"></i>
+                            <span>Duplicates</span>
+                        </a>
+                    </li>
+
+                </ul>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('user.barangay.blotters.*') ? 'active' : '' }}"

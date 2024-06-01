@@ -17,71 +17,70 @@
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
-            {{-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
+                    <i class="fa-regular fa-bell"></i>
+                    <span
+                        class="badge bg-success badge-number">{{ getResidentOverlaps(auth()->user()->official->barangay->id)->count() }}</span>
                 </a><!-- End Messages Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        You have 3 new messages
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
+                    {{-- <li class="dropdown-header">
                         <a href="#">
-                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>4 hrs. ago</p>
-                            </div>
+                            <span class="badge rounded-pill bg-primary p-2 ms-2">View all</span>
                         </a>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
-                    </li>
+                    </li> --}}
+                    @foreach (getResidentOverlaps(auth()->user()->official->barangay->id) as $overlap)
+                        @php
+                            $newResident = getResidentByCode($overlap->new_id);
+                            $existingResident = getResidentByCode($overlap->existing_id);
+                        @endphp
+                        @if (getOverlapByResidentCode($overlap->new_id, auth()->user()->official->barangay->id))
+                            <li class="message-item">
+                                <a href="#">
+                                    <div>
+                                        <h4>{{ $newResident->full_name }}</h4>
+                                        <p>
+                                            This resident is already a registered resident of
+                                            <span>Brgy. {{ Str::ucfirst($existingResident->barangay->name) }}</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        @else
+                            <li class="message-item">
+                                <a href="#">
+                                    <div>
+                                        <h4>{{ $existingResident->full_name }}</h4>
+                                        <p>
+                                            This resident is trying to register to another barangay. <br>
+                                            <span>Brgy. {{ Str::ucfirst($newResident->barangay->name) }}</span>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        @endif
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    @endforeach
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Anna Nelson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>6 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
 
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>David Muldon</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>8 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     <li class="dropdown-footer">
-                        <a href="#">Show all messages</a>
+                        <a href="{{ route('user.barangay.resident.duplicates') }}">View all</a>
                     </li>
 
                 </ul><!-- End Messages Dropdown Items -->
 
-            </li> --}}
+            </li>
             <!-- End Messages Nav -->
 
             <li class="nav-item dropdown pe-3">

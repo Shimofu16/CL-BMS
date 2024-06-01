@@ -126,6 +126,7 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
         Route::prefix('resident')->name('resident.')->group(function () {
             Route::get('/', [ResidentsController::class, 'index'])->name('index');
             Route::get('/create', [ResidentsController::class, 'create'])->name('create');
+            Route::get('/duplicates', [ResidentsController::class, 'duplicates'])->name('duplicates');
             Route::get('/show/{id}', [ResidentsController::class, 'show'])->name('show');
             Route::get('/edit/{id}', [ResidentsController::class, 'edit'])->name('edit');
             Route::post('/store', [ResidentsController::class, 'store'])->name('store');

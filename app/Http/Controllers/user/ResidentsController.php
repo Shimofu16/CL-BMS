@@ -71,9 +71,10 @@ class ResidentsController extends Controller
                 'type' => 'settlement',
             ]
         ];
-        $overlaps = Overlap::pluck('new_id')->toArray();
+        $resident_numbers = Overlap::pluck('new_id')->toArray();
+        // dd($resident_numbers);
         return view('backend.user.residents.index', [
-            'residents' => $this->residents->whereNotIn('res_num', $overlaps)->get(),
+            'residents' => $this->residents->whereNotIn('res_num', $resident_numbers)->get(),
             'certificates' => $certificates,
         ]);
     }
@@ -99,26 +100,26 @@ class ResidentsController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'image' => 'required',
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'middle_name' => 'nullable',
-            'suffix_name' => 'nullable',
-            'gender' => 'required',
-            'birthday' => 'required|date|before:-18 years|before_or_equal:today',
-            'birthplace' => 'nullable',
-            'civil_status' => 'required',
-            'house_number' => 'nullable',
-            'street' => 'required',
-            'occupation' => 'required',
-            'student' => 'required',
-            'type_of_house' => 'required',
-            'pwd' => 'required',
-            'membership_prog' => 'required',
-            'purok_id' => 'nullable',
-        ]);
         try {
+            $request->validate([
+                'image' => 'required',
+                'last_name' => 'required',
+                'first_name' => 'required',
+                'middle_name' => 'nullable',
+                'suffix_name' => 'nullable',
+                'gender' => 'required',
+                'birthday' => 'required|date|before:-18 years|before_or_equal:today',
+                'birthplace' => 'nullable',
+                'civil_status' => 'required',
+                'house_number' => 'nullable',
+                'street' => 'required',
+                'occupation' => 'required',
+                'student' => 'required',
+                'type_of_house' => 'required',
+                'pwd' => 'nullable',
+                'membership_prog' => 'required',
+                'purok_id' => 'nullable',
+            ]);
             $img = $request->get('image');
             $image_parts = explode(";base64,", $img);
             $image_base64 = base64_decode(end($image_parts));
@@ -151,9 +152,10 @@ class ResidentsController extends Controller
             if ($hit) {
                 $overlap = Overlap::create([
                     'existing_id' => $hit->res_num ?? $hit->request_number,
-                    'new_id' => $request->res_num
+                    'new_id' => $resident_number,
                 ]);
-            }else{
+            } 
+
                 $resident = Resident::create([
                     'res_num' => $resident_number,
                     'image' => $fileName,
@@ -183,18 +185,23 @@ class ResidentsController extends Controller
                     'barangay_id' => $this->barangay_id,
                     'purok_id' => $request->purok_id,
                 ]);
-            }
+
 
             if ($request->member) {
                 $memberCount = 1;
                 foreach ($request->member as $member) {
+                    $isPWD = false;
+                    if (array_key_exists('pwd', $member)) {
+                        $isPWD =  true;
+                    }
                     FamilyMember::create([
                         'head_id' => $resident->id,
                         'resident_number' => $resident->res_num . '-' . chr(ord('A') + $memberCount - 1),
                         'name' => $member['name'],
                         'relationship' => $member['relationship'],
                         'birthdate' => $member['birthday'],
-                        'pwd' => $member['pwd'] == 'on' ? true : false
+                        // 'pwd' => $member['pwd'] == 'on' ? true : false
+                        'pwd' => $isPWD
                     ]);
 
                     $memberCount += 1;
@@ -221,9 +228,11 @@ class ResidentsController extends Controller
             //   $residence->path = '/storage/'.$path;
 
             Alert::success('Successfully Created', 'Resident created successfully');
+            session()->flash('success', 'Resident created successfully');
             return redirect()->route('user.barangay.resident.index');
         } catch (\Throwable $th) {
-            Alert::error('Error', $th->getMessage());
+            session()->flash('error', $th->getMessage());
+            dd(session('error'), $th->getMessage());
             return back()->with('error', $th->getMessage());
         }
     }
@@ -265,6 +274,7 @@ class ResidentsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         try {
 
             $resident = Resident::findOrFail($id);
@@ -313,11 +323,16 @@ class ResidentsController extends Controller
                 $ids = [];
                 // dd($request->member, Arr::exists($request->member[2], 'id'));
                 foreach ($request->member as $member) {
+                    $isPWD = false;
+                    if (array_key_exists('pwd', $member)) {
+                        $isPWD =  true;
+                    }
                     if ($member['id'] != null) {
                         FamilyMember::findOrFail($member['id'])->update([
                             'name' => $member['name'],
                             'relationship' => $member['relationship'],
                             'birthdate' => $member['birthday'],
+                            'pwd' => $isPWD
                         ]);
                         $ids[] = $member['id'];
                     } else {
@@ -334,7 +349,7 @@ class ResidentsController extends Controller
                             'name' => $member['name'],
                             'relationship' => $member['relationship'],
                             'birthdate' => $member['birthday'],
-                            'pwd' => $member['pwd'] == 'on' ? true : false
+                            'pwd' => $isPWD
                         ]);
                         $ids[] = $new->id;
                     }
@@ -383,5 +398,8 @@ class ResidentsController extends Controller
     public function import()
     {
         return view('residence.import');
+    }
+    public function duplicates(){
+        return view('backend.user.residents.duplicates.index');
     }
 }

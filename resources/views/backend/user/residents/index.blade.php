@@ -1,6 +1,6 @@
 @extends('backend.user.sidebar')
 @section('page-title')
-    Residents of Brgy. {{ auth()->user()->official->barangay->name }}
+    Residents
 @endsection
 
 @section('contents')

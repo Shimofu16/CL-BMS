@@ -291,7 +291,7 @@ Residents
                                             value="{{ $member->relationship }}">
                                     </div>
                                     <div class="col-sm-12 col-lg-1">
-                                        <input checked="{{ $member->pwd }}" type="checkbox"
+                                        <input {{ ($member->pwd) ? 'checked': '' }} type="checkbox"
                                             name="member[{{ $loop->index }}][pwd]" id="m.{{ $loop->index }}.pwd"
                                             class="form-check-input">
                                         <label class="form-check-label" for="m.{{ $loop->index }}.pwd">PWD</label>
@@ -386,11 +386,11 @@ Residents
                 </div>
             </div>
             `
-            
+
             $('#family_members').append(html)
             memberCount += 1
         })
-            
+
         $(this).on('click', '.remove', function(){
             var target = $(this).parent().parent()
             target.remove()
