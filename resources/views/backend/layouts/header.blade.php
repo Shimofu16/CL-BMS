@@ -8,21 +8,22 @@
         <i class="fa-solid fa-bars toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
     @if (Route::is('user.*'))
-        <div class="ms-5">
-            <h4 class="mb-0 text-violet"> Barangay {{ Str::ucfirst(auth()->user()->official->barangay->name) }}</h4>
-        </div>
+    <div class="ms-5">
+        <h4 class="mb-0 text-violet"> Barangay {{ Str::ucfirst(auth()->user()->official->barangay->name) }}</h4>
+    </div>
     @endif
 
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
+            @if (Route::is('user.*'))
             <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="fa-regular fa-bell"></i>
-                    <span
-                        class="badge bg-success badge-number">{{ getResidentOverlaps(auth()->user()->official->barangay->id)->count() }}</span>
+                    <span class="badge bg-success badge-number">{{
+                        getResidentOverlaps(auth()->user()->official->barangay->id)->count() }}</span>
                 </a><!-- End Messages Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -35,38 +36,38 @@
                         <hr class="dropdown-divider">
                     </li> --}}
                     @foreach (getResidentOverlaps(auth()->user()->official->barangay->id) as $overlap)
-                        @php
-                            $newResident = getResidentByCode($overlap->new_id);
-                            $existingResident = getResidentByCode($overlap->existing_id);
-                        @endphp
-                        @if (getOverlapByResidentCode($overlap->new_id, auth()->user()->official->barangay->id))
-                            <li class="message-item">
-                                <a href="#">
-                                    <div>
-                                        <h4>{{ $newResident->full_name }}</h4>
-                                        <p>
-                                            This resident is already a registered resident of
-                                            <span>Brgy. {{ Str::ucfirst($existingResident->barangay->name) }}</span>
-                                        </p>
-                                    </div>
-                                </a>
-                            </li>
-                        @else
-                            <li class="message-item">
-                                <a href="#">
-                                    <div>
-                                        <h4>{{ $existingResident->full_name }}</h4>
-                                        <p>
-                                            This resident is trying to register to another barangay. <br>
-                                            <span>Brgy. {{ Str::ucfirst($newResident->barangay->name) }}</span>
-                                        </p>
-                                    </div>
-                                </a>
-                            </li>
-                        @endif
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                    @php
+                    $newResident = getResidentByCode($overlap->new_id);
+                    $existingResident = getResidentByCode($overlap->existing_id);
+                    @endphp
+                    @if (getOverlapByResidentCode($overlap->new_id, auth()->user()->official->barangay->id))
+                    <li class="message-item">
+                        <a href="#">
+                            <div>
+                                <h4>{{ $newResident->full_name }}</h4>
+                                <p>
+                                    This resident is already a registered resident of
+                                    <span>Brgy. {{ Str::ucfirst($existingResident->barangay->name) }}</span>
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    @else
+                    <li class="message-item">
+                        <a href="#">
+                            <div>
+                                <h4>{{ $existingResident->full_name }}</h4>
+                                <p>
+                                    This resident is trying to register to another barangay. <br>
+                                    <span>Brgy. {{ Str::ucfirst($newResident->barangay->name) }}</span>
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    @endif
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     @endforeach
 
 
@@ -81,7 +82,7 @@
                 </ul><!-- End Messages Dropdown Items -->
 
             </li>
-            <!-- End Messages Nav -->
+            @endif
 
             <li class="nav-item dropdown pe-3">
 
@@ -98,14 +99,16 @@
                             {{ auth()->user()->name }}
                         </h6>
 
-                        <span>{{ auth()->user()->role == 'User' ? auth()->user()->official->position : auth()->user()->role }}</span>
+                        <span>{{ auth()->user()->role == 'User' ? auth()->user()->official->position :
+                            auth()->user()->role }}</span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
 
                     {{-- <li>
-                        <a class="dropdown-item d-flex align-items-center" href="{{ route(Str::lower(auth()->user()->role).'.change-password.index') }}">
+                        <a class="dropdown-item d-flex align-items-center"
+                            href="{{ route(Str::lower(auth()->user()->role).'.change-password.index') }}">
                             <i class="ri-lock-password-fill"></i>
                             <span>Change Password</span>
                         </a>
@@ -113,7 +116,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                --}}
+                    --}}
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.index') }}">
                             <i class="fa-solid fa-id-card"></i>
@@ -138,5 +141,4 @@
         </ul>
     </nav>
     <!-- End Icons Navigation -->
-
 </header>

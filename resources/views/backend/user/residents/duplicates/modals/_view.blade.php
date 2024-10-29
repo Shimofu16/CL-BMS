@@ -5,11 +5,11 @@
                 <h5 class="modal-title text-white">Information of {{ $newResident->full_name }}</h5>
             </div>
             <div class="modal-body">
-  
+
                     <table class="table">
                         <thead>
                             <tr>
-                                <th colspan="4"><h4>Exixting Brgy.: {{ $newResident->barangay->name }}</h4></th>
+                                <th colspan="4"><h4>Existing Brgy.: {{ $existingResident->barangay->name }} </h4></th>
                             </tr>
                             <tr>
                                 <th scope="col">Resident #</th>
@@ -30,7 +30,7 @@
                     <table class="table mt-3">
                         <thead>
                             <tr>
-                                <th colspan="4"><h4>New Brgy.: {{ $existingResident->barangay->name }}</h4></th>
+                                <th colspan="4"><h4>New Brgy.: {{ $newResident->barangay->name }} </h4></th>
                             </tr>
                             <tr>
                                 <th scope="col">Resident #</th>
@@ -48,7 +48,7 @@
                                 </tr>
                         </tbody>
                     </table>
-               
+
 
             </div>
             <div class="modal-footer">
