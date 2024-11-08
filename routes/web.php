@@ -1,7 +1,15 @@
 <?php
 
+use App\Mail\VerificationMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\NagcarlanController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\user\UsersController;
 use App\Http\Controllers\user\PermitController;
 use App\Http\Controllers\user\FencingController;
 use App\Http\Controllers\admin\ArchiveController;
@@ -11,22 +19,15 @@ use App\Http\Controllers\user\AnalyticsController;
 use App\Http\Controllers\user\ResidentsController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\OfficialsController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\user\DiggingPermitController;
 use App\Http\Controllers\admin\settings\YearController;
-use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\user\BarangayOfficialController;
 use App\Http\Controllers\user\BuildingPermitController;
 use App\Http\Controllers\user\CertificateListController;
+use App\Http\Controllers\user\BarangayOfficialController;
 use App\Http\Controllers\user\MeralcoClearanceController;
 use App\Http\Controllers\user\BusinessClearanceController;
 use App\Http\Controllers\user\FranchiseClearanceController;
-use App\Http\Controllers\user\UsersController;
-use App\Mail\VerificationMail;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,13 +51,26 @@ Route::get('/send/email', function () {
     Mail::to('royjosephlatayan16@gmail.com')->send(new VerificationMail($data));
     return 'email sent.';
 });
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/municipality', [HomeController::class, 'municipality'])->name('home.municipality');
-Route::get('/municipal/historical-background', [HomeController::class, 'historicalBackground'])->name('municipality.historical_background');
-Route::get('/municipal/profile', [HomeController::class, 'profile'])->name('municipality.profile');
-Route::get('/municipal/officials', [HomeController::class, 'officials'])->name('municipality.officials');
-Route::get('/municipal/offices', [HomeController::class, 'offices'])->name('municipality.offices');
-Route::get('/municipal/barangay-directory', [HomeController::class, 'barangayDirectory'])->name('municipality.directory');
+
+//NAGCARLAN
+
+Route::get('/nagcarlan', [NagcarlanController::class, 'index'])->name('home.nagcarlan');
+Route::get('/nagcarlan/historical-background', [NagcarlanController::class, 'historicalBackground'])->name('nagcarlan.historical_background');
+Route::get('/nagcarlan/profile', [NagcarlanController::class, 'profile'])->name('nagcarlan.profile');
+Route::get('/nagcarlan/officials', [NagcarlanController::class, 'officials'])->name('nagcarlan.officials');
+Route::get('/nagcarlan/offices', [NagcarlanController::class, 'offices'])->name('nagcarlan.offices');
+Route::get('/nagcarlan/barangay-directory', [NagcarlanController::class, 'barangayDirectory'])->name('nagcarlan.directory');
+
+//CALAUAN
+
+Route::get('/calauan', [HomeController::class, 'municipality'])->name('home.calauan');
+Route::get('/calauan/historical-background', [HomeController::class, 'historicalBackground'])->name('calauan.historical_background');
+Route::get('/calauan/profile', [HomeController::class, 'profile'])->name('calauan.profile');
+Route::get('/calauan/officials', [HomeController::class, 'officials'])->name('calauan.officials');
+Route::get('/calauan/offices', [HomeController::class, 'offices'])->name('calauan.offices');
+Route::get('/calauan/barangay-directory', [HomeController::class, 'barangayDirectory'])->name('calauan.directory');
 Route::get('/barangay/{barangay_id}/barangay', [HomeController::class, 'barangay'])->name('home.barangay');
 Route::get('/barangay/{barangay_id}/about', [HomeController::class, 'about'])->name('barangay.about');
 Route::get('/barangay/{barangay_id}/login', [HomeController::class, 'login'])->name('login.page');

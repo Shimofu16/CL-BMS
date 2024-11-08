@@ -1,33 +1,3 @@
-/*============================
-
-    Template Name: Rasalina - Personal Portfolio HTML Template
-    Template URL: #
-    Description: Rasalina - Personal Portfolio HTML Template
-    Author: Theme_Pure
-    Author URL: https://themeforest.net/user/theme_pure/portfolio
-    Version: 1.0
-
-=============================
-
-    CSS INDEX
-    ===================
-    01. Theme default CSS
-    02. Header
-    03. Banner
-    04. About
-    05. Services
-    06. Work Process
-    07. Portfolio
-    08. Partner
-    09. Testimonial
-    10. Blog
-    11. Pagination
-    12. Contact
-    13. Footer
-    14. Preloader
-    15. Dark Mode
-
-=============================*/
 /*=============================
 01. Theme default CSS
 =============================*/
@@ -3347,7 +3317,8 @@ Breadcrumb
         width: 100%; }
   @media (max-width: 991.98px) {
     .portfolio__inner__item {
-      margin-bottom: 60px; }
+      margin-bottom: 60px;
+     }
       .portfolio__inner__item:last-child {
         margin-bottom: 0; } }
   @media (max-width: 991.98px) {

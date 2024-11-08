@@ -23,16 +23,18 @@ class HomeController extends Controller
         return view('index', compact('barangays'));
     }
 
+    // CALAUAN
+
     public function municipality()
     {
         $barangays = Barangay::all();
-        return view('frontend.municipality.index', compact('barangays'));
+        return view('frontend.municipality.calauan.index', compact('barangays'));
     }
 
     public function historicalBackground()
     {
         $barangays = Barangay::all();
-        return view('frontend.municipality.historical_background', compact('barangays'));
+        return view('frontend.municipality.calauan.historical_background', compact('barangays'));
     }
 
     public function profile()
@@ -41,25 +43,25 @@ class HomeController extends Controller
         $total = $barangays->count();
         $column1 = ceil($total / 3);
         $column2 = ceil(($total - $column1) / 2);
-        return view('frontend.municipality.profile', compact('barangays', 'column1', 'column2'));
+        return view('frontend.municipality.calauan.profile', compact('barangays', 'column1', 'column2'));
     }
 
     public function officials()
     {
         $barangays = Barangay::all();
-        return view('frontend.municipality.officials', compact('barangays'));
+        return view('frontend.municipality.calauan.officials', compact('barangays'));
     }
 
     public function offices()
     {
         $barangays = Barangay::all();
-        return view('frontend.municipality.offices', compact('barangays'));
+        return view('frontend.municipality.calauan.offices', compact('barangays'));
     }
 
     public function barangayDirectory()
     {
         $barangays = Barangay::all();
-        return view('frontend.municipality.barangay-directory', compact('barangays'));
+        return view('frontend.municipality.calauan.barangay-directory', compact('barangays'));
     }
 
     public function barangay($barangay_id)

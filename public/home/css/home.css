@@ -136,6 +136,7 @@ body {
     box-sizing: border-box;
     overflow: auto;
     justify-content: center;
+    align-items: center;
 }
 
 .thumbnail::-webkit-scrollbar {
@@ -161,6 +162,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .thumbnail .item.active {
     filter: brightness(1);
 }
