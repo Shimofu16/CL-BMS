@@ -5,7 +5,7 @@ namespace App\Http\Controllers\user;
 use Carbon\Carbon;
 use App\Model\Barangay;
 use App\Model\Resident;
-use App\model\ActivityLog;
+use App\Model\ActivityLog;
 use App\Model\FamilyMember;
 use Illuminate\Http\Request;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-use App\model\ActivityLog;
+use App\Model\ActivityLog;
 use App\Model\Barangay;
 use App\Model\Official;
 use App\Model\Resident;
