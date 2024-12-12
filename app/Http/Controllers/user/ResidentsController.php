@@ -100,26 +100,26 @@ class ResidentsController extends Controller
     public function store(Request $request)
     {
         // dd($request);
+        $request->validate([
+            'image' => 'required',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'nullable',
+            'suffix_name' => 'nullable',
+            'gender' => 'required',
+            'birthday' => 'required|date|before:-18 years|before_or_equal:today',
+            'birthplace' => 'nullable',
+            'civil_status' => 'required',
+            'house_number' => 'nullable',
+            'street' => 'required',
+            'occupation' => 'required',
+            'student' => 'required',
+            'type_of_house' => 'required',
+            'pwd' => 'nullable',
+            'membership_prog' => 'required',
+            'purok_id' => 'nullable',
+        ]);
         try {
-            $request->validate([
-                'image' => 'required',
-                'last_name' => 'required',
-                'first_name' => 'required',
-                'middle_name' => 'nullable',
-                'suffix_name' => 'nullable',
-                'gender' => 'required',
-                'birthday' => 'required|date|before:-18 years|before_or_equal:today',
-                'birthplace' => 'nullable',
-                'civil_status' => 'required',
-                'house_number' => 'nullable',
-                'street' => 'required',
-                'occupation' => 'required',
-                'student' => 'required',
-                'type_of_house' => 'required',
-                'pwd' => 'nullable',
-                'membership_prog' => 'required',
-                'purok_id' => 'nullable',
-            ]);
             $img = $request->get('image');
             $image_parts = explode(";base64,", $img);
             $image_base64 = base64_decode(end($image_parts));
