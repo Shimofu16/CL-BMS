@@ -53,7 +53,7 @@ class CertificateListController extends Controller
             ->get();
 
         // chairman
-        $chairman = $barangay_officials->where('position', 'Chairman')->first();
+        $chairman = $barangay_officials->where('position', 'Captain')->first();
 
 
         // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
@@ -94,7 +94,7 @@ class CertificateListController extends Controller
         // officials
         $officials = Official::query()->where('barangay_id', $this->barangay_id)->get();
         // chairman
-        $chairman = $officials->where('position', 'Chairman')->first();
+        $chairman = $officials->where('position', 'Captain')->first();
         // resident
         $resident =  Resident::findOrFail($id);
         // remove the _ and replace it with space, then capitalize the first letter of each word and add "certificate"
