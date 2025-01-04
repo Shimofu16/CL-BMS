@@ -129,8 +129,9 @@ class HomeController extends Controller
                 $this->generateSession(false);
                 return redirect()->intended(route('user.dashboard.index'));
             }
+            
+            $this->generateSession(true);
         }
-        $this->generateSession(true);
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
