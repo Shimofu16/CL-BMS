@@ -20,7 +20,7 @@
                                     <th>Name</th>
                                     <th>Address</th>
                                     <th>Date Issued</th>
-                                    <th>Action</th>
+                                    <th>PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +39,7 @@
                                             {{ $franchise->created_at->format('F d, Y') }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('franchise_clearance.show', $franchise->id) }}"
+                                            <a href="{{ route('franchise_clearance.clearance', $franchise->id) }}"
                                                 class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
                                                 View</a>
                                         </td>

@@ -3,18 +3,36 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Permit;
+use Auth;
 use Illuminate\Http\Request;
+use Str;
 
 class PermitController extends Controller
 {
+    protected $permit_type;
+
+    protected $barangay_id;
+    public function __construct($permit_type)
+    {
+        $this->permit_type = $permit_type;
+        $this->barangay_id = Auth::user()->official->barangay->id;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($permit_type)
+    public function index()
     {
-        
+        $viewPath = "backend.user.permits.{$this->permit_type}.index";
+        $permitType = Str::ucFirst($this->permit_type) . ' permit';
+        $permits = Permit::where('type', $permitType)
+            ->where('barangay_id', $this->barangay_id)
+            ->get();
+
+        return view($viewPath, compact('permits'));
     }
 
     /**

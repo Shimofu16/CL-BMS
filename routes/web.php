@@ -150,12 +150,9 @@ Route::prefix('user')->name('user.')->middleware(['auth', 'role:user'])->group(f
 
         Route::prefix('permit')->name('permit.')->group(function () {
             Route::get('/{permit_type}', [PermitController::class, 'index'])->name('index');
-            Route::get('/create', [PermitController::class, 'create'])->name('create');
-            Route::get('/show/{id}', [PermitController::class, 'show'])->name('show');
-            Route::get('/edit/{id}', [PermitController::class, 'edit'])->name('edit');
-            Route::post('/store', [PermitController::class, 'store'])->name('store');
-            Route::put('/update/{id}', [PermitController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}', [PermitController::class, 'delete'])->name('delete');
+            Route::get('/{permit_type}/create', [PermitController::class, 'create'])->name('create');
+            Route::get('/{permit_type}/pdf', [PermitController::class, 'pdf'])->name('pdf');
+            Route::post('/{permit_type}/store', [PermitController::class, 'store'])->name('store');
         });
 
         Route::prefix('certificate')->name('certificate.')->group(function () {
@@ -269,9 +266,9 @@ Route::group(['prefix' => 'Reports', 'middleware' => 'auth'], function () {
     Route::get('/residents-occupation-report', [App\Http\Controllers\ReportController::class, 'residents_occupation_report'])->name('residents-occupation.report');
 });
 
-Route::get('/permits', function () {
-    return view('brgy_permit.index');
-})->name('certificate');
+// Route::get('/permits', function () {
+//     return view('brgy_permit.index');
+// })->name('certificate');
 
 //officials
 Route::group(['prefix' => 'officials', 'middleware' => 'auth'], function () {
@@ -290,7 +287,7 @@ Route::group(['prefix' => 'business_clearance', 'middleware' => 'auth'], functio
     Route::get('/create-business', [BusinessClearanceController::class, 'create_business'])->name('create_business');
     Route::post('/store', [BusinessClearanceController::class, 'store_business'])->name('store_business');
     Route::get('/show/{id}', [BusinessClearanceController::class, 'show'])->name('business_clearance.show');
-    Route::post('/clearance/{id}', [BusinessClearanceController::class, 'show_clearance'])->name('business_clearance.show_clearance');
+    Route::get('/clearance/{id}', [BusinessClearanceController::class, 'clearance'])->name('business_clearance.show_clearance');
 });
 
 Route::group(['prefix' => 'building_permit', 'middleware' => 'auth'], function () {

@@ -27,22 +27,18 @@ Fencing Permits - Brgy. {{ Auth::user()->official->barangay->name }}
                         <table class="table datatable" id="table">
                             <thead>
                                 <tr>
-                                    <th>View</th>
                                     <th>Fencing Number</th>
                                     <th>Name</th>
                                     <th>Address</th>
                                     <th>Location</th>
                                     <th>Purpose</th>
+                                    <th>PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($fencings as $fencing)
                                 <tr>
-                                    <td>
-                                        <a href="{{route('fencing_permit.show', $fencing->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
-                                    </td>
+
                                     <td>
                                         {{$fencing->details['number']}}
                                     </td>
@@ -57,6 +53,11 @@ Fencing Permits - Brgy. {{ Auth::user()->official->barangay->name }}
                                     </td>
                                     <td>
                                         {{$fencing->details['purpose']}}
+                                    </td>
+                                    <td>
+                                        <a href="{{route('fencing_permit.clearance', $fencing->id)}}"
+                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
+                                            View</a>
                                     </td>
                                 </tr>
 

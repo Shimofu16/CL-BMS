@@ -27,21 +27,17 @@ Meralco Clearance Records - Brgy. {{ Auth::user()->official->barangay->name }}
                         <table class="table datatable" id="table">
                             <thead>
                                 <tr>
-                                    <th>View</th>
                                     <th>Meralco Control Number</th>
                                     <th>Applicant</th>
                                     <th>Building type</th>
                                     <th>Building address</th>
+                                    <th>PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($meralcos as $meralco)
                                 <tr>
-                                    <td>
-                                        <a href="{{route('meralco_clearance.show', $meralco->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
-                                    </td>
+
                                     <td>
                                         {{$meralco->details['number']}}
                                     </td>
@@ -53,6 +49,11 @@ Meralco Clearance Records - Brgy. {{ Auth::user()->official->barangay->name }}
                                     </td>
                                     <td>
                                         {{$meralco->details['address']}}
+                                    </td>
+                                    <td>
+                                        <a href="{{route('meralco_clearance.show', $meralco->id)}}"
+                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
+                                            View</a>
                                     </td>
                                 </tr>
 

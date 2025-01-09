@@ -31,7 +31,7 @@
                                         <th>Address</th>
                                         <th>Location</th>
                                         <th>Purpose</th>
-                                        <th>Generate</th>
+                                        <th>PDF</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -26,9 +26,7 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                         <table class="table datatable" id="table">
                             <thead>
                                 <tr>
-                                    <th>View</th>
                                     <th>Business Number</th>
-
                                     <th>
                                         Business Owner
                                     </th>
@@ -44,16 +42,13 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                                     <th>
                                         Registration Date
                                     </th>
+                                    <th>PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($businesses as $business)
                                 <tr>
-                                    <td>
-                                        <a href="{{route('business_clearance.show', $business->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
-                                    </td>
+
                                     <td>
                                         {{$business->details['number']}}
                                     </td>
@@ -73,6 +68,11 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                                     <td>
                                         {{ \Carbon\Carbon::parse($business->details['registration_date'])->format('F d,
                                         Y') }}
+                                    </td>
+                                    <td>
+                                        <a href="{{route('business_clearance.clearance', $business->id)}}"
+                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
+                                            View</a>
                                     </td>
                                 </tr>
 

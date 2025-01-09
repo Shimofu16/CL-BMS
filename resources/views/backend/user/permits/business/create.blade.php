@@ -79,12 +79,15 @@ Add Business
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <div class="container d-flex justify-content-center">
-                                <button type="submit" class="btn btn-icon icon-left btn-primary mr-3"><i
-                                        class="far fa-save"></i> Save</button>
-                                <a href="{{route('business_clearance.index')}}"
-                                    class="btn btn-icon icon-left btn-danger mr-3"><i class="fas fa-ban"></i>
-                                    Cancel</a>
+                            <div class="d-flex justify-content-between">
+                                <div></div>
+                                <div>
+                                    <button type="submit" class="btn btn-icon icon-left btn-primary mr-3"><i
+                                            class="far fa-save"></i> Save</button>
+                                    <a href="{{ route('business_clearance.index') }}"
+                                        class="btn btn-icon icon-left btn-danger"><i class="fas fa-ban"></i>
+                                        Cancel</a>
+                                </div>
                             </div>
                         </div>
                     </form>

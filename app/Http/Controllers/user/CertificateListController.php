@@ -21,10 +21,11 @@ class CertificateListController extends Controller
     public function __construct(Request $request)
     {
         // Initialize a default value for barangay_id in case it's not in the session
-        $this->barangay_id = session('barangay_id');
+        $this->barangay_id = Auth::user()->official->barangay->id;
 
         $this->barangay = Barangay::findOrFail($this->barangay_id);
         $this->residents = Resident::query()->where('barangay_id', $this->barangay_id);
+        
     }
 
     public function create(Request $request, $resident_id)
