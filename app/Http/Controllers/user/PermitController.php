@@ -3,20 +3,26 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Model\Barangay;
+use App\Model\Official;
 use App\Permit;
-use Auth;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PermitController extends Controller
 {
     protected $permit_type;
 
-    protected $barangay_id;
-    public function __construct($permit_type)
+    protected $barangay;
+
+    public function __construct(Request $request)
     {
-        $this->permit_type = $permit_type;
-        $this->barangay_id = Auth::user()->official->barangay->id;
+        $this->permit_type = $request->get('permit_type');
+        if ($request->has('permit_type')) {
+            
+        }
+        $this->barangay = Barangay::find(Auth::user()->official->barangay->id);
     }
 
     /**
@@ -29,10 +35,28 @@ class PermitController extends Controller
         $viewPath = "backend.user.permits.{$this->permit_type}.index";
         $permitType = Str::ucFirst($this->permit_type) . ' permit';
         $permits = Permit::where('type', $permitType)
-            ->where('barangay_id', $this->barangay_id)
+            ->where('barangay_id', $this->barangay->id)
             ->get();
 
         return view($viewPath, compact('permits'));
+    }
+
+    public function pdf($permit_id)
+    {
+        // dd($this->permit_type, $permit_id);
+
+        return view(
+            'backend.user.permits.pdf',
+            [
+                'filename' => "{$this->permit_type}_permit.pdf",
+                'officials' => Official::where('barangay_id', $this->barangay->id)->get(),
+                'barangay' => $this->barangay,
+                'permit_type' => $this->permit_type,
+                'permit' => Permit::find($permit_id),
+                'captain' => Official::where('barangay_id', $this->barangay->id)->where('position', 'Captain')->first(),
+                'secretary' => Official::where('barangay_id', $this->barangay->id)->where('position', 'Secretary')->first(),
+            ]
+        );
     }
 
     /**

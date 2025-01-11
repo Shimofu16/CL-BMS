@@ -51,9 +51,10 @@ Meralco Clearance Records - Brgy. {{ Auth::user()->official->barangay->name }}
                                         {{$meralco->details['address']}}
                                     </td>
                                     <td>
-                                        <a href="{{route('meralco_clearance.show', $meralco->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
+                                        <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $meralco->id, 'permit_type' => 'meralco']) }}"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-file-alt"></i> View
+                                         </a>
                                     </td>
                                 </tr>
 

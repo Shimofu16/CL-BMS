@@ -60,6 +60,12 @@
                             <span>Building Permit</span>
                         </a>
                     </li>
+                    <li class="{{ Route::is('business_clearance.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('business_clearance.index') }}">
+                            <i class="fa-regular fa-circle"></i>
+                            <span>Business Clearance</span>
+                        </a>
+                    </li>
                     <li class="{{ Route::is('digging_permit.index') ? 'collapse-active' : '' }}">
                         <a href="{{ route('digging_permit.index') }}">
                             <i class="fa-regular fa-circle"></i>
@@ -72,12 +78,7 @@
                             <span>Fencing Permit</span>
                         </a>
                     </li>
-                    <li class="{{ Route::is('business_clearance.index') ? 'collapse-active' : '' }}">
-                        <a href="{{ route('business_clearance.index') }}">
-                            <i class="fa-regular fa-circle"></i>
-                            <span>Business Clearance</span>
-                        </a>
-                    </li>
+                   
                     <li class="{{ Route::is('franchise_clearance.index') ? 'collapse-active' : '' }}">
                         <a href="{{ route('franchise_clearance.index') }}">
                             <i class="fa-regular fa-circle"></i>

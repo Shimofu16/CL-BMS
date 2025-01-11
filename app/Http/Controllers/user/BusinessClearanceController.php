@@ -92,7 +92,7 @@ class BusinessClearanceController extends Controller
         return view('brgy_permit.business_clearance.clearance');
     }
 
-    public function show_clearance($id, Request $request)
+    public function clearance($id, Request $request)
     {
         $business = Permit::with('owner')->findOrFail($id);
 

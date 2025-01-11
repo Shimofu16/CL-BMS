@@ -82,9 +82,6 @@ Issue Franchise Clearance
                             <div class="content" style="width: 5.55in; border-right: 2px solid black;">
                                 <div class="content-wrapper">
                                     <div class="top-part">
-                                        {{-- <p id="bayog"> <strong>Control No.</strong> {{
-                                            $franchise->franchise_number}}</p> --}}
-
                                         <div id="resident-picture">
                                             <canvas id="canvas" width="120" height="120"></canvas>
                                         </div>

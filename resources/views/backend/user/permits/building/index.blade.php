@@ -64,10 +64,10 @@
                                                                                         Y') }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('building_permit.clearance', $building->id) }}"
-                                                    class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                                    View
-                                                </a>
+                                                <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $building->id, 'permit_type' => 'building']) }}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-file-alt"></i> View
+                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach

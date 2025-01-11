@@ -54,11 +54,10 @@
                                                 {{ $digging->details['purpose'] }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('digging_permit.clearance', $digging->id) }}"
+                                                <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $digging->id, 'permit_type' => 'digging']) }}"
                                                     class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-file-alt"></i>
-                                                    View
-                                                </a>
+                                                    <i class="fas fa-file-alt"></i> View
+                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach

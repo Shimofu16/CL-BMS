@@ -55,9 +55,10 @@ Fencing Permits - Brgy. {{ Auth::user()->official->barangay->name }}
                                         {{$fencing->details['purpose']}}
                                     </td>
                                     <td>
-                                        <a href="{{route('fencing_permit.clearance', $fencing->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
+                                        <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $fencing->id, 'permit_type' => 'fencing']) }}"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-file-alt"></i> View
+                                         </a>
                                     </td>
                                 </tr>
 

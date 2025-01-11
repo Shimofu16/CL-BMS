@@ -70,9 +70,10 @@ Business Clearance - Brgy. {{ auth()->user()->official->barangay->name }}
                                         Y') }}
                                     </td>
                                     <td>
-                                        <a href="{{route('business_clearance.clearance', $business->id)}}"
-                                            class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                            View</a>
+                                        <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $business->id, 'permit_type' => 'business']) }}"
+                                            class="btn btn-primary btn-sm">
+                                            <i class="fas fa-file-alt"></i> View
+                                         </a>
                                     </td>
                                 </tr>
 

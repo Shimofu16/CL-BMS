@@ -39,9 +39,10 @@
                                             {{ $franchise->created_at->format('F d, Y') }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('franchise_clearance.clearance', $franchise->id) }}"
-                                                class="btn btn-primary btn-sm"><i class="fas fa-file-alt"></i>
-                                                View</a>
+                                            <a href="{{ route('user.barangay.permit.pdf', [ 'permit_id' => $franchise->id, 'permit_type' => 'franchise']) }}"
+                                                class="btn btn-primary btn-sm">
+                                                <i class="fas fa-file-alt"></i> View
+                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -7,142 +7,150 @@ Barangay Building Clearance
 @section('contents')
 
 <section class="section">
-    <div class="section-header d-flex justify-content-between">
-        <div>
-            <h3 class="page__heading">Barangay Building Clearance</h3>
+    <div class="card">
+        <div class="card-header">
+            <div class="section-header d-flex justify-content-between">
+                <div>
+                    <h3 class="page__heading">Barangay Building Clearance</h3>
+                </div>
+                <div>
+                    <button class="btn btn-md btn-icon icon-left btn-success" onclick="generatepdf()">Download</button>
+                </div>
+
+            </div>
         </div>
-        <div>
-            <button class="btn btn-md btn-icon icon-left btn-success" onclick="generatepdf()">Download</button>
-        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-around">
+                <div id="border-blue">
+                    <div class="certificate-container">
+                        <div class="page" style="width: 8.3in;" id="element-to-print">
+                            <div class="wrapper">
+                                <div class="head">
 
-    </div>
-    <div class="d-flex justify-content-around">
-        <div id="border-blue">
-            <div class="certificate-container">
-                <div class="page" style="width: 8.3in;" id="element-to-print">
-                    <div class="wrapper">
-                        <div class="head">
+                                    <p>REPUBLIC OF THE PHILIPPINES</p>
+                                    <p> PROVINCE OF LAGUNA </p>
+                                    <p> MUNICIPLITY OF CALAUAN </p>
+                                    <p class="text-uppercase"> BARANGAY {{ Auth::user()->official->barangay->name }} </p>
 
-                            <p>REPUBLIC OF THE PHILIPPINES</p>
-                            <p> PROVINCE OF LAGUNA </p>
-                            <p> MUNICIPLITY OF CALAUAN </p>
-                            <p class="text-uppercase"> BARANGAY {{ Auth::user()->official->barangay->name }} </p>
-
-                            <div class="title-wrapper">
-                                <h1 style="border-left: 2px solid black; border-right: 2px solid black;">Barangay
-                                    Building Clearance</h1>
-                            </div>
-                        </div>
-
-                        <div class="body">
-                            <div class="officials" style="width: 2.75in;  border-left: 2px solid black;">
-                                <div class="official-wrapper">
-                                    <img id="logo-img" src="{{ asset('storage/'.Auth::user()->official->barangay->logo) }}"
-                                        alt="{{ Auth::user()->official->barangay->name }}">
-                                    <p style="margin-bottom: 20px;"> <strong> Barangay {{
-                                            Auth::user()->official->barangay->name }} </strong></p>
-                                    @foreach ($b_officials as $b_official)
-
-                                    @if ($b_official->position == 'Captain')
-                                    <p>
-                                        <strong>Hon. {{ $b_official->full_name }}</strong><br>
-                                        {{ $b_official->position }}
-                                    </p>
-
-                                    <p id="councelor-label">
-                                        <strong>COUNCILORS</strong><br>
-                                    </p>
-
-
-                                    @elseif($b_official->position == 'Secretary')
-                                    <p>
-                                        <strong>{{ $b_official->full_name }}</strong><br>
-                                        {{ $b_official->position }}
-                                    </p>
-
-                                    @elseif($b_official->position == 'Treasurer')
-                                    <p>
-                                        <strong>{{ $b_official->full_name }}</strong><br>
-                                        {{ $b_official->position }}
-                                    </p>
-
-                                    @elseif($b_official->brgy_official_position == 'SK Chairperson')
-                                    <p>
-                                        <strong>{{ $b_official->full_name }}</strong><br>
-                                        {{ $b_official->position }}
-                                    </p>
-
-                                    @else
-                                    <p>
-                                        <strong>Hon. {{ $b_official->full_name }}</strong><br>
-                                        {{ $b_official->position }}
-                                    </p>
-
-                                    @endif
-
-                                    @endforeach
-
-
-                                </div>
-                            </div>
-
-                            <div class="content" style="width: 5.55in; border-right: 2px solid black;">
-                                <div class="content-wrapper">
-
-                                    <div class="text-part" style="margin-top:100px;">
-                                        <p id="to-whom">TO WHOM IT MAY CONCERN:</p>
-                                        <p id="content">
-                                            Permit is hereby granted to Mr./Mrs.
-                                            <strong>{{$building->owner->full_name}}</strong> to construct and renovate a
-                                            proposed <strong> {{$building->details['type']}}</strong> located at
-                                            <strong>{{$building->details['address']}}</strong>.
-
-                                        <P id="issue-for">
-                                            SUBJECT, however to the provision of our existing laws, ordinances and
-                                            regulation governing the operation and maintenance of the SAME.
-                                        </P>
-
-                                        <P id="issue-for">This <strong>BARANGAY BUILDING CLEARANCE </strong>may be
-                                            revoked at any time when necessary to protect, rules and regulations
-                                            governing the operation and maintenance of the same.</p>
-
-                                        <p id="witness">
-                                            This permit is expires after the construction of the said building.
-                                        </p>
+                                    <div class="title-wrapper">
+                                        <h1 style="border-left: 2px solid black; border-right: 2px solid black;">Barangay
+                                            Building Clearance</h1>
                                     </div>
+                                </div>
 
-
-                                    <div class="cap-sign-part">
-                                        <div class="cap-sign-wrapper">
-
+                                <div class="body">
+                                    <div class="officials" style="width: 2.75in;  border-left: 2px solid black;">
+                                        <div class="official-wrapper">
+                                            <img id="logo-img" src="{{ asset('storage/'.Auth::user()->official->barangay->logo) }}"
+                                                alt="{{ Auth::user()->official->barangay->name }}">
+                                            <p style="margin-bottom: 20px;"> <strong> Barangay {{
+                                                    Auth::user()->official->barangay->name }} </strong></p>
                                             @foreach ($b_officials as $b_official)
 
                                             @if ($b_official->position == 'Captain')
                                             <p>
-                                                <strong>Hon.
-                                                    {{ $b_official->full_name }}</strong><br>
-                                                Barangay Chairman
+                                                <strong>Hon. {{ $b_official->full_name }}</strong><br>
+                                                {{ $b_official->position }}
+                                            </p>
+
+                                            <p id="councelor-label">
+                                                <strong>COUNCILORS</strong><br>
+                                            </p>
+
+
+                                            @elseif($b_official->position == 'Secretary')
+                                            <p>
+                                                <strong>{{ $b_official->full_name }}</strong><br>
+                                                {{ $b_official->position }}
+                                            </p>
+
+                                            @elseif($b_official->position == 'Treasurer')
+                                            <p>
+                                                <strong>{{ $b_official->full_name }}</strong><br>
+                                                {{ $b_official->position }}
+                                            </p>
+
+                                            @elseif($b_official->brgy_official_position == 'SK Chairperson')
+                                            <p>
+                                                <strong>{{ $b_official->full_name }}</strong><br>
+                                                {{ $b_official->position }}
+                                            </p>
+
+                                            @else
+                                            <p>
+                                                <strong>Hon. {{ $b_official->full_name }}</strong><br>
+                                                {{ $b_official->position }}
                                             </p>
 
                                             @endif
+
                                             @endforeach
+
+
                                         </div>
                                     </div>
 
-                                    <div style="margin-top: 60px;">
-                                        <strong>Date Issued: </strong>{{ \Carbon\Carbon::today()->format('jS \\of F Y')
-                                        }}
+                                    <div class="content" style="width: 5.55in; border-right: 2px solid black;">
+                                        <div class="content-wrapper">
+
+                                            <div class="text-part" style="margin-top:100px;">
+                                                <p id="to-whom">TO WHOM IT MAY CONCERN:</p>
+                                                <p id="content">
+                                                    Permit is hereby granted to Mr./Mrs.
+                                                    <strong>{{$building->owner->full_name}}</strong> to construct and renovate a
+                                                    proposed <strong> {{$building->details['type']}}</strong> located at
+                                                    <strong>{{$building->details['address']}}</strong>.
+
+                                                <P id="issue-for">
+                                                    SUBJECT, however to the provision of our existing laws, ordinances and
+                                                    regulation governing the operation and maintenance of the SAME.
+                                                </P>
+
+                                                <P id="issue-for">This <strong>BARANGAY BUILDING CLEARANCE </strong>may be
+                                                    revoked at any time when necessary to protect, rules and regulations
+                                                    governing the operation and maintenance of the same.</p>
+
+                                                <p id="witness">
+                                                    This permit is expires after the construction of the said building.
+                                                </p>
+                                            </div>
+
+
+                                            <div class="cap-sign-part">
+                                                <div class="cap-sign-wrapper">
+
+                                                    @foreach ($b_officials as $b_official)
+
+                                                    @if ($b_official->position == 'Captain')
+                                                    <p>
+                                                        <strong>Hon.
+                                                            {{ $b_official->full_name }}</strong><br>
+                                                        Barangay Chairman
+                                                    </p>
+
+                                                    @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            <div style="margin-top: 60px;">
+                                                <strong>Date Issued: </strong>{{ \Carbon\Carbon::today()->format('jS \\of F Y')
+                                                }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-
                     </div>
                 </div>
+
             </div>
         </div>
-
     </div>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
         integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
